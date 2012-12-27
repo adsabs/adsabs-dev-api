@@ -25,14 +25,19 @@ The list of possible parameters is as follows. A "*" indicates a parameter that 
 
 #### q
 a UTF-8, url-encoded string of <= 1000 characters representing the search query
+
 #### fmt
 Desired response format. Can be one of 'json' or 'xml'. Default is 'json'.
+
 #### rows
 number of results to return. Default is 10 and the max is determined by your API access permissions.
+
 #### start
 starting point for returned results (for pagination). Default is 0, max is determined by API access permissions.
+
 #### fl
 Specify the fields contained in each returned document. Check the *allowed_fields* shown in your */adsabs/api/settings/* to see what's available.
+
 #### filter
 Filter your query results using a particular *field:value* condition. This parameter is repeatable.
 
@@ -68,9 +73,92 @@ http://adslabs.org/adsabs/api/search/?q=black+holes&dev_key=abc123
 # Search for "dark energy", filter by author, sort by citation count
 http://adslabs.org/adsabs/api/search/?q=dark+energy&filter=author%3A"Civano%2C+F"&sort=CITED+desc&dev_key=abc123
 ```
+
+### Example search response
+```
+{
+  "meta": {
+    "count": 6160,
+    "query": "black holes",
+    "qtime": 4
+  },
+  "results": {
+    "docs": [
+      { 'bibcode': '2012AJ....144..160W', ... },
+      ...],
+    "facets": {
+      "author": [
+         "Miller, J",
+         53,
+         "Fabian, A",
+         44,
+         ...
+      ]
+  },
+```
+The *meta* section contains information about the query and how it was processed. *count* is the total number of hits in the result set.
+
 ## Record Requests
 ```
 http://adslabs.org/api/record/<identifier>?dev_key=...
 ```
+Record requests require an identifier in the path of the request URL. Currently this can be either an ADS bibcode, a DOI or an arxiv id. 
 
+Record requests accept the following parameters:
+
+#### fmt
+Desired response format. Can be one of 'json' or 'xml'. Default is 'json'.
+
+#### fl
+Specify the fields contained in each returned document. Check the *allowed_fields* shown in your */adsabs/api/settings/* to see what's available.
+
+#### hl*
+Include snippets containing highlighted query terms with the returned results. The format of this parameter is *field[:count]* where...
+
+* *field* is the field to extract the snippets from
+* *count* is an integer specifying how many snippets to return per document
+
+#### hlq*
+The highlight query, i.e., the terms you wish to see highlighted snippets for in the returned document.
+
+### Example record response
+```
+
+
+{
+  "bibcode": "2012A&A...542A..16R",
+  "author": [
+    "Ranalli, P.",
+    "Comastri, A.",
+    ...
+  ],
+  "pub": "Astronomy and Astrophysics",
+  "identifier": [
+    "2012arXiv1204.4485R",
+    "arXiv:1204.4485",
+    "2012A&A...542A..16R"
+  ],
+  "score": 5.909609,
+  "title": "X-ray properties of radio-selected star forming galaxies in the Chandra-COSMOS survey",
+  "property": [
+    "REFEREED",
+    "ARTICLE"
+  ],
+  "abstract": "X-ray surveys contain sizable numbers of star forming galaxies, ..."
+  "keyword": [
+    "astronomy x rays",
+    "astronomy radio",
+    "galaxies fundamental parameters",
+    "galaxies star clusters",
+    "galaxies active",
+    ...
+  ],
+  "aff": [
+    "Università di Bologna, Dipartimento di Astronomia, via Ranzani 1, 40127, Bologna, Italy ; Institute of Astronomy and Astrophysics, National Observatory of Athens, Palaia Penteli, 15236, Athens, Greece; INAF - Osservatorio Astronomico di Bologna, via Ranzani 1, 40127, Bologna, Italy",
+    "INAF - Osservatorio Astronomico di Bologna, via Ranzani 1, 40127, Bologna, Italy",
+    ...
+  ],
+}
+
+```
 ## Search Syntax
