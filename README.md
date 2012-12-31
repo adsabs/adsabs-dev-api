@@ -1,3 +1,30 @@
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [adsabs-dev-api](#adsabs-dev-api)
+	- [Access](#access)
+	- [Access Settings](#access-settings)
+	- [Search Requests](#search-requests)
+			- [q](#q)
+			- [fmt](#fmt)
+			- [rows](#rows)
+			- [start](#start)
+			- [fl](#fl)
+			- [filter](#filter)
+			- [sort](#sort)
+			- [facet*](#facet)
+			- [hl*](#hl)
+		- [Example search requests](#example-search-requests)
+		- [Example search response](#example-search-response)
+	- [Record Requests](#record-requests)
+			- [fmt](#fmt)
+			- [fl](#fl)
+			- [hl*](#hl)
+			- [hlq*](#hlq)
+		- [Example record requests](#example-record-requests)
+		- [Example record response](#example-record-response)
+	- [Available Fields](#available-fields)
+	- [Search Syntax](#search-syntax)
+
 # adsabs-dev-api
 
 Developer API service description and example client code
@@ -72,22 +99,22 @@ Include snippets containing highlighted query terms with the returned results. T
 
 ### Example search requests
 ```
-# Simple search for "black holes"
+\# Simple search for "black holes"
 http://adslabs.org/adsabs/api/search/?q=black+holes&dev_key=abc123
 
-# Search for "dark energy", filter by author, sort by citation count
+\# Search for "dark energy", filter by author, sort by citation count
 http://adslabs.org/adsabs/api/search/?q=dark+energy&filter=author:"Civano,+F"&sort=CITED+desc&dev_key=abc123
 
-# Same search but only return *bibcode* and *property* values
+\# Same search but only return *bibcode* and *property* values
 http://adslabs.org/adsabs/api/search/?q=dark+energy&filter=author:"Civano,+F"&sort=CITED+desc&fl=bibcode,property&dev_key=abc123
 
-# Search for author "Kurtz, M", facet on publication author, year and bibstem
+\# Search for author "Kurtz, M", facet on publication author, year and bibstem
 http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&facet=author&facet=year&facet=bibstem&dev_key=abc123
 
-# Same search but with limit and mincount settings
+\# Same search but with limit and mincount settings
 http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&facet=author:20:1&facet=year:20:1&facet=bibstem:20:1&dev_key=abc123
 
-# Search for "transiting exoplanets", include fulltext and abstract highlight snippets
+\# Search for "transiting exoplanets", include fulltext and abstract highlight snippets
 http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=full&hl=abstract&dev_key=abc123
 ```
 
@@ -152,15 +179,15 @@ The highlight query, i.e., the terms you wish to see highlighted snippets for in
 
 ### Example record requests
 ```
-# These are equivalent
+\# These are equivalent
 http://adslabs.org/api/record/2012A&A...542A..16R?dev_key=abc123
 http://adslabs.org/api/record/arXiv:1204.4485?dev_key=abc123
 http://adslabs.org/api/record/10.1051/0004-6361/201118723?dev_key=abc123
 
-# Only give me the authors and affiliations
+\# Only give me the authors and affiliations
 http://adslabs.org/api/record/2012A&A...542A..16R?fl=author,aff&dev_key=abc123
 
-# Highlight appearances of "dark energy" in the abstract
+\# Highlight appearances of "dark energy" in the abstract
 http://adslabs.org/api/record/2012A&A...542A..16R?hl=abstract&hlq="dark+energy"&dev_key=abc123
 
 ```
