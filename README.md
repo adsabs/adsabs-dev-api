@@ -1,32 +1,32 @@
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
-
-- [adsabs-dev-api](#adsabs-dev-api)
-	- [Access](#access)
-	- [Access Settings](#access-settings)
-	- [Search Requests](#search-requests)
-			- [q](#q)
-			- [fmt](#fmt)
-			- [rows](#rows)
-			- [start](#start)
-			- [fl](#fl)
-			- [filter](#filter)
-			- [sort](#sort)
-			- [facet*](#facet)
-			- [hl*](#hl)
-		- [Example search requests](#example-search-requests)
-		- [Example search response](#example-search-response)
-	- [Record Requests](#record-requests)
-			- [fmt](#fmt)
-			- [fl](#fl)
-			- [hl*](#hl)
-			- [hlq*](#hlq)
-		- [Example record requests](#example-record-requests)
-		- [Example record response](#example-record-response)
-	- [Available Fields](#available-fields)
-	- [Search Syntax](#search-syntax)
 # adsabs-dev-api
 
 Developer API service description and example client code
+
+**Table of Contents** 
+
+- [Access](#access)
+- [Access Settings](#access-settings)
+- [Search Requests](#search-requests)
+        - [q](#q)
+        - [fmt](#fmt)
+        - [rows](#rows)
+        - [start](#start)
+        - [fl](#fl)
+        - [filter](#filter)
+        - [sort](#sort)
+        - [facet*](#facet)
+        - [hl*](#hl)
+    - [Example search requests](#example-search-requests)
+    - [Example search response](#example-search-response)
+- [Record Requests](#record-requests)
+        - [fmt](#fmt)
+        - [fl](#fl)
+        - [hl*](#hl)
+        - [hlq*](#hlq)
+    - [Example record requests](#example-record-requests)
+    - [Example record response](#example-record-response)
+- [Available Fields](#available-fields)
+- [Search Syntax](#search-syntax)
 
 ## Access
 
