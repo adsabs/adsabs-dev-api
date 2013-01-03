@@ -113,8 +113,11 @@ http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&facet=author&facet=yea
 # Same search but with limit and mincount settings
 http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&facet=author:20:1&facet=year:20:1&facet=bibstem:20:1&dev_key=abc123
 
-# Search for "transiting exoplanets", include fulltext and abstract highlight snippets
-http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=full&hl=abstract&dev_key=abc123
+# Search for "transiting exoplanets", get 200 rows, include fulltext and abstract highlight snippets
+http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=full&hl=abstract&rows=200&dev_key=abc123
+
+# Same search but get the next 200 rows
+http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=full&hl=abstract&rows=200&start=201&dev_key=abc123
 ```
 
 ### Example search response
