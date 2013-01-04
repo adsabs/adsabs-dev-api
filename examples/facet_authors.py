@@ -13,10 +13,10 @@ import simplejson
 import requests
 
 # base API search url
-BASE_URL = 'http://adslabs.org/adsabs/api/search/'
+BASE_URL = 'http://localhost:5000/api/search/'
 
 # developer API access key
-DEV_KEY = 'Dpn7HKuAlNos4Yhw'
+DEV_KEY = 'UwyCSs8fhuQPyP0U'
 
 for input in sys.argv[1:]:
     fp = open(input, 'rb')
@@ -31,15 +31,10 @@ for input in sys.argv[1:]:
         # we're not interested in the acutal result documents
         params['rows'] = '0'
         
-        # here we indicate we want facet data for the 'property' 
-        # with a 'limit' of 50 (top 50 values) and a 'mincount' of 1 (any values >= 1)
-        # 'property' is a general purpose field containing flags that indicate things
-        # like refereed status, openaccess, etc.
-        params['facet'] = ['property:50:1']
-        
         # the 'facet' param is repeatable so we can pass a list of values to the request
-        # here we set the 'limit' to 3 since we only want the top three values
-        params['facet'].append('bibstem:3:1')
+        # here we indicate we want facet data for the 'property' and 'bibstem' fields
+        # for the bibstem field we set a 'limit' of 3 since we only want the top three values
+        params['facet'] = ['property', 'bibstem:3']
         
         # include our access key
         params['dev_key'] = DEV_KEY
@@ -61,7 +56,7 @@ for input in sys.argv[1:]:
         data = simplejson.loads(r.text)
         
         # turn property facet data into a dict
-        properties_data = data['results']['facets']['year']
+        properties_data = data['results']['facets']['property']
         properties = dict([tuple(properties_data[i:i+2]) for i in xrange(0, len(properties_data), 2)])
         
         # get top 3 most frequently appearing publication
@@ -69,5 +64,5 @@ for input in sys.argv[1:]:
         top_pubs = ["%s:%d" % tuple(bibstem_data[i:i+2]) for i in xrange(0, len(bibstem_data), 2)]
         
         # output author \t refereed count \t non-refereed count \t top publications
-        print author + "\t" + properties['refereed'] + "\t" + properties['not refereed'] + "\t" + top_pubs
+        print "%s\t%d\t%d\t%s" % (author, properties['refereed'], properties['not refereed'], ','.join(top_pubs))
         
