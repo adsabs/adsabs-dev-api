@@ -13,7 +13,7 @@ import requests
 BASE_URL = 'http://adslabs.org/adsabs/api/search/'
 
 # developer API access key
-DEV_KEY = 'Dpn7HKuAlNos4Yhw'
+DEV_KEY = ''
 
 for input in sys.argv[1:]:
     fp = open(input, 'rb')
@@ -59,10 +59,10 @@ for input in sys.argv[1:]:
             processed += data['meta']['count']
             
             for d in data['results']['docs']:
-                print d['bibcode'] + "\t" + d['title'] + "\t" + d['pub'] + "\t" + ';'.join(d['author'])
+                print d['bibcode'] + "\t" + d['title'] + "\t" + d.get('pub', '') + "\t" + ';'.join(d['author'])
             sys.stderr.write("status: processed %d of %d results for author %s\n" % (processed, hits, author))
             
-            if processed < hits:
+            if processed <= hits -1:
                 start = processed + 1
             else:
                 break

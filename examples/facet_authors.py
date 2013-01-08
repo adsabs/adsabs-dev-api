@@ -13,10 +13,10 @@ import simplejson
 import requests
 
 # base API search url
-BASE_URL = 'http://localhost:5000/api/search/'
+BASE_URL = 'http://adslabs.org/api/search/'
 
 # developer API access key
-DEV_KEY = 'UwyCSs8fhuQPyP0U'
+DEV_KEY = ''
 
 for input in sys.argv[1:]:
     fp = open(input, 'rb')
