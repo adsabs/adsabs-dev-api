@@ -15,7 +15,7 @@ Developer API service description and example client code
 - [Available Fields](#available-fields)
 - [Search Syntax](#search-syntax)
 
-## Access
+## Signup & Access
 
 Access to the ADS data holdings is regulated by the the ADS terms of use, as described in the ADS [Terms of Use](http://doc.adsabs.harvard.edu/abs_doc/help_pages/overview.html#use).
 
