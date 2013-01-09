@@ -21,7 +21,10 @@ Access to the ADS data holdings is regulated by the the ADS terms of use, as des
 
 Developers who require regular, automated access to our system are encouraged to contact us to gain access to this API.  Upon reviewing requests for API access, we will issue a developer key which should be used for the intended purpose and must not be further shared.
 
-To obtain access to the ADS Developer API you must first apply for and recieve a *developer token* using our [Signup Form](https://docs.google.com/spreadsheet/viewform?formkey=dFJZbHp1WERWU3hQVVJnZFJjbE05SGc6MQ#gid=0)
+To obtain access to the ADS Developer API you must do two things:
+
+1. log in to our newest version of the ADS search interface here: [ADS 2.0](http://adslabs.org/adsabs/)
+1. apply for and recieve a *developer token* using our [Signup Form](https://docs.google.com/spreadsheet/viewform?formkey=dFJZbHp1WERWU3hQVVJnZFJjbE05SGc6MQ#gid=0)
 
 **All** API requests must include your developer token in the *&dev_key* parameter.
 
