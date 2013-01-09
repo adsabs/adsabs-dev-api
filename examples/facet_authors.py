@@ -8,15 +8,19 @@ each author along with his/her could of referreed vs. non-refereed
 articles and his/her top-3 publication venues
 '''
 
+import os
 import sys
 import simplejson
 import requests
 
 # base API search url
-BASE_URL = 'http://adslabs.org/api/search/'
+BASE_URL = 'http://adslabs.org/adsabs/api/search/'
 
 # developer API access key
 DEV_KEY = ''
+
+if os.environ.has_key("ADS_DEV_KEY"):
+    DEV_KEY = os.environ['ADS_DEV_KEY']
 
 for input in sys.argv[1:]:
     fp = open(input, 'rb')

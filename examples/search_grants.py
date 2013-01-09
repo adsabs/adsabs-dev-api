@@ -5,6 +5,7 @@ for records matching those ids and outputs a tsv of bibcodes
 mapped to the grant ids they contain
 '''
 
+import os
 import sys
 import simplejson
 import requests
@@ -17,6 +18,9 @@ FILTER_QUERY = '(NASA OR "National Aeronautics and Space Administration") AND gr
 
 # developer API access key
 DEV_KEY = ''
+
+if os.environ.has_key("ADS_DEV_KEY"):
+    DEV_KEY = os.environ['ADS_DEV_KEY']
 
 for input in sys.argv[1:]:
     fp = open(input, 'rb')
@@ -45,6 +49,9 @@ for input in sys.argv[1:]:
         sys.stderr.write("issuing query for grant %s\n" % grant)
         r = requests.get(BASE_URL, params=params, headers=headers)
         
+        # uncomment if you want to see the actual http request url
+        #sys.stderr.write(r.url + "\n")
+            
         if r.status_code != requests.codes.ok:
             # hopefully if something went wrong you'll get a json error message
             e = simplejson.loads(r.text)
