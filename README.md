@@ -235,6 +235,8 @@ If highlights are requested they will appear alongside the other document fields
 ```
 
 ## Available Fields
+
+This list will likely change a lot as we learn what data users are most interested in. To see the up-to-date list of allowed fields you can do an [Access Settings](#access-settings) request.
 * *id* - an internal-only integer id. This value cannot be used as the *<identifier>* portion of a record request.
 * *bibcode* - the canonical ADS bibcode identifier for this record
 * *bibstem* - the abbreviated name of the journal or publication, e.g., *ApJ*.
