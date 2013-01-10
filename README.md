@@ -23,7 +23,7 @@ Developers who require regular, automated access to our system are encouraged to
 
 To obtain access to the ADS Developer API you must do two things:
 
-1. log in to our newest version of the ADS search interface here: [ADS 2.0](http://adslabs.org/adsabs/)
+1. log in to our newest version of the ADS search interface here: [ADS 2.0](http://adslabs.org/adsabs/). You'll need to use your existing "Classic ADS" credentials, or register with Classic ADS if you don't have one.
 1. apply for and recieve a *developer token* using our [Signup Form](https://docs.google.com/spreadsheet/viewform?formkey=dFJZbHp1WERWU3hQVVJnZFJjbE05SGc6MQ#gid=0)
 
 **All** API requests must include your developer token in the *&dev_key* parameter.
