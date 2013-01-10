@@ -74,14 +74,14 @@ Indicate how you wish the result set sorted. The format is *TYPE direction* wher
 * POPULARITY - ordered by how often the document was "read" over the past 90 days
 
 #### facet*
-Include facet data in the response. The format of this parameter is *field[:limit[:mincount]]*, where...
+Include facet data in the response. This parameter is repeatable. The format is *field[:limit[:mincount]]*, where...
 
 * *field* is the name of the field
 * *limit* is an integer specifying how many facet values to return. Default is 100.
 * *mincount* is an optional integer specifying the minimum count for a facet value to be included. A *mincount* of "1" will exclude facet values with zero counts.
 
 #### hl*
-Include snippets containing highlighted query terms with the returned results. The format of this parameter is *field[:count]* where...
+Include snippets containing highlighted query terms with the returned results. This parameter is repeatable. The format is *field[:count]* where...
 
 * *field* is the field to extract the snippets from
 * *count* is an integer specifying how many snippets to return per document
@@ -161,7 +161,7 @@ Desired response format. Can be one of 'json' or 'xml'. Default is 'json'.
 Specify the fields contained in each returned document. Check the *allowed_fields* shown in your */adsabs/api/settings/* to see what's available.
 
 #### hl*
-Include snippets containing highlighted query terms with the returned results. The format of this parameter is *field[:count]* where...
+Include snippets containing highlighted query terms with the returned results. This parameter is repeatable. The format is *field[:count]* where...
 
 * *field* is the field to extract the snippets from
 * *count* is an integer specifying how many snippets to return per document
