@@ -66,12 +66,14 @@ Filter your query results using a particular *field:value* condition. This param
 * *value* should be a UTF-8, url-encoded string of <= characters
 
 #### sort
-Indicate how you wish the result set sorted. The format is *TYPE direction* where *direction* is one of "asc" or "desc", and *TYPE* is one of
+Indicate how you wish the result set sorted. The format is *"TYPE direction"* where *direction* is one of "asc" or "desc", and *TYPE* is one of
 
 * DATE - ordered by publication date
 * RELEVANCE - ordered by the document's relevance score calculated during the search
 * CITED - ordered by the number of citations
 * POPULARITY - ordered by how often the document was "read" over the past 90 days
+
+Example of a properly formated & encoded sort param: "...&sort=CITED+desc..."
 
 #### facet*
 Include facet data in the response. This parameter is repeatable. The format is *field[:limit[:mincount]]*, where...
