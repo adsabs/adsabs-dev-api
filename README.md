@@ -150,7 +150,7 @@ The *results* section of the response will include the actual data of the found 
 
 ## Record Requests
 ```
-http://adslabs.org/api/record/<identifier>?dev_key=...
+http://adslabs.org/adsabs/api/record/<identifier>?dev_key=...
 ```
 Record requests require an identifier in the path of the request URL. Currently this can be either an ADS bibcode, a DOI or an arxiv id. 
 
@@ -174,15 +174,15 @@ The highlight query, i.e., the terms you wish to see highlighted snippets for in
 ### Example record requests
 ```
 # These are equivalent
-http://adslabs.org/api/record/2012A&A...542A..16R?dev_key=abc123
-http://adslabs.org/api/record/arXiv:1204.4485?dev_key=abc123
-http://adslabs.org/api/record/10.1051/0004-6361/201118723?dev_key=abc123
+http://adslabs.org/adsabs/api/record/2012A&A...542A..16R?dev_key=abc123
+http://adslabs.org/adsabs/api/record/arXiv:1204.4485?dev_key=abc123
+http://adslabs.org/adsabs/api/record/10.1051/0004-6361/201118723?dev_key=abc123
 
 # Only give me the authors and affiliations
-http://adslabs.org/api/record/2012A&A...542A..16R?fl=author,aff&dev_key=abc123
+http://adslabs.org/adsabs/api/record/2012A&A...542A..16R?fl=author,aff&dev_key=abc123
 
 # Highlight appearances of "dark energy" in the abstract
-http://adslabs.org/api/record/2012A&A...542A..16R?hl=abstract&hlq="dark+energy"&dev_key=abc123
+http://adslabs.org/adsabs/api/record/2012A&A...542A..16R?hl=abstract&hlq="dark+energy"&dev_key=abc123
 
 ```
 
