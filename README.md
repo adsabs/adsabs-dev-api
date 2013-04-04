@@ -102,6 +102,9 @@ http://adslabs.org/adsabs/api/search/?q=dark+energy&filter=author:"Civano,+F"&so
 # Search for author "Kurtz, M", facet on publication author, year and bibstem
 http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&facet=author&facet=year&facet=bibstem&dev_key=abc123
 
+# Limit a search to only refereed articles
+http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&filter=property:refereed&dev_key=abc123
+
 # Same search but with limit and mincount settings
 http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&facet=author:20:1&facet=year:20:1&facet=bibstem:20:1&dev_key=abc123
 
@@ -250,6 +253,9 @@ This list will likely change a lot as we learn what data users are most interest
 * *abstract* - the abstract of the record
 * *aff* - an array of the authors' affiliations
 * *property* - an array of miscellaneous flags associated with the record. Possible values include: ARTICLE, REFEREED, NOT_REFEREED, INPROCEEDINGS, OPENACCESS, NONARTICLE, EPRINT, BOOK, PROCEEDINGS, CATALOG, SOFTWARE
+* *volume* - volume the record appeared in
+* *issue* - issue the record appeared in
+* *page* - starting page
 
 ## Search Syntax
 
