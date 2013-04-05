@@ -1,6 +1,10 @@
 # adsabs-dev-api
 
-Developer API service description and example client code
+Developer API service description and example client code. 
+
+For answers to some frequently asked questions check out the [wiki](https://github.com/adsabs/adsabs-dev-api/wiki).
+
+For bugs, feature requests or even random questions feel free to use the [issues](https://github.com/adsabs/adsabs-dev-api/issues) section.
 
 **Table of Contents** 
 
