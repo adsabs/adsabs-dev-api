@@ -61,7 +61,7 @@ number of results to return. Default is 10 and the max is determined by your API
 starting point for returned results (for pagination). Default is 0, max is determined by API access permissions.
 
 #### fl
-Specify the fields contained in each returned document. Check the *allowed_fields* shown in your */adsabs/api/settings/* to see what's available.
+Specify the fields contained in each returned document. Value should be a comma-separated list of field names. Check the *allowed_fields* shown in your */adsabs/api/settings/* to see what's available.
 
 #### filter
 Filter your query results using a particular *field:value* condition. This parameter is repeatable.
