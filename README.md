@@ -260,6 +260,7 @@ This list will likely change a lot as we learn what data users are most interest
 * *volume* - volume the record appeared in
 * *issue* - issue the record appeared in
 * *page* - starting page
+* *citation_count* - number of citations the item has received
 
 ## Search Syntax
 
