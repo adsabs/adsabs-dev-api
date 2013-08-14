@@ -27,7 +27,7 @@ Developers who require regular, automated access to our system are encouraged to
 
 To obtain access to the ADS Developer API you must do two things:
 
-1. log in to our newest version of the ADS search interface here: [ADS 2.0](http://adslabs.org/adsabs/). You'll need to use your existing "Classic ADS" credentials, or register with Classic ADS if you don't have one.
+1. Log in to the newest version of the ADS search interface here: [ADS 2.0](http://adslabs.org/adsabs/). We encourage you to use your existing "Classic ADS" login credentials if you already have an account at [ADS](http://adsabs.harvard.edu). If not, you can create a new user account [here](http://labs.adsabs.harvard.edu/adsabs/user/signup).
 1. apply for and recieve a *developer token* using our [Signup Form](https://docs.google.com/spreadsheet/viewform?formkey=dFJZbHp1WERWU3hQVVJnZFJjbE05SGc6MQ#gid=0)
 
 **All** API requests must include your developer token in the *&dev_key* parameter.
@@ -160,6 +160,8 @@ The *results* section of the response will include the actual data of the found 
 http://adslabs.org/adsabs/api/record/<identifier>?dev_key=...
 ```
 Record requests require an identifier in the path of the request URL. Currently this can be either an ADS bibcode, a DOI or an arxiv id. 
+
+*Note*: we are experiencing an issue with record requests for some identifiers and are currently working to resolve it.
 
 Record requests accept the following parameters:
 
