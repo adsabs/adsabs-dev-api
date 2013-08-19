@@ -60,13 +60,13 @@ for input in sys.argv[1:]:
         data = simplejson.loads(r.text)
         
         # turn property facet data into a dict
-        properties_data = data['results']['facets']['property']
+        properties_data = data['results']['facets']['facet_fields']['property']
         properties = dict([tuple(properties_data[i:i+2]) for i in xrange(0, len(properties_data), 2)])
         
         # get top 3 most frequently appearing publication
-        bibstem_data = data['results']['facets']['bibstem']
+        bibstem_data = data['results']['facets']['facet_fields']['bibstem']
         top_pubs = ["%s:%d" % tuple(bibstem_data[i:i+2]) for i in xrange(0, len(bibstem_data), 2)]
         
         # output author \t refereed count \t non-refereed count \t top publications
-        print "%s\t%d\t%d\t%s" % (author, properties['refereed'], properties['not refereed'], ','.join(top_pubs))
+        print "%s\t%d\t%d\t%s" % (author, properties['refereed'], properties['notrefereed'], ','.join(top_pubs))
         
