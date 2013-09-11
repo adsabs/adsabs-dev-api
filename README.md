@@ -263,6 +263,7 @@ This list will likely change a lot as we learn what data users are most interest
 * *issue* - issue the record appeared in
 * *page* - starting page
 * *citation_count* - number of citations the item has received
+* *pubdate* - publication date in the form YYYY-MM-DD (DD value will always be "00")
 
 ## Search Syntax
 
@@ -281,6 +282,14 @@ Prepend terms with "+" or "-" to indicate inclusion or exclusion:
 * *+transiting exoplanets*
 * *"dark energy" -"weak lensing"*
 
+To filter by a publication date range you can use either the *year* or *pubdate* fields:
+
+* *pubdate:[2013-07-00 TO *]*
+* *pubdate:[2005-01 TO 2007-01]*
+* *pubdate:2013-02*
+* *year:2013*
+* *year:[2012 TO 2013]*
+* 
 The default search uses a boolean "AND" between terms, but you may use "OR" and "AND" in combination with "()" to create more complex queries.
 
 Prefix queries (wildcards) are supported for most fields.
