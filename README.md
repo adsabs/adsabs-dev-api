@@ -46,6 +46,12 @@ http://adslabs.org/adsabs/api/search/?q=...&dev_key=...
 
 All requests to the search endpoint must include at least the *&q* query parameter. All parameter values shoud be UTF-8 and url-encoded. For search syntax and descriptions of the fields returned, see below.
 
+### A note about "databases"
+
+The ADS content is divided into a few separate databases: "astronomy", "physics" & "general". By default, the API does not discriminate between them. To limit a search to "astronomy" articles you must add **&filter=database:astronomy** to the request parameters.
+
+### Search parameters
+
 The list of possible parameters is as follows. A "*" indicates a parameter that is not available at the "basic" access level.
 
 #### q
@@ -94,8 +100,8 @@ Include snippets containing highlighted query terms with the returned results. T
 
 ### Example search requests
 ```
-# Simple search for "black holes"
-http://adslabs.org/adsabs/api/search/?q=black+holes&dev_key=abc123
+# Simple search for "black holes", restricted to astronomy content
+http://adslabs.org/adsabs/api/search/?q=black+holes&filter=database:astronomy&dev_key=abc123
 
 # Search for "dark energy", filter by author, sort by citation count
 http://adslabs.org/adsabs/api/search/?q=dark+energy&filter=author:"Civano,+F"&sort=CITED+desc&dev_key=abc123
