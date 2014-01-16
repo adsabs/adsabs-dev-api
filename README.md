@@ -312,13 +312,14 @@ http://adslabs.org/adsabs/api/metrics/?q=...&dev_key=...
 
 All requests to the search endpoint must include at least the *&q* query parameter. All parameter values shoud be UTF-8 and url-encoded. For search syntax and descriptions of the fields returned, see the section on search requests.
 
-### Example search request
+### Example metrics request
 ```
 
 # Metrics for author "Kurtz, M"
 http://adslabs.org/adsabs/api/metrics/?q=author:"Kurtz,+M"&dev_key=abc123
+```
 
-### Example search response
+### Example metrics response
 ```
 {
   "meta": {
@@ -349,7 +350,7 @@ The *meta* section contains information about the query and how it was processed
 * *qtime* is the time taken to process the actual search
 * *api-version* reflects the version of the API endpoint being used. This value is also returned in the HTTP header *X-API-Version*.
 
-The *results* section of the response will include the actual data of the found documents.
+The *results* section of the response will include the actual data of the metrics data.
 
 ## Metrics Help
 
