@@ -167,7 +167,7 @@ The *results* section of the response will include the actual data of the found 
 
 ## Record Requests
 ```
-http://adslabs.org/adsabs/api/record/<identifier>?dev_key=...
+http://adslabs.org/adsabs/api/record/<identifier>/?dev_key=...
 ```
 Record requests require an identifier in the path of the request URL. Currently this can be either an ADS bibcode, a DOI or an arxiv id. 
 
@@ -193,15 +193,15 @@ The highlight query, i.e., the terms you wish to see highlighted snippets for in
 ### Example record requests
 ```
 # These are equivalent
-http://adslabs.org/adsabs/api/record/2012A&A...542A..16R?dev_key=abc123
-http://adslabs.org/adsabs/api/record/arXiv:1204.4485?dev_key=abc123
-http://adslabs.org/adsabs/api/record/10.1051/0004-6361/201118723?dev_key=abc123
+http://adslabs.org/adsabs/api/record/2012A&A...542A..16R/?dev_key=abc123
+http://adslabs.org/adsabs/api/record/arXiv:1204.4485/?dev_key=abc123
+http://adslabs.org/adsabs/api/record/10.1051/0004-6361/201118723/?dev_key=abc123
 
 # Only give me the authors and affiliations
-http://adslabs.org/adsabs/api/record/2012A&A...542A..16R?fl=author,aff&dev_key=abc123
+http://adslabs.org/adsabs/api/record/2012A&A...542A..16R/?fl=author,aff&dev_key=abc123
 
 # Highlight appearances of "dark energy" in the abstract
-http://adslabs.org/adsabs/api/record/2012A&A...542A..16R?hl=abstract&hlq="dark+energy"&dev_key=abc123
+http://adslabs.org/adsabs/api/record/2012A&A...542A..16R/?hl=abstract&hlq="dark+energy"&dev_key=abc123
 
 ```
 
@@ -304,19 +304,21 @@ The default search uses a boolean "AND" between terms, but you may use "OR" and 
 
 Prefix queries (wildcards) are supported for most fields.
 
-## Metrics Requests
+## Metrics Search Requests
+
+To retrieve metrics data for a particular search result set append `/metrics/` to the API search endpoint path.
 
 ```
-http://adslabs.org/adsabs/api/metrics/?q=...&dev_key=...
+http://adslabs.org/adsabs/api/search/metrics/?q=...&dev_key=...
 ```
 
-All requests to the search endpoint must include at least the *&q* query parameter. All parameter values shoud be UTF-8 and url-encoded. For search syntax and descriptions of the fields returned, see the section on search requests.
+All requests to the metrics search endpoint must include at least the *&q* query parameter. All parameter values shoud be UTF-8 and url-encoded. For search syntax and descriptions of the fields returned, see the section on search requests.
 
-### Example metrics request
+### Example search result metrics request
 ```
 
 # Metrics for author "Kurtz, M"
-http://adslabs.org/adsabs/api/metrics/?q=author:"Kurtz,+M"&dev_key=abc123
+http://adslabs.org/adsabs/api/search/metrics/?q=author:"Kurtz,+M"&dev_key=abc123
 ```
 
 ### Example metrics response
@@ -330,14 +332,14 @@ http://adslabs.org/adsabs/api/metrics/?q=author:"Kurtz,+M"&dev_key=abc123
     "api-version": "0.1.1"
   },
   "results": {
-    "all reads": { overview of reads and download stats for all papers},
-    "refereed reads": { overview of reads and download stats for refereed papers},
-    "all stats": { overview of stats and indexes for all papers},
-    "refereed stats": { overview of stats and indexes for refereed papers},
-    "reads histogram": { histogram of read and normalized read counts},
-    "paper histogram": { histogram of paper and normalized paper counts},
-    "citation histogram": { histogram of citation and normalized citation counts},
-    "metrics series": { time series for a number of indexes},
+    "all_reads": { overview of reads and download stats for all papers},
+    "refereed_reads": { overview of reads and download stats for refereed papers},
+    "all_stats": { overview of stats and indexes for all papers},
+    "refereed_stats": { overview of stats and indexes for refereed papers},
+    "reads_histogram": { histogram of read and normalized read counts},
+    "paper_histogram": { histogram of paper and normalized paper counts},
+    "citation_histogram": { histogram of citation and normalized citation counts},
+    "metrics_series": { time series for a number of indexes},
   }
  }
 ```
@@ -351,6 +353,17 @@ The *meta* section contains information about the query and how it was processed
 * *api-version* reflects the version of the API endpoint being used. This value is also returned in the HTTP header *X-API-Version*.
 
 The *results* section of the response will include the actual data of the metrics data.
+
+## Metrics Record Requests
+
+Likewise, to retrieve metrics for a single record append `/metrics/` to the API record endpoint.
+
+### Example search result metrics request
+```
+
+# Metrics for 2011ApSSP...1...23K"
+http://adslabs.org/adsabs/api/record/2011ApSSP...1...23K/metrics/?dev_key=abc123
+```
 
 ## Metrics Help
 
