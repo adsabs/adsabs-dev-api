@@ -102,6 +102,13 @@ Include snippets containing highlighted query terms with the returned results. T
 * *field* is the field to extract the snippets from
 * *count* is an integer specifying how many snippets to return per document
 
+To view the list of available highlight fields, see your `/api/settings` response. For most users this will include:
+
+* *abstract*
+* *title*
+* *body* - the full text (when present)
+* *ack* - acknowledgements section (when present)
+
 ### Example search requests
 ```
 # Simple search for "black holes", restricted to astronomy content
@@ -123,10 +130,10 @@ http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&filter=property:refere
 http://adslabs.org/adsabs/api/search/?q=author:"Kurtz,+M"&facet=author:20:1&facet=year:20:1&facet=bibstem:20:1&dev_key=abc123
 
 # Search for "transiting exoplanets", get 200 rows, include fulltext and abstract highlight snippets
-http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=full&hl=abstract&rows=200&dev_key=abc123
+http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=body&hl=abstract&rows=200&dev_key=abc123
 
 # Same search but get the next 200 rows
-http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=full&hl=abstract&rows=200&start=201&dev_key=abc123
+http://adslabs.org/adsabs/api/search/?q=transiting+exoplanets&hl=body&hl=abstract&rows=200&start=201&dev_key=abc123
 ```
 
 ### Example search response
