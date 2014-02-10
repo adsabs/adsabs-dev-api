@@ -23,6 +23,10 @@ For bugs, feature requests or even random questions feel free to use the [issues
 
 Announcements and discussion related to the Developer API are available via the Google Group, [adsabs-dev-api](https://groups.google.com/forum/#!forum/adsabs-dev-api). We encourage all API users to subscribe, as the functionality of the API, format of responses, etc., will likely be improving and changing rapidly.
 
+## Clients
+
+* https://github.com/andycasey/ads-python
+
 ## Signup & Access
 
 Access to the ADS data holdings is regulated by the the ADS terms of use, as described in the ADS [Terms of Use](http://doc.adsabs.harvard.edu/abs_doc/help_pages/overview.html#use).
