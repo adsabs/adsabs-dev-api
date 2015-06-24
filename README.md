@@ -8,12 +8,12 @@ For bugs, feature requests or even random questions feel free to use the [issues
 
 - [Access](#access)
 - [Access Settings](#access-settings)
-- [Search Requests](search.md)
-- [Metrics Requests](metrics.md)
+- [Search API](search.md)
+- [Metrics API](metrics.md)
 
 ## Mailing List
 
-Announcements and discussion related to the Developer API are available via the Google Group, [adsabs-dev-api](https://groups.google.com/forum/#!forum/adsabs-dev-api). We encourage all API users to subscribe, as the functionality of the API, format of responses, etc., will likely be improving and changing rapidly.
+Announcements and discussion related to the Developer API are available via the Google Group, [adsabs-dev-api](https://groups.google.com/forum/#!forum/adsabs-dev-api). We encourage all API users to subscribe, as the functionality of the API, will likely be improving and changing rapidly.
 
 ## Clients
 
