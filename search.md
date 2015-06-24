@@ -1,3 +1,11 @@
+## Contents
+
+* [Search API](#search-api)
+* [Query parameters](#query-parameters)
+* [Fields](#fields)
+* [Examples](#example-search-requests)
+* [Advanced search syntax](#advanced-search-syntax)
+
 
 ## Search API
 
@@ -29,7 +37,7 @@ Compute and return the term-vector components on a query. (@roman @aacommazzi @a
 ## Query parameters
 
 #### q
-*required:* a UTF-8, url-encoded string of <= 1000 characters representing the search query. `q` can be used for both fielded (`title:exoplanets`), and unfielded (`exoplanets`) search. See the list of fields below.
+*required:* a UTF-8, url-encoded string of <= 1000 characters representing the search query. `q` can be used for both fielded (`title:exoplanets`), and unfielded (`exoplanets`) search. See the list of fields [below](#fields). 
 
 #### rows
 number of results to return. Default is 10.
@@ -72,7 +80,7 @@ Below are some fields noted here for their high usefulness that are available to
 * `page` - starting page
 * `citation_count` - number of citations the item has received
 * `pubdate` - publication date in the form YYYY-MM-DD (DD value will always be "00")
-* `database` - Which database the record is associated with
+* `database` - Which database the record is associated with.
 
 #### databases
 
