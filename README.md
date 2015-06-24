@@ -21,11 +21,9 @@ The unofficial python client for the API can be found here:
 
 * https://github.com/andycasey/ads
 
-## Signup & Access
+## Access
 
 Access to the ADS data holdings is regulated by the the ADS terms of use, as described in the ADS [Terms of Use](http://doc.adsabs.harvard.edu/abs_doc/help_pages/overview.html#use).
-
-Developers who require regular, automated access to our system are encouraged to contact us to gain access to this API.  Upon reviewing requests for API access, we will issue a developer key which should be used for the intended purpose and must not be further shared.
 
 To obtain access to the ADS Developer API you must do two things:
 
