@@ -67,6 +67,7 @@ Below are some fields noted here for their high usefulness that are available to
 
 * `bibcode` - the canonical ADS bibcode identifier for this record
 * `bibstem` - the abbreviated name of the journal or publication, e.g., *ApJ*.
+* `id` - a unique integer for this record
 * `identifier` - an array of alternative identifiers for the record. May contain alternative bibcodes, DOIs and/or arxiv ids.
 * `title` - the title of the record
 * `author` - an array of the author names associated with the record
