@@ -13,7 +13,7 @@ Base URL: `https://api.adsabs.harvard.edu/v1/search`
 
 All text values shoud be UTF-8 and url-encoded. The response body will be json encoded.
 
-Note that the search API uses the same syntax as [Apache Solr](http://lucene.apache.org/solr/). For a full reference of query possibilities, please refer to the Solr documentation. The sections below present useful parameters and patterns for the vast majority of use cases, but are not meant to be exhaustive.
+Note that the search API uses the same syntax as [Apache Solr](http://lucene.apache.org/solr/). For a full reference of query possibilities, please refer to the Solr documentation and [ADS Search Help](http://adsabs.github.io/help/search/). The sections below present useful parameters and patterns for the vast majority of use cases, but are not meant to be exhaustive.
 
 ##### Basic search
     https://api.adsabs.harvard.edu/v1/search/query
@@ -22,17 +22,17 @@ The basic interface to the ADS data holdings. Query our search engine and receiv
 ##### bigquery
 
     https://api.adsabs.harvard.edu/v1/search/bigquery
-Query the database using a seed list of bibcodes. (@roman @aacommazzi we don't have documentation for bigquery; would one of you care to provide this?)
+Query the database and limit results only to the collection of supplied identifiers. Useful when you cannot express your search using a query, but you have the list of identifiers (and want facets, citations, etc.)
 
 ##### tvrh
 
     https://api.adsabs.harvard.edu/v1/search/tvrh
-Compute and return the term-vector components on a query. (@roman @aacommazzi @aholachek please help me to add one sentence describing what this means). The technical documentation can be at https://cwiki.apache.org/confluence/display/solr/The+Term+Vector+Component.
+Compute and return term and document frequencies of the given query - useful for visualizations and/or post-processing of results. [Technical documentation](https://cwiki.apache.org/confluence/display/solr/The+Term+Vector+Component)
    
 ##### qtree
 
     https://api.adsabs.harvard.edu/v1/search/qtree
-(@roman @aacommazzi I need your input here, too)
+Turn a query string into a hierarchical structure (as seen by the ADS Search Syntax Parser). Can be used to validate a query or to build smart search interfaces.
 
 ## Query parameters
 
