@@ -80,6 +80,7 @@ Below are some fields noted here for their high usefulness that are available to
 * `issue` - issue the record appeared in
 * `page` - starting page
 * `citation_count` - number of citations the item has received
+* `read_count` - number of times the item has been read
 * `pubdate` - publication date in the form YYYY-MM-DD (DD value will always be "00")
 * `database` - Which database the record is associated with.
 
