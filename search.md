@@ -24,16 +24,6 @@ The basic interface to the ADS data holdings. Query our search engine and receiv
     https://api.adsabs.harvard.edu/v1/search/bigquery
 Query the database and limit results only to the collection of supplied identifiers. Useful when you cannot express your search using a query, but you have the list of identifiers (and want facets, citations, etc.)
 
-##### tvrh
-
-    https://api.adsabs.harvard.edu/v1/search/tvrh
-Compute and return term and document frequencies of the given query - useful for visualizations and/or post-processing of results. [Technical documentation](https://cwiki.apache.org/confluence/display/solr/The+Term+Vector+Component)
-   
-##### qtree
-
-    https://api.adsabs.harvard.edu/v1/search/qtree
-Turn a query string into a hierarchical structure (as seen by the ADS Search Syntax Parser). Can be used to validate a query or to build smart search interfaces.
-
 ## Query parameters
 
 #### q
@@ -80,7 +70,7 @@ Below are some fields noted here for their high usefulness that are available to
 * `issue` - issue the record appeared in
 * `page` - starting page
 * `citation_count` - number of citations the item has received
-* `read_count` - number of times the item has been read
+* `read_count` - number of times the record has been viewed within in a 90-day windows (ads and arxiv)
 * `pubdate` - publication date in the form YYYY-MM-DD (DD value will always be "00")
 * `database` - Which database the record is associated with.
 
