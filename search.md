@@ -19,11 +19,6 @@ Note that the search API uses the same syntax as [Apache Solr](http://lucene.apa
     https://api.adsabs.harvard.edu/v1/search/query
 The basic interface to the ADS data holdings. Query our search engine and receive the cooresponding documents back.  
 
-##### bigquery
-
-    https://api.adsabs.harvard.edu/v1/search/bigquery
-Query the database and limit results only to the collection of supplied identifiers. Useful when you cannot express your search using a query, but you have the list of identifiers (and want facets, citations, etc.)
-
 ## Query parameters
 
 #### q
