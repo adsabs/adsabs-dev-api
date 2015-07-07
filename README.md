@@ -10,6 +10,7 @@ For bugs, feature requests or even random questions feel free to use the [issues
 - [Access Settings](#access-settings)
 - [Search API](search.md)
 - [Metrics API](metrics.md)
+- [Export API](export.md)
 
 ## Mailing List
 
