@@ -20,7 +20,9 @@ Announcements and discussion related to the Developer API are available via the 
 
 The unofficial python client for the API can be found here:
 
-* https://github.com/andycasey/ads
+* https://github.com/adsabs/ads
+
+(Note that this is a temporary fork of andycasey's client; please install from the git repo and not pypi if you use this fork)
 
 ## Access
 
