@@ -18,11 +18,10 @@ Announcements and discussion related to the Developer API are available via the 
 
 ## Clients
 
-The unofficial python client for the API can be found here:
+The unofficial python client for the API is maintained by Andy Casey and can be found here:
 
-* https://github.com/adsabs/ads
+* https://github.com/andycasey/ads
 
-(Note that this is a temporary fork of andycasey's client; please install from the git repo and not pypi if you use this fork)
 
 ## Access
 
@@ -33,7 +32,7 @@ To obtain access to the ADS Developer API you must do two things:
 1. Create an account and log in to the latest version of the [ADS](https://ui.adsabs.harvard.edu). 
 1. Push the "Generate a new key" button under the [user profile](https://ui.adsabs.harvard.edu/#user/settings/token)
 
-All API requests must pass your token in an `Authorization: Bearer <token>` HTTP header.
+All API requests must pass your token in an `Authorization: Bearer <token>` HTTP header (where <token> is the key you just generated).
 
 ## Access Settings
 
