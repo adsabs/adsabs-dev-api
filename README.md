@@ -22,6 +22,9 @@ The unofficial python client for the API is maintained by Andy Casey and can be 
 
 * https://github.com/andycasey/ads
 
+Geert Barentsen has built an application to support the Kepler publication database which uses the ADS API to discover relevant papers:
+
+* https://github.com/KeplerGO/kpub
 
 ## Access
 
