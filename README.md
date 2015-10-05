@@ -35,7 +35,10 @@ To obtain access to the ADS Developer API you must do two things:
 1. Create an account and log in to the latest version of the [ADS](https://ui.adsabs.harvard.edu). 
 1. Push the "Generate a new key" button under the [user profile](https://ui.adsabs.harvard.edu/#user/settings/token)
 
-All API requests must pass your token in an `Authorization: Bearer <token>` HTTP header (where <token> is the key you just generated).
+All API requests must pass your token in an `Authorization: Bearer <token>` HTTP header (where <token> is the key you just generated), e.g.
+
+    curl -H 'Authorization: Bearer <token>' 'https://api.adsabs.harvard.edu/v1/search/query?q=star'
+
 
 ## Access Settings
 
