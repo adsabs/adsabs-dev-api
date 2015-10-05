@@ -89,7 +89,6 @@ Assuming your access token is `my_token`, all queries can be executed by any HTT
     
     # Search for "dark energy", filter by author, sort by citation count
     ?q=dark+energy&fq=author:"Civano,+F"&sort=citation_count+desc
-    (@roman fq won't work in this example until !aqp is the default)
 
     # Same search but only return *bibcode* and *property* values
     ?q=dark+energy&fq=author:"Civano,+F"&sort=citation_count+desc&fl=bibcode,property
