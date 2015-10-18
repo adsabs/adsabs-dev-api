@@ -28,7 +28,7 @@ Geert Barentsen has built an application to support the Kepler publication datab
 
 ## Access
 
-Access to the ADS data holdings is regulated by the the ADS terms of use, as described in the ADS [Terms of Use](http://doc.adsabs.harvard.edu/abs_doc/help_pages/overview.html#use).
+Access to the ADS data holdings is regulated by the the ADS terms of use, as described in the ADS [Terms of Use](http://adsabs.github.io/help/terms/).
 
 To obtain access to the ADS Developer API you must do two things:
 
