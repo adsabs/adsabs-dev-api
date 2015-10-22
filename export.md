@@ -13,7 +13,7 @@ with in the POST header
 	
 Using `curl`, to get the BibTeX for e.g. the record with bibcode `2015ApJS..219...21Z`, you would do
 
-    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcodes":["2015ApJS..219...21Z"]}' https://api.adsabs.harvard.edu/v1/export/bibtex
+    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcode":["2015ApJS..219...21Z"]}' https://api.adsabs.harvard.edu/v1/export/bibtex
 
 and the API then responds in JSON with 
 
