@@ -11,6 +11,7 @@ For bugs, feature requests or even random questions feel free to use the [issues
 - [Search API](search.md)
 - [Metrics API](metrics.md)
 - [Export API](export.md)
+- [Libraries API](libraries.md)
 
 ## Mailing List
 
