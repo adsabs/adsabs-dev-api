@@ -297,6 +297,6 @@ The following type of user can transfer libraries:
   * **owner**: Owns the library. Can read libraries, add/remove bibcodes, delete the library, add/remove permissions, transfer ownership of the library.
   * **admin**: Can read libraries, add/remove bibcodes, add/remove permissions.
   * **write**: Can read libraries, add/remove bibcdes.
-  * ** read**: Can read libraries.
+  * **read**: Can read libraries.
 
 Any other user that does not have a permission to the library they try to visit, can only see it if it is public. If the user has no permissions, they cannot view this library.
