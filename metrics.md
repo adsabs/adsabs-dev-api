@@ -84,18 +84,18 @@ Each of these attributes contains specific data elements. The following overview
 For all histograms, the actual histogram values are stored as follows:
 
     {
-	    'histogram name': {year: value, year: value, ...}
+	    "histogram name": {year: value, year: value, ...}
 	}
 
 where values can be either integers or floats, depending on the type of histograms. The histogram name is an attribute of the histogram type. For example, the `publications` type has 4 separate histograms: `all publications`, `refereed publications`, `all publications normalized` and `refereed publications normalized`, which are organized as follows in the JSON output:
 
     {
-	    'histograms':  {
-			'publications': {
-				'all publications': {},
-				'refereed publications': {},
-				'all publications normalized': {},
-				'refereed publications normalized': {},
+	    "histograms":  {
+			"publications": {
+				"all publications": {},
+				"refereed publications": {},
+				"all publications normalized": {},
+				"refereed publications normalized": {},
 			
 			}
 		}
@@ -114,13 +114,13 @@ Note that 'refereed reads' means: 'number of reads for the refereed publications
 The `timeseries` attribute contains time series data for: `h`, `g`, `i10`, `i100`, `read10` and `tori`. The output is structured as
 
     {
-		'time series': {
-			'h': { values },
-			'g': { values },
-			'i10': { values },
-			'i100': { values },
-			'read10': { values },
-			'tori': { values },
+		"time series": {
+			"h": { values },
+			"g": { values },
+			"i10": { values },
+			"i100": { values },
+			"read10": { values },
+			"tori": { values },
 		
 		}
 	}
@@ -128,127 +128,127 @@ The `timeseries` attribute contains time series data for: `h`, `g`, `i10`, `i100
 where the 'values' are organized in the same way as for the histograms: 
 
     {
-	    'indicator name': {year: value, year: value, ...}
+	    "indicator name": {year: value, year: value, ...}
 	}
 
 ## Everything together
 So, returning everything, the output looks like
 
     {
-		'skipped bibcodes': [ ... ],
-		'basic stats':
+		"skipped bibcodes": [ ... ],
+		"basic stats":
 		{
-			'number of papers': 1,
-			'normalized paper count': 0.1,
-			'median number of reads': 1.1,
-			'average number of reads': 1.1,
-			'total number of reads': 1,
-			'normalized number of reads': 0.1,
-			'median number of downloads': 1.1,
-			'average number of downloads': 1.1,
-			'total number of downloads': 1,
-			'normalized number of downloads': 0.1,			
+			"number of papers": 1,
+			"normalized paper count": 0.1,
+			"median number of reads": 1.1,
+			"average number of reads": 1.1,
+			"total number of reads": 1,
+			"normalized number of reads": 0.1,
+			"median number of downloads": 1.1,
+			"average number of downloads": 1.1,
+			"total number of downloads": 1,
+			"normalized number of downloads": 0.1,			
 			},
-		'basic stats refereed':
+		"basic stats refereed":
 		{
-			'number of papers': 1,
-			'normalized paper count': 0.1,
-			'median number of reads': 1.1,
-			'average number of reads': 1.1,
-			'total number of reads': 1,
-			'normalized number of reads': 0.1,
-			'median number of downloads': 1.1,
-			'average number of downloads': 1.1,
-			'total number of downloads': 1,
-			'normalized number of downloads': 0.1,			
+			"number of papers": 1,
+			"normalized paper count": 0.1,
+			"median number of reads": 1.1,
+			"average number of reads": 1.1,
+			"total number of reads": 1,
+			"normalized number of reads": 0.1,
+			"median number of downloads": 1.1,
+			"average number of downloads": 1.1,
+			"total number of downloads": 1,
+			"normalized number of downloads": 0.1,			
 			},
-		'citation stats':
+		"citation stats":
 		{
-			'number of citing papers': 1,
-			'median number of citations': 0.1,
-			'average number of citations': 1.1,
-			'total number of citations': 1,
-			'normalized number of citations': 0.1,
-			'median number of refereed citations': 0.1,
-			'average number of refereed citations': 1.1,
-			'total number of refereed citations': 1,
-			'normalized number of refereed citations': 0.1,	
-			'number of self-citations': 1,		
+			"number of citing papers": 1,
+			"median number of citations": 0.1,
+			"average number of citations": 1.1,
+			"total number of citations": 1,
+			"normalized number of citations": 0.1,
+			"median number of refereed citations": 0.1,
+			"average number of refereed citations": 1.1,
+			"total number of refereed citations": 1,
+			"normalized number of refereed citations": 0.1,	
+			"number of self-citations": 1,		
 			},
-		'citations stats refereed':
+		"citations stats refereed":
 		{
-			'number of citing papers': 1,
-			'median number of citations': 0.1,
-			'average number of citations': 1.1,
-			'total number of citations': 1,
-			'normalized number of citations': 0.1,
-			'median number of refereed citations': 0.1,
-			'average number of refereed citations': 1.1,
-			'total number of refereed citations': 1,
-			'normalized number of refereed citations': 0.1,	
-			'number of self-citations': 1,		
+			"number of citing papers": 1,
+			"median number of citations": 0.1,
+			"average number of citations": 1.1,
+			"total number of citations": 1,
+			"normalized number of citations": 0.1,
+			"median number of refereed citations": 0.1,
+			"average number of refereed citations": 1.1,
+			"total number of refereed citations": 1,
+			"normalized number of refereed citations": 0.1,	
+			"number of self-citations": 1,		
 			},
-		'indicators':
+		"indicators":
 		{
-			'i10': 1,
-			'i100': 1,
-			'h': 1,
-			'm': 1.1,
-			'g': 1,
-			'read10': 0.1,
-			'tori': 1.1,
-			'riq': 1,	
+			"i10": 1,
+			"i100": 1,
+			"h": 1,
+			"m": 1.1,
+			"g": 1,
+			"read10": 0.1,
+			"tori": 1.1,
+			"riq": 1,	
 			},
-		'indicators refereed':
+		"indicators refereed":
 		{
-			'i10': 1,
-			'i100': 1,
-			'h': 1,
-			'm': 1.1,
-			'g': 1,
-			'read10': 0.1,
-			'tori': 1.1,
-			'riq': 1,
+			"i10": 1,
+			"i100": 1,
+			"h": 1,
+			"m": 1.1,
+			"g": 1,
+			"read10": 0.1,
+			"tori": 1.1,
+			"riq": 1,
 			},
-		'histograms':
+		"histograms":
 		{
-			'publications': {
-				'all publications': { values },
-				'refereed publications': { values },
-				'all publications normalized': { values },
-				'refereed publications normalized': { values },
+			"publications": {
+				"all publications": { values },
+				"refereed publications": { values },
+				"all publications normalized": { values },
+				"refereed publications normalized": { values },
 				},
-			'reads': {
-				'all reads': { values },
-				'refereed reads': { values },
-				'all reads normalized': { values },
-				'refereed reads normalized': { values },
+			"reads": {
+				"all reads": { values },
+				"refereed reads": { values },
+				"all reads normalized": { values },
+				"refereed reads normalized": { values },
 				},
-			'downloads': {
-				'all downloads': { values },
-				'refereed downloads': { values },
-				'all downloads normalized': { values },
-				'refereed downloads normalized': { values },
+			"downloads": {
+				"all downloads": { values },
+				"refereed downloads": { values },
+				"all downloads normalized": { values },
+				"refereed downloads normalized": { values },
 				},
-			'citations': {
-				'refereed to refereed': { values },
-				'nonrefereed to refereed': { values },
-				'refereed to nonrefereed': { values },
-				'nonrefereed to nonrefereed': { values },
-				'refereed to refereed normalized': { values },
-				'nonrefereed to refereed normalized': { values },
-				'refereed to nonrefereed normalized': { values },
-				'nonrefereed to nonrefereed normalized': { values },
+			"citations": {
+				"refereed to refereed": { values },
+				"nonrefereed to refereed": { values },
+				"refereed to nonrefereed": { values },
+				"nonrefereed to nonrefereed": { values },
+				"refereed to refereed normalized": { values },
+				"nonrefereed to refereed normalized": { values },
+				"refereed to nonrefereed normalized": { values },
+				"nonrefereed to nonrefereed normalized": { values },
 				},
 		},
-		'time series':
+		"time series":
 		{
-			'h': { values },
-			'g': { values },
-			'i10': { values },
-			'i100': { values },
-			'read10': { values },
-			'tori': { values },
+			"h": { values },
+			"g": { values },
+			"i10": { values },
+			"i100": { values },
+			"read10": { values },
+			"tori": { values },
 		}
 	}
 
