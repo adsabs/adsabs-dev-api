@@ -11,9 +11,10 @@
 
 Base URL: `https://api.adsabs.harvard.edu/v1/search`
 
+
 ## Get search results
 
-  GET /query?q=value&fl=value2.....
+    GET /query?q=value&fl=value2.....
 
 All text values shoud be UTF-8 and url-encoded. The response body will be json encoded.
 
@@ -22,7 +23,7 @@ Note that the search API uses the same syntax as [Apache Solr](http://lucene.apa
 
 ## Parse a query
 
-  GET /qtree?q=this+OR+that
+    GET /qtree?q=this+OR+that
 
 Returns a `query tree` (Abstract Syntax Tree - AST) as understood by our query parser. Useful if you want to modify and/or enhance 
 queries.
@@ -46,7 +47,7 @@ Example response (value in the `qtree` is a string (JSON) serialized version of 
 
 ## Post a large query
 
-  POST /bigquery[?urlparams]
+    POST /bigquery[?urlparams]
 
 Returns standard search results, but accepts as input very large query (i.e. a query that can be expressed only as a list of search
 criteria, typically IDs). There is currently no limit to the size of the submitted data (besides buffer/time limits imposed by our API
@@ -79,10 +80,7 @@ Output is exactly the same as from `/query` endpoint.
 
 
 
-
-##### Basic search
-    https://api.adsabs.harvard.edu/v1/search/query
-The basic interface to the ADS data holdings. Query our search engine and receive the cooresponding documents back.  
+  
 
 ## Query parameters
 
