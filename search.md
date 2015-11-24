@@ -11,9 +11,74 @@
 
 Base URL: `https://api.adsabs.harvard.edu/v1/search`
 
+## Get search results
+
+  GET /query?q=value&fl=value2.....
+
 All text values shoud be UTF-8 and url-encoded. The response body will be json encoded.
 
 Note that the search API uses the same syntax as [Apache Solr](http://lucene.apache.org/solr/). For a full reference of query possibilities, please refer to the Solr documentation and [ADS Search Help](http://adsabs.github.io/help/search/). The sections below present useful parameters and patterns for the vast majority of use cases, but are not meant to be exhaustive.
+
+
+## Parse a query
+
+  GET /qtree?q=this+OR+that
+
+Returns a `query tree` (Abstract Syntax Tree - AST) as understood by our query parser. Useful if you want to modify and/or enhance 
+queries.
+
+Example response (value in the `qtree` is a string (JSON) serialized version of the AST):
+
+```
+{
+             "qtree": "\n{\"name\":\"OPERATOR\", \"label\":\"DEFOP\", \"children\": [\n    {\"name\":\"MODIFIER\", \"label\":\"MODIFIER\", \"children\": [\n        {\"name\":\"TMODIFIER\", \"label\":\"TMODIFIER\", \"children\": [\n            {\"name\":\"FIELD\", \"label\":\"FIELD\", \"children\": [\n                {\"name\":\"QNORMAL\", \"label\":\"QNORMAL\", \"children\": [\n                    {\"name\":\"TERM_NORMAL\", \"input\":\"star\", \"start\":0, \"end\":3}]\n                }]\n            }]\n        }]\n    }]\n}",
+             "responseHeader": {
+              "status": 0,
+              "QTime": 6,
+              "params": {
+               "q": "star",
+               "wt": "json",
+               "fl": "id"
+              }
+             }
+            }
+```            
+
+## Post a large query
+
+  POST /bigquery[?urlparams]
+
+Returns standard search results, but accepts as input very large query (i.e. a query that can be expressed only as a list of search
+criteria, typically IDs). There is currently no limit to the size of the submitted data (besides buffer/time limits imposed by our API
+frontend), however there are severe limits on how often you can call this enpoint. Typically, only 100 requests per day are allowed.
+
+### Parameters
+
+Name          | Type   | Description
+--------------|--------|--------------
+`urlparams`   |`string`| **Required**. Url escaped/serialized query parameters if used in the URL (ie: `q=star&fl=bibcode,title`) or form encoded search paramaters.
+`payload`     |`string`| **Required**. Newline separated list of values, the first line specifies index that will be used for search (ie: `bibcode\n1907AN....174...59.\n1908PA.....16..445.\n1989LNP...334..242S`)
+
+
+Currently, we allow to search in `bibcode` index only. You can submit `canonical` as well as `alternate` bibcodes; the search will automatically match both. In the future, the list of available indexes may be extended. (We do not plan to support search with other values than IDs).
+
+The bigquery filter is *applied only after* the main search (ie: it limits results of the main search).
+
+Example python session - get all papers from ADS and filter them using several IDs:
+
+```python
+import requests
+bibcodes="bibcode\n1907AN....174...59.\n1908PA.....16..445.\n1989LNP...334..242S"
+r = requests.post('https://api.adsabs.harvard.edu/v1/search/bigquery', 
+       params={'q':'*:*', 'wt':'json', 'fq':'{!bitset}', 'fl':'bibcode'}, 
+       headers={'Authorization': 'Bearer: TOKEN'},
+       data=bibcodes)
+```
+
+Output is exactly the same as from `/query` endpoint.
+
+
+
 
 ##### Basic search
     https://api.adsabs.harvard.edu/v1/search/query
