@@ -43,10 +43,20 @@ All API requests must pass your token in an `Authorization: Bearer <token>` HTTP
 
 ## Access Settings
 
-Each endpoint is individually rate-limited. API Responses advertise these limits in their response headers:
+Each endpoint is individually rate-limited. API Responses advertise these limits in their HTTP response headers.  A useful way to see these values is to issue a curl request to the desired endpoint with the verbose flag, e.g.:
+
+    curl -v -H "Authorization: Bearer <token>" 'https://api.adsabs.harvard.edu/v1/search/query?q=star'
+    
+And then noting the following values:
 
     X-RateLimit-Limit: 5000
     X-RateLimit-Remaining: 4999
     X-RateLimit-Reset: 1435190400
 
+The Limit variable indicates the amount of daily queries allowed to the user (in this case 5000).  The Remaining variable indicates how many queries are still available.  The Reset variable provides a UTC timestamp corresponding to the time the rate limits will be reset.  To see its value in human-readable format, you can use the UNIX "date" command:
+
+    date -r 1435190400
+    Wed Jun 24 20:00:00 EDT 2015
+
+(the rate resetting happens at midnight UTC).  
 To increase rate limits, please contact us directly at `adshelp@cfa.harvard.edu`.
