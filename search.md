@@ -84,6 +84,8 @@ Output is exactly the same as from `/query` endpoint.
 
 ## Query parameters
 
+All query parameters appearing in the search URL must be UTF-8, url-encoded strings.  Please note that due to the requirements of the authentication library used for validating requests, most non-ascii characters appearing in the URL need to be hex-encoded, e.g. a double quote character (") must be encoded as %22.  In most programming languages the libraries used to retrieve content from web services will perform this encoding for you, but if you are using your own curl-based request you will need to take care of this. 
+
 #### q
 *required:* a UTF-8, url-encoded string of <= 1000 characters representing the search query. `q` can be used for both fielded (`title:exoplanets`), and unfielded (`exoplanets`) search. See the list of fields [below](#fields). 
 
@@ -94,10 +96,10 @@ number of results to return. Default is 10.
 starting point for returned results (for pagination). Default is 0.
 
 #### fl
-Specify the fields contained in each returned document. Value should be a comma-separated list of field names.
+Fields list: specify the fields contained in each returned document. Value should be a comma-separated list of field names.
 
 #### fq
-Filter your query results using a particular `field:value` condition. This parameter is repeatable.
+Filter query: filter your results using a particular `field:value` condition. This parameter is repeatable.
 
 * `field` can be any field listed in the field descriptions below
 * `value` should be a UTF-8, url-encoded string
@@ -151,19 +153,20 @@ Assuming your access token is `my_token`, all queries can be executed by any HTT
     ?q=black+holes&fq=database:astronomy
     
     # Search for "dark energy", filter by author, sort by citation count
-    ?q=dark+energy&fq=author:"Civano,+F"&sort=citation_count+desc
+    # (double quotes encoded as %22)
+    ?q=dark+energy&fq=author:%22Civano,+F%22&sort=citation_count+desc
 
     # Same search but only return *bibcode* and *property* values
-    ?q=dark+energy&fq=author:"Civano,+F"&sort=citation_count+desc&fl=bibcode,property
+    ?q=dark+energy&fq=author:%22Civano,+F%22&sort=citation_count+desc&fl=bibcode,property
 
     # Limit a search to only refereed articles
-    ?q=author:"Kurtz,+M"&fq=property:refereed
+    ?q=author:%22Kurtz,+M%22&fq=property:refereed
 
-    # Search for "transiting exoplanets", get 200 rows
-    ?q=transiting+exoplanets&rows=200
+    # Search for the phrase "transiting exoplanets", get 200 rows
+    ?q=%22transiting+exoplanets%22&rows=200
 
     # Same search but get the next 200 rows
-    ?q=transiting+exoplanets&rows=200&start=201
+    ?q=%22transiting+exoplanets%22&rows=200&start=201
     
 
 ## Example record response
