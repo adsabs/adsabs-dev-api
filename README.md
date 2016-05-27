@@ -23,9 +23,18 @@ The unofficial python client for the API is maintained by Andy Casey and can be 
 
 * https://github.com/andycasey/ads
 
+Examples of how to use Andy Casey's Python client can be found here:
+
+* https://github.com/jonnybazookatone/ads-examples
+
 Geert Barentsen has built an application to support the Kepler publication database which uses the ADS API to discover relevant papers:
 
 * https://github.com/KeplerGO/kpub
+
+The ADS built an application to compare author's with a wrestling theme at AAS 227:
+
+* https://authorsmackdown.herokuapp.com/
+
 
 ## Access
 
