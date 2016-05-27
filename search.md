@@ -113,26 +113,50 @@ Some useful fields to sort by may be `pubdate`, `citation_count`, or `num_reader
 
 ## Fields
 
-Below are some fields noted here for their high usefulness that are available to all API users:
+Below are the fields available to all API users:
 
-* `bibcode` - the canonical ADS bibcode identifier for this record
-* `bibstem` - the abbreviated name of the journal or publication, e.g., *ApJ*.
-* `id` - a unique integer for this record
-* `identifier` - an array of alternative identifiers for the record. May contain alternative bibcodes, DOIs and/or arxiv ids.
-* `title` - the title of the record
-* `author` - an array of the author names associated with the record
-* `pub` - the canonical name of the publication the record appeared in
-* `keyword` - an array of normalized and un-normalized keyword values associated with the record
 * `abstract` - the abstract of the record
+* `ack` - the acknowledgements section of an article
 * `aff` - an array of the authors' affiliations
-* `property` - an array of miscellaneous flags associated with the record. Possible values include: ARTICLE, REFEREED, NOT_REFEREED, INPROCEEDINGS, OPENACCESS, NONARTICLE, EPRINT, BOOK, PROCEEDINGS, CATALOG, SOFTWARE (@aacommazzi didn't we remove/clean up some of these? Could you tell me which, if any, don't belong here)
-* `volume` - volume the record appeared in
-* `issue` - issue the record appeared in
-* `page` - starting page
+* `alternate_bibcode` - list of alternate bibcodes for a single record
+* `alternate_title` - list of alternate titles for a single record (usually if they are in multiple languages)
+* `arxiv_class` - the arXiv class the pre-print was submitted to
+* `author` - an array of the author names associated with the record
+* `author_facet`
+* `bibcode` - the canonical ADS bibcode identifier for this record
+* `bibgroup` - the bibliographic groups that the bibcode has been associated with
+* `bibgroup_facet`
+* `bibstem` - the abbreviated name of the journal or publication, e.g., *ApJ*.
+* `bibstem_facet`
+* `body`\* - the full text content of the article
 * `citation_count` - number of citations the item has received
-* `read_count` - number of times the record has been viewed within in a 90-day windows (ads and arxiv)
-* `pubdate` - publication date in the form YYYY-MM-DD (DD value will always be "00")
+* `copyright` - the copyright applied to the article
+* `data` - the list of sources that have data related to this bibcode
 * `database` - Which database the record is associated with.
+* `doi`-  the digital object identifier of the article
+* `first_author` - the first author of the article
+* `grant` - the list of grant IDs and agencies noted within an article
+* `id` - a (**non-persistent**) unique integer for this record, used for fast look-up of a document
+* `identifier` - an array of alternative identifiers for the record. May contain alternative bibcodes, DOIs and/or arxiv ids.
+* `indexstamp` - time at which the document was (last) indexed
+* `issue` - issue the record appeared in
+* `keyword` - an array of normalized and un-normalized keyword values associated with the record
+* `lang`\* - the language of the article's title
+* `orcid_pub` - ORCiD iDs supplied by publishers
+* `orcid_user` - ORCiD iDs supplied by knonwn users in the ADS
+* `orcid_other` - ORCiD iDs supplied by anonymous users in the ADS
+* `page` - starting page
+* `property` - an array of miscellaneous flags associated with the record. Possible values include: `ARTICLE`, `REFEREED`, `NOT\_REFEREED`, `INPROCEEDINGS`, `OPENACCESS`, `NONARTICLE`, `EPRINT`, `BOOK`, `PROCEEDINGS`, `CATALOG`,`SOFTWARE
+* `pub` - the canonical name of the publication the record appeared in
+* `pubdate` - publication date in the form YYYY-MM-DD (DD value will always be "00")
+* `read_count` - number of times the record has been viewed within in a 90-day windows (ads and arxiv)
+* `title` - the title of the record
+* `vizier` - the subject tags given to the article by VizieR
+* `vizier_facet`
+* `volume` - volume the record appeared in
+* `year` - the year the article was published
+
+\* *These fields are only indexed and so are only searchable - they are not stored or returned by the search end point, if requested*
 
 #### databases
 

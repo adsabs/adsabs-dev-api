@@ -27,6 +27,10 @@ Geert Barentsen has built an application to support the Kepler publication datab
 
 * https://github.com/KeplerGO/kpub
 
+The ADS built an application to compare author's with a wrestling theme at AAS 227:
+
+* https://authorsmackdown.herokuapp.com/
+
 ## Access
 
 Access to the ADS data holdings is regulated by the the ADS terms of use, as described in the ADS [Terms of Use](http://adsabs.github.io/help/terms/).
