@@ -19,9 +19,9 @@ Announcements and discussion related to the Developer API are available via the 
 
 ## Clients
 
-The unofficial python client for the API is maintained by Andy Casey and can be found here:
+The unofficial python client for the API is maintained by Andy Casey described here:
 
-* https://github.com/andycasey/ads
+* http://ads.readthedocs.io/
 
 Examples of how to use Andy Casey's Python client can be found here:
 
