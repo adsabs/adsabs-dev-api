@@ -86,9 +86,10 @@ Output is exactly the same as from `/query` endpoint.
 
 All query parameters appearing in the search URL must be UTF-8, url-encoded strings.  Please note that due to the requirements of the authentication library used for validating requests, most non-ascii characters appearing in the URL need to be hex-encoded, e.g. a double quote character (") must be encoded as %22.  In most programming languages the libraries used to retrieve content from web services will perform this encoding for you, but if you are using your own curl-based request you will need to take care of this. 
 
-#### q
-*required:* a UTF-8, url-encoded string of <= 1000 characters representing the search query. `q` can be used for both fielded (`title:exoplanets`), and unfielded (`exoplanets`) search. See the list of fields [below](#fields). 
+[Below](#fields) you can find the list of fields available to all API users.  A more comprehensive list is [available in our help pages](https://adsabs.github.io/help/search/comprehensive-solr-term-list).
 
+#### q
+*required:* a UTF-8, url-encoded string of <= 1000 characters representing the search query. `q` can be used for both fielded (`title:exoplanets`), and unfielded (`exoplanets`) search. 
 #### rows
 number of results to return. Default is 10.
 
@@ -96,7 +97,7 @@ number of results to return. Default is 10.
 starting point for returned results (for pagination). Default is 0.
 
 #### fl
-Fields list: specify the fields contained in each returned document. Value should be a comma-separated list of field names.
+Fields list: specify the fields contained in each returned document. Value should be a comma-separated list of field names.  Default is just the document id (field `id`).
 
 #### fq
 Filter query: filter your results using a particular `field:value` condition. This parameter is repeatable.
@@ -109,7 +110,7 @@ Indicate how you wish the result set sorted. The format is `field direction` whe
 
 Example of a properly formated & encoded sort param is `sort=read_count+desc`
 
-Some useful fields to sort by may be `pubdate`, `citation_count`, or `num_readers`.
+Some useful fields to sort by may be `pubdate`, `citation_count`, or `first_author`.
 
 ## Fields
 
