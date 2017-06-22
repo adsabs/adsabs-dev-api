@@ -164,7 +164,7 @@ The ADS content is divided into a few separate databases: "astronomy", "physics"
 
 Assuming your access token is `my_token`, all queries can be executed by any HTTP client. An example `curl` request is:
 
-`curl -H "Authorization: Bearer my_token" "https://api.adsabs.harvard.edu/v1/search/query?........"`
+`curl -H "Authorization: Bearer:my_token" "https://api.adsabs.harvard.edu/v1/search/query?........"`
 
 ...and by adding the following query params, the response will contain relevant documents:
 
