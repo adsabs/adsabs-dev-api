@@ -11,6 +11,11 @@
 
 Base URL: `https://api.adsabs.harvard.edu/v1/search`
 
+Please note that all queries to the API need to include an HTTP header specifying an access token, e.g.
+
+    curl -H 'Authorization: Bearer <token>' 'https://api.adsabs.harvard.edu/v1/search/query?q=star'
+
+For more information on this please see the top-level [README](README.md) file.
 
 ## Get search results
 
@@ -45,11 +50,11 @@ Example response (value in the `qtree` is a string (JSON) serialized version of 
             }
 ```            
 
-## Post a large query
+## Post a large identifier query
 
     POST /bigquery[?urlparams]
 
-Returns standard search results, but accepts as input very large query (i.e. a query that can be expressed only as a list of search
+Returns standard search results, but accepts as input a very large query (i.e. a query that can be expressed only as a list of search
 criteria, typically IDs). There is currently no limit to the size of the submitted data (besides buffer/time limits imposed by our API
 frontend), however there are severe limits on how often you can call this enpoint. Typically, only 100 requests per day are allowed.
 
@@ -65,20 +70,18 @@ Currently, we allow to search in `bibcode` index only. You can submit `canonical
 
 The bigquery filter is *applied only after* the main search (ie: it limits results of the main search).
 
-Example python session - get all papers from ADS and filter them using several IDs:
+Example python session - get all papers from ADS and filter them using several IDs (thus returning only records for the list of input bibcodes):
 
 ```python
 import requests
 bibcodes="bibcode\n1907AN....174...59.\n1908PA.....16..445.\n1989LNP...334..242S"
 r = requests.post('https://api.adsabs.harvard.edu/v1/search/bigquery', 
        params={'q':'*:*', 'wt':'json', 'fq':'{!bitset}', 'fl':'bibcode'}, 
-       headers={'Authorization': 'Bearer:TOKEN'},
+       headers={'Authorization': 'Bearer my_token'},
        data=bibcodes)
 ```
 
 Output is exactly the same as from `/query` endpoint.
-
-
 
   
 
