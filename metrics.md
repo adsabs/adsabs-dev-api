@@ -23,7 +23,7 @@ and `token` is your API token.
 
 You can also request a specific set of metrics by adding the `types` parameter in the JSON header. For example:
 
-    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcodes":["1980ApJS...44..137K","1980ApJS...44..489B"],'types':['basic']}' https://api.adsabs.harvard.edu/v1/metrics
+    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcodes":["1980ApJS...44..137K","1980ApJS...44..489B"],"types":["basic"]}' https://api.adsabs.harvard.edu/v1/metrics
 
 which will return just the basic statistics for the set of bibcodes. The following values are allowed for the `types` list:
 
@@ -35,7 +35,7 @@ which will return just the basic statistics for the set of bibcodes. The followi
 
 If you just want a specific histogram, you can add a `histograms` parameter to the JSON header, specifying that histogram. For example:
 
-    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcodes":["1980ApJS...44..137K","1980ApJS...44..489B"],'types':['histograms'], 'histograms':['publications']}' https://api.adsabs.harvard.edu/v1/metrics
+    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcodes":["1980ApJS...44..137K","1980ApJS...44..489B"],"types":["histograms"], "histograms":["publications"]}' https://api.adsabs.harvard.edu/v1/metrics
 
 to get just the publications histogram. The service returns JSON with attributes determined by the contents of the `types` list (no such list means that everything gets returned). It always contains an attribute 'skipped bibcodes', which is a list of bibcodes for which no metrics data could be found. The following overview shows the JSON attributes returned by each type:
 
