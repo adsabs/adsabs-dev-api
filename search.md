@@ -83,6 +83,13 @@ r = requests.post('https://api.adsabs.harvard.edu/v1/search/bigquery',
 
 Output is exactly the same as from `/query` endpoint.
 
+An example of a bigquery using curl:
+
+```
+curl -H "Content-Type: big-query/csv" -H "Authorization: Bearer {token}" "https://api.adsabs.harvard.edu/v1/search/bigquery?q=*:*&wt=json&fl=bibcode" -X POST -d $'bibcode\n1907AN....174...59.\n1908PA.....16..445.\n1989LNP...334..242S\n'
+
+```
+
   
 
 ## Query parameters
