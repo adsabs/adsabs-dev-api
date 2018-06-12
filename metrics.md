@@ -23,7 +23,7 @@ and `token` is your API token.
 
 You can also request a specific set of metrics by adding the `types` parameter in the JSON header. For example:
 
-    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcodes":["1980ApJS...44..137K","1980ApJS...44..489B"],'types':['basic']}' https://api.adsabs.harvard.edu/v1/metrics
+    curl -H "Authorization: Bearer <your API token>" -H "Content-Type: application/json" -X POST -d '{"bibcodes":["1980ApJS...44..137K","1980ApJS...44..489B"],"types":["basic"]}' https://api.adsabs.harvard.edu/v1/metrics
 
 which will return just the basic statistics for the set of bibcodes. The following values are allowed for the `types` list:
 
