@@ -4,14 +4,19 @@ ADS Developer API description.
 
 For bugs, feature requests or even random questions feel free to use the [issues](https://github.com/adsabs/adsabs-dev-api/issues) section.
 
-**Table of Contents** 
+**Table of Contents**
+
+The help pages and examples below are formatted as Jupyter notebooks. Browse them in Github or download them to your own computer to edit the code and run as desired. Note that the code in these notebooks was run using an API key or token. This has been edited out of the notebooks for security; [acquire your own API key](#access) and copy it into the notebook before running it locally.
+
+Note: sometimes Github's internal Jupyter notebook rendering agent fails. If that happens, copy the link to the notebook you wish to view into the form at [Jupyter's own notebook renderer](https://nbviewer.jupyter.org/).
 
 - [Access](#access)
 - [Access Settings](#access-settings)
-- [Search API](search.md)
-- [Metrics API](metrics.md)
-- [Export API](export.md)
-- [Libraries API](libraries.md)
+- [Search API](Search_API.ipynb)
+- [Metrics API](Metrics_API.ipynb)
+- [Export API](Export_API.ipynb)
+- [Libraries API](Libraries_API.ipynb)
+- [Converting curl to Python - examples](Converting_curl_to_python.ipynb)
 
 ## Mailing List
 
