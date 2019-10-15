@@ -69,7 +69,11 @@ And then noting the following values:
 
 The Limit variable indicates the amount of daily queries allowed to the user (in this case 5000).  The Remaining variable indicates how many queries are still available.  The Reset variable provides a UTC timestamp corresponding to the time the rate limits will be reset.  To see its value in human-readable format, you can use the UNIX "date" command:
 
+	# syntax for UNIX on a Mac
     date -r 1435190400
+	# Linux syntax
+	date -d @1435190400
+	# output for either
     Wed Jun 24 20:00:00 EDT 2015
 
 (the rate resetting happens at midnight UTC).  
