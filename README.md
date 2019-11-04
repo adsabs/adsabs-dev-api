@@ -77,4 +77,4 @@ The Limit variable indicates the amount of daily queries allowed to the user (in
     Wed Jun 24 20:00:00 EDT 2015
 
 (the rate resetting happens at midnight UTC).  
-To increase rate limits, please contact us directly at `adshelp@cfa.harvard.edu`.
+For more information and tips about rate limits, please contact us directly at `adshelp@cfa.harvard.edu`.
