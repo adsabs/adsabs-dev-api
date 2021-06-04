@@ -21,6 +21,9 @@ info:
     * Resolver: https://github.com/adsabs/resolver_service
     * Notifications: https://github.com/adsabs/vault
     * Visualizations: https://github.com/adsabs/vis-services
+
+    This documentation follows the [OpenAPI specification](https://swagger.io/specification/).
+    The UI was created with [RapiDoc](https://mrin9.github.io/RapiDoc/index.html).
   termsOfService: https://ui.adsabs.harvard.edu/help/terms/
   contact:
     name: ADS Help
