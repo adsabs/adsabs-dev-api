@@ -1,0 +1,537 @@
+basicMetricsResponse:
+  type: object
+  properties:
+    basic stats:
+      type: object
+      properties:
+        average number of downloads:
+          type: number
+        average number of reads:
+          type: number
+        median number of downloads:
+          type: number
+        median number of reads:
+          type: number
+        normalized paper count:
+          type: number
+        number of papers:
+          type: integer
+        recent number of downloads:
+          type: integer
+        recent number of reads:
+          type: integer
+        total number of downloads:
+          type: integer
+        total number of reads:
+          type: integer
+    basic stats refereed:
+      type: object
+      properties:
+        average number of downloads:
+          type: number
+        average number of reads:
+          type: number
+        median number of downloads:
+          type: number
+        median number of reads:
+          type: number
+        normalized paper count:
+          type: number
+        number of papers:
+          type: integer
+        recent number of downloads:
+          type: integer
+        recent number of reads:
+          type: integer
+        total number of downloads:
+          type: integer
+        total number of reads:
+          type: integer
+    citation stats:
+      type: object
+      properties:
+        average number of citations:
+          type: number
+        average number of refereed citations:
+          type: number
+        median number of citations:
+          type: number
+        median number of refereed citations:
+          type: number
+        normalized number of citations:
+          type: number
+        normalized number of refereed citations:
+          type: number
+        number of citing papers:
+          type: integer
+        number of self-citations:
+          type: integer
+        self-citations:
+          type: array
+          items:
+            type: string
+        total number of citations:
+          type: integer
+        total number of refereed citations:
+          type: integer
+    citation stats refereed:
+      type: object
+      properties:
+        average number of citations:
+          type: number
+        average number of refereed citations:
+          type: number
+        median number of citations:
+          type: number
+        median number of refereed citations:
+          type: number
+        normalized number of citations:
+          type: number
+        normalized number of refereed citations:
+          type: number
+        number of citing papers:
+          type: integer
+        number of self-citations:
+          type: integer
+        self-citations:
+          type: array
+          items:
+            type: string
+        total number of citations:
+          type: integer
+        total number of refereed citations:
+          type: integer
+    histograms:
+      type: object
+      properties:
+        citations:
+          type: object
+          properties:
+            nonrefereed to nonrefereed:
+              type: object
+              properties:
+                year:
+                  type: integer
+            nonrefereed to nonrefereed normalized:
+              type: object
+              properties:
+                year:
+                  type: number
+            nonrefereed to refereed:
+              type: object
+              properties:
+                year:
+                  type: integer
+            nonrefereed to refereed normalized:
+              type: object
+              properties:
+                year:
+                  type: number
+            refereed to nonrefereed:
+              type: object
+              properties:
+                year:
+                  type: integer
+            refereed to nonrefereed normalized:
+              type: object
+              properties:
+                year:
+                  type: number
+            refereed to refereed:
+              type: object
+              properties:
+                year:
+                  type: integer
+            refereed to refereed normalized:
+              type: object
+              properties:
+                year:
+                  type: number
+        reads:
+          type: object
+          properties:
+            all reads:
+              type: object
+              properties:
+                year:
+                  type: integer
+            all reads normalized:
+              type: object
+              properties:
+                year:
+                  type: number
+            refereed reads:
+              type: object
+              properties:
+                year:
+                  type: integer
+            refereed reads normalized:
+              type: object
+              properties:
+                year:
+                  type: number
+    skipped bibcodes:
+      type: array
+      items:
+        type: string
+bibcodeObject:
+  type: object
+  required:
+    - bibcode
+  properties:
+    bibcode:
+      type: array
+      description: >
+        Input bibcodes
+      items:
+        type: string
+bibcodesObject:
+  type: object
+  required:
+    - bibcodes
+  properties:
+    bibcodes:
+      type: array
+      description: >
+        Input bibcodes
+      items:
+doc:
+  type: object
+  required:
+    - id
+  properties:
+    id:
+      type: string
+    bibcode:
+      type: string
+    title:
+      type: string
+libraryMetadata:
+  type: object
+  properties:
+    owner:
+      type: string
+      description: User who created the library
+    num_documents:
+      type: integer
+      description: Number of bibcodes in the library
+    public:
+      type: boolean
+      description: True means it is public
+    num_users:
+      type: integer
+      description: Number of users with permissions to this library
+    date_created:
+      type: string
+      description: Date library was created
+    name:
+      type: string
+      description: Name of library
+    description:
+      type: string
+      description: Description of library
+    permission:
+      type: string
+      description: Permission type, can be 'read', 'write', 'admin', or 'owner'
+    id:
+      type: string
+      description: Library ID
+    date_last_modified:
+      type: string
+      description: Date library was last modified
+myADSsetupResponse:
+  type: array
+  items:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+      active:
+        type: boolean
+      stateful:
+        type: boolean
+      frequency:
+        type: string
+      template:
+        type: string
+      classes:
+        type: array
+        items:
+          type: string
+      data:
+        type: string
+      created:
+        type: string
+      updated:
+        type: string
+      qid:
+        type: string
+      query:
+        type: string
+myADSdetailResponse:
+  type: object
+  properties:
+    qid:
+      type: string
+    stateful:
+      type: boolean
+    classes:
+      type: array
+      items:
+        type: string
+myADSsummaryResponse:
+  type: object
+  properties:
+    active:
+      type: boolean
+    created:
+      type: string
+    data:
+      type: string
+    frequency:
+      type: string
+      enum:
+        - daily
+        - weekly
+    id:
+      type: integer
+    name:
+      type: string
+    template:
+      type: string
+      enum:
+        - arxiv
+        - authors
+        - citations
+        - keyword
+    type:
+      type: string
+      enum:
+        - template
+        - query
+    updated:
+      type: string
+orcid-preferences:
+  type: object
+  properties:
+    authorizedUser:
+      type: boolean
+    currentAffiliation:
+      type: string
+    nameVariations:
+      type: array
+      items:
+        type: string
+orcid-work-from:
+  description: >
+    JSON from the ORCID API, describing a single record
+  allOf:
+    - $ref: '#/components/schemas/orcid-work-to'
+    - type: object
+      properties:
+        created-date:
+          type: object
+          properties:
+            value:
+              description: ms since epoch
+              type: integer
+        last-modified-date:
+          type: object
+          properties:
+            value:
+              description: ms since epoch
+              type: integer
+        source:
+          type: object
+          properties:
+            source-orcid:
+              type: object
+              properties:
+                value:
+                  type: string
+            source-name:
+              type: object
+              properties:
+                value:
+                  type: string
+            source-client-id:
+              type: object
+              properties:
+                uri:
+                  type: string
+                path:
+                  type: string
+                host:
+                  type: string
+        path:
+          type: string
+        url:
+          type: string
+        language-code:
+          type: string
+        country:
+          type: string
+        visibility:
+          type: string
+orcid-work-to:
+  description: >
+    JSON to send to ORCID API, describing a single record
+  type: object
+  properties:
+    put-code:
+      type: integer
+    title:
+      type: object
+      properties:
+        title:
+          type: object
+          properties:
+            value:
+              type: string
+        subtitle:
+          type: object
+          properties:
+            value:
+              type: string
+        translated-title:
+          type: object
+          properties:
+            value:
+              type: string
+    journal-title:
+      type: object
+      properties:
+        value:
+          type: string
+    short-description:
+      type: string
+    type:
+      type: string
+    publication-date:
+      type: object
+      properties:
+        year:
+          type: object
+          properties:
+            value:
+              type: string
+        month:
+          type: object
+          properties:
+            value:
+              type: string
+        day:
+          type: object
+          properties:
+            value:
+              type: string
+    external-ids:
+      type: object
+      properties:
+        external-id:
+          type: array
+          items:
+            type: object
+            properties:
+              external-id-type:
+                type: string
+              external-id-value:
+                type: string
+              external-id-url:
+                type: string
+              external-id-relationship:
+                type: string
+    contributors:
+      type: object
+      properties:
+        contributor:
+          type: array
+          items:
+            type: object
+            properties:
+              contributor-orcid:
+                type: string
+              credit-name:
+                type: object
+                properties:
+                  value:
+                    type: string
+              contributor-email:
+                type: string
+              contributor-attributes:
+                type: object
+                properties:
+                  contributor-sequence:
+                    type: string
+                  contributor-role:
+                    type: string
+qtree:
+  type: object
+  properties:
+    responseHeader:
+      $ref: '#/components/schemas/responseHeader'
+    qtree:
+      type: string
+      description: serialized JSON
+responseHeader:
+  type: object
+  properties:
+    status:
+      description: Status code as returned by the search engine
+      type: integer
+    QTime:
+      type: integer
+      description: >-
+        search time in millisecs (only search, without faceting, latency and
+        all other steps)
+    parameters:
+      description: Input search parameters
+      type: object
+      properties:
+        q:
+          type: string
+        fl:
+          type: string
+        start:
+          type: string
+        rows:
+          type: string
+results:
+  type: object
+  properties:
+    responseHeader:
+      $ref: '#/components/schemas/responseHeader'
+    numFound:
+      type: integer
+    start:
+      type: integer
+    docs:
+      type: array
+      items:
+        $ref: '#/components/schemas/doc'
+vaultObject:
+  type: object
+  properties:
+    q:
+      $ref: '#/components/parameters/q'
+    fl:
+      $ref: '#/components/parameters/fl'
+    start:
+      $ref: '#/components/parameters/start'
+    rows:
+      $ref: '#/components/parameters/rows'
+    sort:
+      $ref: '#/components/parameters/sort'
+    fq:
+      type: string
+      description: >
+        must be set to `'{!bitset}'`
+    bigquery:
+      type: string
+      description: >
+        new line separated list of bibcodes, the first line is the name of
+        the index that will be searched, right now we only support search in `bibcode` index

@@ -1,0 +1,227 @@
+bibcode:
+  name: bibcode
+  description: Bibcode to export
+  required: true
+  in: path
+  schema:
+    type: string
+fl:
+  name: fl
+  description: Comma delimited set of fields to return; default is 'id'
+  in: query
+  style: form
+  explode: false
+  example: "bibcode,author,title"
+  schema:
+    type: array
+    default: id
+    uniqueItems: true
+    items:
+      type: string
+      enum:
+        - abstract
+        - ack
+        - aff
+        - aff_id
+        - alternate_bibcode
+        - alternate_title
+        - arxiv_class
+        - author
+        - author_count
+        - author_norm
+        - bibcode
+        - bibgroup
+        - bibstem
+        - citation
+        - citation_count
+        - cite_read_boost
+        - classic_factor
+        - comment
+        - copyright
+        - data
+        - database
+        - date
+        - doctype
+        - doi
+        - eid
+        - entdate
+        - entry_date
+        - esources
+        - facility
+        - first_author
+        - first_author_norm
+        - grant
+        - grant_agencies
+        - grant_id
+        - id
+        - identifier
+        - indexstamp
+        - inst
+        - isbn
+        - issn
+        - issue
+        - keyword
+        - keyword_norm
+        - keyword_schema
+        - lang
+        - links_data
+        - nedid
+        - nedtype
+        - orcid_pub
+        - orcid_other
+        - orcid_user
+        - page
+        - page_count
+        - page_range
+        - property
+        - pub
+        - pub_raw
+        - pubdate
+        - pubnote
+        - read_count
+        - reference
+        - simbid
+        - title
+        - vizier
+        - volume
+        - year
+fq:
+  name: fq
+  description: Additional filters applied on top of the results of the main query.
+  in: query
+  required: false
+  schema:
+    type: array
+    maxItems: 10
+    items:
+      type: string
+  style: form
+  explode: true
+iso_datestring:
+  name: iso_datestring
+  in: path
+  description: >
+    Datestring, following RFC3339 (e.g. '2008-09-03T20:56:35.450686Z')
+  schema:
+    type: string
+  required: true
+link:
+  name: link
+  description: Query URL
+  required: true
+  in: path
+  schema:
+    type: string
+myadsId:
+  name: myads_id
+  description: ID from one myADS notification, taken from the response to `/vault/notifications`
+  required: true
+  in: path
+  schema:
+    type: integer
+OrcidAuthorization:
+  name: Orcid-Authorization
+  in: header
+  description: >
+    'access_token' of the orcid user (will be passed on to the ORCiD API)
+  schema:
+    type: string
+orcidId:
+  name: orcidId
+  in: path
+  description: ORCiD ID, i.e. '0000-0000-0000-0000'
+  schema:
+    type: string
+  required: true
+putcode:
+  name: putcode
+  description: Putcode (unique identifier for a work on the ORCID API)
+  in: path
+  schema:
+    type: integer
+  required: true
+q:
+  name: q
+  description: >-
+    Query string; for detailed documentation go to
+    https://ui.adsabs.harvard.edu/help/search/search-syntax
+  in: query
+  required: true
+  schema:
+    type: string
+  example: "author%3Amart%C3%ADnez+neutron+star"
+queryId:
+  name: queryId
+  description: QID returned from the POST operation
+  required: true
+  in: path
+  schema:
+    type: string
+rows:
+  name: rows
+  description: How many records to return for this request (default=10, maximum=200)
+  in: query
+  required: false
+  schema:
+    type: integer
+    default: 10
+    maximum: 200
+sort:
+  name: sort
+  description: >
+    The format is 'field' + 'direction' where direction is one of 'asc' or
+    'desc' and field is any of the valid indexes. The default sorting is by
+    relevance (computed by our search engine). Example\:
+    'sort=read_count+desc' Some useful fields to sort by may be date,
+    citation_count, or read_count.
+  in: query
+  required: false
+  schema:
+    type: string
+    enum:
+      - id asc
+      - author_count asc
+      - bibcode asc
+      - citation_count asc
+      - citation_count_norm asc
+      - classic_factor asc
+      - first_author asc
+      - date asc
+      - entry_date asc
+      - read_count asc'
+      - score asc
+      - id desc
+      - author_count desc
+      - bibcode desc
+      - citation_count desc
+      - citation_count_norm desc
+      - classic_factor desc
+      - first_author desc
+      - date desc
+      - entry_date desc
+      - read_count desc
+      - score desc
+start:
+  name: start
+  description: For pagination, offset of the first returned result (default=0)
+  in: query
+  required: false
+  schema:
+    type: integer
+    minimum: 0
+    default: 0
+token:
+  name: token
+  description: >
+    Verification token
+  in: path
+  required: true
+  schema:
+    type: string
+user_id:
+  name: user_id
+  description: User ID
+  required: true
+  in: path
+  schema:
+    type: string

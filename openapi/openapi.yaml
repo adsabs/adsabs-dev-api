@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Full API for Astrophysics Data System (ADS)
+  description: >
+    Internal + user-facing API endpoints
+  termsOfService: https://ui.adsabs.harvard.edu/help/terms/
+  contact:
+    name: ADS Help
+    url: https://github.com/adsabs/adsabs-dev-api
+    email: adshelp@cfa.harvard.edu
+  version: 1.0.0
+servers:
+  - url: https://api.adsabs.harvard.edu/{basePath}
+    description: Production Server
+    variables:
+      basePath:
+        default: v1
+        enum:
+          - v1
+  - url: https://devapi.adsabs.harvard.edu/{basePath}
+    description: Development Server
+    variables:
+      basePath:
+        default: v1
+        enum:
+          - v1
+tags:
+  - name: search
+  - name: stored search
+  - name: libraries
+  - name: export (tagged formats)
+  - name: export (LaTeX formats)
+  - name: export (XML formats)
+  - name: export (other)
+  - name: metrics
+  - name: author affiliation
+  - name: citation helper
+  - name: classic import
+  - name: objects
+  - name: recommender
+  - name: reference
+  - name: resolver
+  - name: notifications
+  - name: visualizations
+  - name: internal
+  - name: user-facing
+  - name: pipeline
+components:
+  securitySchemes:
+    ApiKeySecurity:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    XCsrfSecurity:
+      type: apiKey
+      in: header
+      name: x-csrftoken
+  parameters:
+    token:
+      $ref: parameters.yaml#/token
+    user_id:
+      $ref: parameters.yaml#/user_id
+    orcidId:
+      $ref: parameters.yaml#/orcidId
+    putcode:
+      $ref: parameters.yaml#/putcode
+    OrcidAuthorization:
+      $ref: parameters.yaml#/OrcidAuthorization
+    iso_datestring:
+      $ref: parameters.yaml#/iso_datestring
+    q:
+      $ref: parameters.yaml#/q
+    rows:
+      $ref: parameters.yaml#/rows
+    fq:
+      $ref: parameters.yaml#/fq
+    fl:
+      $ref: parameters.yaml#/fl
+    start:
+      $ref: parameters.yaml#/start
+    sort:
+      $ref: parameters.yaml#/sort
+    bibcode:
+      $ref: parameters.yaml#/bibcode
+    link:
+      $ref: parameters.yaml#/link
+    queryId:
+      $ref: parameters.yaml#/queryId
+    myadsId:
+      $ref: parameters.yaml#/myadsId
+  responses:
+    QTree:
+      $ref: responses.yaml#/QTree
+    SearchResults:
+      $ref: responses.yaml#/SearchResults
+    VaultResponse:
+      $ref: responses.yaml#/VaultResponse
+    ExportResponse:
+      $ref: responses.yaml#/ExportResponse
+    ExportResponseGet:
+      $ref: responses.yaml#/ExportResponseGet
+    ResolverResponse:
+      $ref: responses.yaml#/ResolverResponse
+    TokenResponse:
+      $ref: responses.yaml#/TokenResponse
+  schemas:
+    qtree:
+      $ref: schemas.yaml#/qtree
+    results:
+      $ref: schemas.yaml#/results
+    doc:
+      $ref: schemas.yaml#/doc
+    responseHeader:
+      $ref: schemas.yaml#/responseHeader
+    vaultObject:
+      $ref: schemas.yaml#/vaultObject
+    basicMetricsResponse:
+      $ref: schemas.yaml#/basicMetricsResponse
+    myADSsummaryResponse:
+      $ref: schemas.yaml#/myADSsummaryResponse
+    myADSdetailResponse:
+      $ref: schemas.yaml#/myADSdetailResponse
+    bibcodeObject:
+      $ref: schemas.yaml#/bibcodeObject
+    bibcodesObject:
+      $ref: schemas.yaml#/bibcodesObject
+    libraryMetadata:
+      $ref: schemas.yaml#/libraryMetadata
+    orcid-work-to:
+      $ref: schemas.yaml#/orcid-work-to
+    orcid-work-from:
+      $ref: schemas.yaml#/orcid-work-from
+    orcid-preferences:
+      $ref: schemas.yaml#/orcid-preferences
+    myADSsetupResponse:
+      $ref: schemas.yaml#/myADSsetupResponse

@@ -71,643 +71,61 @@ components:
       bearerFormat: JWT
   parameters:
     q:
-      name: q
-      description: >-
-        Query string; for detailed documentation go to
-        https://ui.adsabs.harvard.edu/help/search/search-syntax
-      in: query
-      required: true
-      schema:
-        type: string
-      example: "author%3Amart%C3%ADnez+neutron+star"
+      $ref: parameters.yaml#/q
     rows:
-      name: rows
-      description: How many records to return for this request (default=10, maximum=200)
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 10
-        maximum: 200
+      $ref: parameters.yaml#/rows
     fq:
-      name: fq
-      description: Additional filters applied on top of the results of the main query.
-      in: query
-      required: false
-      schema:
-        type: array
-        maxItems: 10
-        items:
-          type: string
-      style: form
-      explode: true
+      $ref: parameters.yaml#/fq
     fl:
-      name: fl
-      description: Comma delimited set of fields to return; default is 'id'
-      in: query
-      style: form
-      explode: false
-      example: "bibcode,author,title"
-      schema:
-        type: array
-        default: id
-        uniqueItems: true
-        items:
-          type: string
-          enum:
-            - abstract
-            - ack
-            - aff
-            - aff_id
-            - alternate_bibcode
-            - alternate_title
-            - arxiv_class
-            - author
-            - author_count
-            - author_norm
-            - bibcode
-            - bibgroup
-            - bibstem
-            - citation
-            - citation_count
-            - cite_read_boost
-            - classic_factor
-            - comment
-            - copyright
-            - data
-            - database
-            - date
-            - doctype
-            - doi
-            - eid
-            - entdate
-            - entry_date
-            - esources
-            - facility
-            - first_author
-            - first_author_norm
-            - grant
-            - grant_agencies
-            - grant_id
-            - id
-            - identifier
-            - indexstamp
-            - inst
-            - isbn
-            - issn
-            - issue
-            - keyword
-            - keyword_norm
-            - keyword_schema
-            - lang
-            - links_data
-            - nedid
-            - nedtype
-            - orcid_pub
-            - orcid_other
-            - orcid_user
-            - page
-            - page_count
-            - page_range
-            - property
-            - pub
-            - pub_raw
-            - pubdate
-            - pubnote
-            - read_count
-            - reference
-            - simbid
-            - title
-            - vizier
-            - volume
-            - year
+      $ref: parameters.yaml#/fl
     start:
-      name: start
-      description: For pagination, offset of the first returned result (default=0)
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
+      $ref: parameters.yaml#/start
     sort:
-      name: sort
-      description: >
-        The format is 'field' + 'direction' where direction is one of 'asc' or
-        'desc' and field is any of the valid indexes. The default sorting is by
-        relevance (computed by our search engine). Example\:
-        'sort=read_count+desc' Some useful fields to sort by may be date,
-        citation_count, or read_count.
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-          - id asc
-          - author_count asc
-          - bibcode asc
-          - citation_count asc
-          - citation_count_norm asc
-          - classic_factor asc
-          - first_author asc
-          - date asc
-          - entry_date asc
-          - read_count asc'
-          - score asc
-          - id desc
-          - author_count desc
-          - bibcode desc
-          - citation_count desc
-          - citation_count_norm desc
-          - classic_factor desc
-          - first_author desc
-          - date desc
-          - entry_date desc
-          - read_count desc
-          - score desc
-    orcidId:
-      name: orcidId
-      in: path
-      description: ORCiD ID, i.e. '0000-0000-0000-0000'
-      schema:
-        type: string
-      required: true
-    OrcidAuthorization:
-      name: Orcid-Authorization
-      in: header
-      description: >
-        'access_token' of the orcid user (will be passed on to the ORCiD API)
-      schema:
-        type: string
+      $ref: parameters.yaml#/sort
     bibcode:
-      name: bibcode
-      description: Bibcode to export
-      required: true
-      in: path
-      schema:
-        type: string
+      $ref: parameters.yaml#/bibcode
     link:
-      name: link
-      description: Query URL
-      required: true
-      in: path
-      schema:
-        type: string
+      $ref: parameters.yaml#/link
     queryId:
-      name: queryId
-      description: QID returned from the POST operation
-      required: true
-      in: path
-      schema:
-        type: string
+      $ref: parameters.yaml#/queryId
     myadsId:
-      name: myads_id
-      description: ID from one myADS notification, taken from the response to `/vault/notifications`
-      required: true
-      in: path
-      schema:
-        type: integer
+      $ref: parameters.yaml#/myadsId
   responses:
     QTree:
-      description: Abstract Syntax Tree of a Parsed query
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/qtree'
+      $ref: responses.yaml#/QTree
     SearchResults:
-      description: Results returned by the search engine
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/results'
+      $ref: responses.yaml#/SearchResults
     VaultResponse:
-      description: Response from vault storage service
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              numfound:
-                readOnly: true
-                type: integer
-                description: >
-                  Number of docs this query found (the last time it was executed; this
-                  number is up to date only when the query is stored). But if you see number higher
-                  than 0 then you can be sure that the query was executed.
-              qid:
-                readOnly: true
-                type: string
-                description: >
-                  Query ID (unique hash identifying all the parameters; it is computed
-                  from the supplied query parameters)
-              query:
-                type: string
-                description: >
-                  Serialized JSON input search parameters
+      $ref: responses.yaml#/VaultResponse
     ExportResponse:
-      description: >
-            Returns export
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              msg:
-                type: string
-              export:
-                type: string
+      $ref: responses.yaml#/ExportResponse
     ExportResponseGet:
-      description: >
-            Returns export
-      content:
-        application/json:
-          schema:
-            type: string
+      $ref: responses.yaml#/ExportResponseGet
     ResolverResponse:
-      description: >
-        JSON containing the available external resources,
-        including links
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              action:
-                type: string
-              links:
-                type: object
-                properties:
-                  count:
-                    type: integer
-                  link_type:
-                    type: string
-                  records:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        bibcode:
-                          type: string
-                        count:
-                          type: integer
-                        title:
-                          type: string
-                        type:
-                          type: string
-                        url:
-                          type: string
+      $ref: responses.yaml#/ResolverResponse
   schemas:
     qtree:
-      type: object
-      properties:
-        responseHeader:
-          $ref: '#/components/schemas/responseHeader'
-        qtree:
-          type: string
-          description: serialized JSON
+      $ref: schemas.yaml#/qtree
     results:
-      type: object
-      properties:
-        responseHeader:
-          $ref: '#/components/schemas/responseHeader'
-        numFound:
-          type: integer
-        start:
-          type: integer
-        docs:
-          type: array
-          items:
-            $ref: '#/components/schemas/doc'
+      $ref: schemas.yaml#/results
     doc:
-      type: object
-      required:
-        - id
-      properties:
-        id:
-          type: string
-        bibcode:
-          type: string
-        title:
-          type: string
+      $ref: schemas.yaml#/doc
     responseHeader:
-      type: object
-      properties:
-        status:
-          description: Status code as returned by the search engine
-          type: integer
-        QTime:
-          type: integer
-          description: >-
-            search time in millisecs (only search, without faceting, latency and
-            all other steps)
-        parameters:
-          description: Input search parameters
-          type: object
-          properties:
-            q:
-              type: string
-            fl:
-              type: string
-            start:
-              type: string
-            rows:
-              type: string
+      $ref: schemas.yaml#/responseHeader
     vaultObject:
-      type: object
-      properties:
-        q:
-          $ref: '#/components/parameters/q'
-        fl:
-          $ref: '#/components/parameters/fl'
-        start:
-          $ref: '#/components/parameters/start'
-        rows:
-          $ref: '#/components/parameters/rows'
-        sort:
-          $ref: '#/components/parameters/sort'
-        fq:
-          type: string
-          description: >
-            must be set to `'{!bitset}'`
-        bigquery:
-          type: string
-          description: >
-            new line separated list of bibcodes, the first line is the name of
-            the index that will be searched, right now we only support search in `bibcode` index
+      $ref: schemas.yaml#/vaultObject
     basicMetricsResponse:
-      type: object
-      properties:
-        basic stats:
-          type: object
-          properties:
-            average number of downloads:
-              type: number
-            average number of reads:
-              type: number
-            median number of downloads:
-              type: number
-            median number of reads:
-              type: number
-            normalized paper count:
-              type: number
-            number of papers:
-              type: integer
-            recent number of downloads:
-              type: integer
-            recent number of reads:
-              type: integer
-            total number of downloads:
-              type: integer
-            total number of reads:
-              type: integer
-        basic stats refereed:
-          type: object
-          properties:
-            average number of downloads:
-              type: number
-            average number of reads:
-              type: number
-            median number of downloads:
-              type: number
-            median number of reads:
-              type: number
-            normalized paper count:
-              type: number
-            number of papers:
-              type: integer
-            recent number of downloads:
-              type: integer
-            recent number of reads:
-              type: integer
-            total number of downloads:
-              type: integer
-            total number of reads:
-              type: integer
-        citation stats:
-          type: object
-          properties:
-            average number of citations:
-              type: number
-            average number of refereed citations:
-              type: number
-            median number of citations:
-              type: number
-            median number of refereed citations:
-              type: number
-            normalized number of citations:
-              type: number
-            normalized number of refereed citations:
-              type: number
-            number of citing papers:
-              type: integer
-            number of self-citations:
-              type: integer
-            self-citations:
-              type: array
-              items:
-                type: string
-            total number of citations:
-              type: integer
-            total number of refereed citations:
-              type: integer
-        citation stats refereed:
-          type: object
-          properties:
-            average number of citations:
-              type: number
-            average number of refereed citations:
-              type: number
-            median number of citations:
-              type: number
-            median number of refereed citations:
-              type: number
-            normalized number of citations:
-              type: number
-            normalized number of refereed citations:
-              type: number
-            number of citing papers:
-              type: integer
-            number of self-citations:
-              type: integer
-            self-citations:
-              type: array
-              items:
-                type: string
-            total number of citations:
-              type: integer
-            total number of refereed citations:
-              type: integer
-        histograms:
-          type: object
-          properties:
-            citations:
-              type: object
-              properties:
-                nonrefereed to nonrefereed:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                nonrefereed to nonrefereed normalized:
-                  type: object
-                  properties:
-                    year:
-                      type: number
-                nonrefereed to refereed:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                nonrefereed to refereed normalized:
-                  type: object
-                  properties:
-                    year:
-                      type: number
-                refereed to nonrefereed:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                refereed to nonrefereed normalized:
-                  type: object
-                  properties:
-                    year:
-                      type: number
-                refereed to refereed:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                refereed to refereed normalized:
-                  type: object
-                  properties:
-                    year:
-                      type: number
-            reads:
-              type: object
-              properties:
-                all reads:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                all reads normalized:
-                  type: object
-                  properties:
-                    year:
-                      type: number
-                refereed reads:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                refereed reads normalized:
-                  type: object
-                  properties:
-                    year:
-                      type: number
-        skipped bibcodes:
-          type: array
-          items:
-            type: string
+      $ref: schemas.yaml#/basicMetricsResponse
     myADSsummaryResponse:
-      type: object
-      properties:
-        active:
-          type: boolean
-        created:
-          type: string
-        data:
-          type: string
-        frequency:
-          type: string
-          enum:
-            - daily
-            - weekly
-        id:
-          type: integer
-        name:
-          type: string
-        template:
-          type: string
-          enum:
-            - arxiv
-            - authors
-            - citations
-            - keyword
-        type:
-          type: string
-          enum:
-            - template
-            - query
-        updated:
-          type: string
+      $ref: schemas.yaml#/myADSsummaryResponse
     myADSdetailResponse:
-      type: object
-      properties:
-        qid:
-          type: string
-        stateful:
-          type: boolean
-        classes:
-          type: array
-          items:
-            type: string
+      $ref: schemas.yaml#/myADSdetailResponse
     bibcodeObject:
-      type: object
-      required:
-        - bibcode
-      properties:
-        bibcode:
-          type: array
-          description: >
-            Input bibcodes
-          items:
-            type: string
+      $ref: schemas.yaml#/bibcodeObject
     bibcodesObject:
-      type: object
-      required:
-        - bibcodes
-      properties:
-        bibcodes:
-          type: array
-          description: >
-            Input bibcodes
-          items:
-            type: string
+      $ref: schemas.yaml#/bibcodesObject
     libraryMetadata:
-      type: object
-      properties:
-        owner:
-          type: string
-          description: User who created the library
-        num_documents:
-          type: integer
-          description: Number of bibcodes in the library
-        public:
-          type: boolean
-          description: True means it is public
-        num_users:
-          type: integer
-          description: Number of users with permissions to this library
-        date_created:
-          type: string
-          description: Date library was created
-        name:
-          type: string
-          description: Name of library
-        description:
-          type: string
-          description: Description of library
-        permission:
-          type: string
-          description: Permission type, can be 'read', 'write', 'admin', or 'owner'
-        id:
-          type: string
-          description: Library ID
-        date_last_modified:
-          type: string
-          description: Date library was last modified
+      $ref: schemas.yaml#/libraryMetadata
   requestBodies:
     exportBody:
       description: >
@@ -827,6 +245,7 @@ paths:
           description: Server error
       tags:
         - search
+        - user-facing
   /search/qtree:
     get:
       summary: (advanced) Search ADS and return a query tree object
@@ -873,6 +292,7 @@ paths:
           description: Server error
       tags:
         - search
+        - user-facing
   /search/bigquery:
     post:
       summary: Search using bigquery
@@ -964,6 +384,7 @@ paths:
           description: Server error
       tags:
         - search
+        - user-facing
   /vault/query:
     post:
       summary: 01. Save a query
@@ -993,6 +414,7 @@ paths:
               $ref: '#/components/schemas/vaultObject'
       tags:
         - stored search
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1019,6 +441,7 @@ paths:
         - $ref: '#/components/parameters/queryId'
       tags:
         - stored search
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1096,6 +519,7 @@ paths:
             $ref: '#/components/schemas/vaultObject'
       tags:
         - stored search
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1111,6 +535,7 @@ paths:
         results returned by the stored query.
       tags:
         - stored search
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -1131,6 +556,7 @@ paths:
         View all libraries for the user associated with the given API token.
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1155,6 +581,7 @@ paths:
         library created.
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1226,6 +653,7 @@ paths:
         View metadata and contents of a specific library.
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1401,6 +829,7 @@ paths:
         `{"public": true, "bibcode": ["2009A&A...502..515G", "2010ApJ...710L.156R", "2010ApJ...710..248C", "2003ApJ...595..665X", "2011ApJ...731L..12S", "2010ApJ...721..505R", "2011ApJ...734...87R", "2010ApJ...723.1255R", "2006ApJ...639L..51A", "2001AJ....122.2993S", "2010ASPC..423..355R", "2010A&A...518A..59G", "2010ApJ...721L..48K"], "name": "New difference library", "description": "Sample difference library"}`
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1511,6 +940,7 @@ paths:
         * write
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1578,6 +1008,7 @@ paths:
         * admin
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1648,6 +1079,7 @@ paths:
         * owner
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1681,6 +1113,7 @@ paths:
         View permissions of a specific library.
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1724,6 +1157,7 @@ paths:
         * admin
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1790,6 +1224,7 @@ paths:
         * owner
       tags:
         - libraries
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1831,6 +1266,7 @@ paths:
         Export the given bibcodes in the BibTeX + abstract format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1849,6 +1285,7 @@ paths:
         Export the given bibcode in the BibTeX + abstract format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1864,6 +1301,7 @@ paths:
         Export the given bibcodes in the BibTeX format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1882,6 +1320,7 @@ paths:
         Export the given bibcode in the BibTeX format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1897,6 +1336,7 @@ paths:
         Export the given bibcodes in the ADS format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1915,6 +1355,7 @@ paths:
         Export the given bibcode in the ADS format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1930,6 +1371,7 @@ paths:
         Export the given bibcodes in the EndNote format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1948,6 +1390,7 @@ paths:
         Export the given bibcode in the EndNote format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1963,6 +1406,7 @@ paths:
         Export the given bibcodes in the ProCite format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -1981,6 +1425,7 @@ paths:
         Export the given bibcode in the ProCite format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -1996,6 +1441,7 @@ paths:
         Export the given bibcodes in the RIS (Refman) format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2014,6 +1460,7 @@ paths:
         Export the given bibcode in the RIS (Refman) format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2029,6 +1476,7 @@ paths:
         Export the given bibcodes in the RefWorks format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2047,6 +1495,7 @@ paths:
         Export the given bibcode in the RefWorks format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2062,6 +1511,7 @@ paths:
         Export the given bibcodes in the MEDLARS format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2080,6 +1530,7 @@ paths:
         Export the given bibcode in the MEDLARS format
       tags:
         - export (tagged formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2095,6 +1546,7 @@ paths:
         Export the given bibcodes in the AASTeX format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2113,6 +1565,7 @@ paths:
         Export the given bibcode in the AASTeX format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2128,6 +1581,7 @@ paths:
         Export the given bibcodes in the Icarus format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2146,6 +1600,7 @@ paths:
         Export the given bibcode in the Icarus format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2161,6 +1616,7 @@ paths:
         Export the given bibcodes in the MNRAS format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2179,6 +1635,7 @@ paths:
         Export the given bibcode in the MNRAS format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2194,6 +1651,7 @@ paths:
         Export the given bibcodes in the Solar Physics (SoPh) format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2212,6 +1670,7 @@ paths:
         Export the given bibcode in the Solar Physics (SoPh) format
       tags:
         - export (LaTeX formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2227,6 +1686,7 @@ paths:
         Export the given bibcodes in the Dublin Core (DC) XML format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2245,6 +1705,7 @@ paths:
         Export the given bibcode in the Dublin Core (DC) XML format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2260,6 +1721,7 @@ paths:
         Export the given bibcodes in the REF-XML format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2278,6 +1740,7 @@ paths:
         Export the given bibcode in the REF-XML format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2293,6 +1756,7 @@ paths:
         Export the given bibcodes in the REFABS-XML format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2311,6 +1775,7 @@ paths:
         Export the given bibcode in the REFABS-XML format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2326,6 +1791,7 @@ paths:
         Export the given bibcodes in the VOTables format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2344,6 +1810,7 @@ paths:
         Export the given bibcode in the VOTables format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2359,6 +1826,7 @@ paths:
         Export the given bibcodes in the RSS format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2377,6 +1845,7 @@ paths:
         Export the given bibcode in the RSS format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2395,6 +1864,7 @@ paths:
         Export the given bibcode in the RSS format
       tags:
         - export (XML formats)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2410,6 +1880,7 @@ paths:
         Export the given bibcodes in the IEEE format
       tags:
         - export (other)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2428,6 +1899,7 @@ paths:
         Export the given bibcode in the IEEE format
       tags:
         - export (other)
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2443,6 +1915,7 @@ paths:
         Export the given bibcodes in the given style and format
       tags:
         - export (other)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2495,6 +1968,7 @@ paths:
         Export the given bibcodes in the given custom format
       tags:
         - export (other)
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2545,6 +2019,7 @@ paths:
         * 'timeseries': time series for a set of indicators; returns 'time series'
       tags:
         - metrics
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2706,6 +2181,7 @@ paths:
             type: string
       tags:
         - metrics
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2730,6 +2206,7 @@ paths:
         Provides basic, year-by-year metrics on a per-bibcode basis.
       tags:
         - metrics
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2788,6 +2265,7 @@ paths:
         information in JSON.
       tags:
         - author affiliation
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2845,6 +2323,7 @@ paths:
         use your terminal's flags or programming language's functionality.
       tags:
         - author affiliation
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2889,6 +2368,7 @@ paths:
         list the result is associated with.
       tags:
         - citation helper
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -2922,6 +2402,7 @@ paths:
         Returns the list of mirrors used by ADS Classic
       tags:
         - classic import
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2940,6 +2421,7 @@ paths:
         Returns a user's ADS Classic registration email and mirror
       tags:
         - classic import
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -2967,6 +2449,7 @@ paths:
         Sign into ADS Classic account and link it to your main ADS account
       tags:
         - classic import
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3017,6 +2500,7 @@ paths:
         SIMBAD, whichever is specified
       tags:
         - objects
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3076,6 +2560,7 @@ paths:
         to include the SIMBAD and NED identifiers.
       tags:
         - objects
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3118,6 +2603,7 @@ paths:
         which input metadata fields were used in the matching.
       tags:
         - recommender
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3218,6 +2704,7 @@ paths:
         Returns paper recommendations for the given user, based on their reading history.
       tags:
         - recommender
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3284,6 +2771,7 @@ paths:
         Returns paper recommendations for the given user, based on their reading history.
       tags:
         - recommender
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3324,6 +2812,7 @@ paths:
         of a published paper), returns the bibcode of the matching paper.
       tags:
         - reference
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3367,6 +2856,7 @@ paths:
         of a published paper), returns the bibcode of the matching paper.
       tags:
         - reference
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3419,6 +2909,7 @@ paths:
         of the matching paper.
       tags:
         - reference
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3498,6 +2989,7 @@ paths:
         data links, etc., for a given bibcode
       tags:
         - resolver
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3522,6 +3014,7 @@ paths:
         full text or data links, for a given bibcode
       tags:
         - resolver
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3700,6 +3193,7 @@ paths:
         with the given API token
       tags:
         - notifications
+        - user-facing
       security:
         - ApiKeySecurity: []
       responses:
@@ -3721,6 +3215,7 @@ paths:
         Create a myADS notification for the current user
       tags:
         - notifications
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -3837,6 +3332,7 @@ paths:
         with the given API token
       tags:
         - notifications
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3861,6 +3357,7 @@ paths:
         with the given API token
       tags:
         - notifications
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3915,6 +3412,7 @@ paths:
         with the given API token
       tags:
         - notifications
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3934,6 +3432,7 @@ paths:
         to build the full query(ies), ready for execution.
       tags:
         - notifications
+        - user-facing
       security:
         - ApiKeySecurity: []
       parameters:
@@ -3966,6 +3465,7 @@ paths:
         returns the author network data
       tags:
         - visualizations
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -4060,6 +3560,7 @@ paths:
         returns the author network data
       tags:
         - visualizations
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
@@ -4195,6 +3696,7 @@ paths:
         returns the word cloud data
       tags:
         - visualizations
+        - user-facing
       security:
         - ApiKeySecurity: []
       requestBody:
