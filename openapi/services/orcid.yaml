@@ -1,0 +1,442 @@
+orcid-exchangeOAuthCode:
+  get:
+    summary: (internal) OAuth exchange with ORCID
+    description: OAuth token exchange with external ORCID Api
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - name: code
+        description: Code to exchange
+        required: true
+        in: query
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Exchange complete, login successful
+      '502':
+        description: Connection error with ORCID API
+orcid-export:
+  get:
+    summary: (pipeline) Get all ORCID users updated after a certain point
+    description: >
+      Get all internal ORCID users whose profiles have been updated after a
+      certain date/time. For ORCID pipeline use.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/iso_datestring'
+    responses:
+      '200':
+        description: Recently updated ORCID users
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  orcid_id:
+                    type: string
+                  created:
+                    type: string
+                  updated:
+                    type: string
+                  profile:
+                    type: string
+orcid-get-profile:
+  get:
+    summary: (pipeline) Fetch the latest profile from the ORCID API
+    description: >
+      For a given user, fetch the latest profile from the ORCID API. For
+      ORCID pipeline use.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+    responses:
+      '200':
+        description: ORCID user profile
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orcid_id:
+                  type: string
+                access_token:
+                  type: string
+                created:
+                  type: string
+                updated:
+                  type: string
+                profile:
+                  description: Fresh profile from ORCID API, serialized JSON
+                  type: string
+                info:
+                  type: string
+orcid-orcidId-orcid-profile:
+  get:
+    summary: (retired) Get user profile from ORCID API
+    description: >
+      (retired) Get user profile from ORCID API and save to local storage.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    responses:
+      '200':
+        description: JSON profile from ORCID API
+  post:
+    summary: (retired) Set user profile in ORCID API
+    description: >
+      (retired) Set user profile in ORCID API and save to local storage.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    responses:
+      '200':
+        description: JSON profile from ORCID API
+orcid-orcidId-orcid-profile-type:
+  get:
+    summary: (internal) Get user profile from ORCID API
+    description: >
+      Get user profile from ORCID API. Update in local storage if requested.
+      Return either an abridged or full version of the profile, depending
+      on requested type.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - name: type
+        description: >
+          'Simple' to return bibcodes and statuses only; 'full' to return
+          full profile
+        required: true
+        in: path
+        schema:
+          type: string
+          enum:
+            - simple
+            - full
+      - name: update
+        description: Set to True to update local storage
+        required: false
+        in: query
+        schema:
+          type: boolean
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    responses:
+      '200':
+        description: >
+          If type=simple, an object is still returned but containing
+          only the bibcodes + statuses. The full response is returned
+          if type=full.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                pubmonth:
+                  type: string
+                pubyear:
+                  type: string
+                putcode:
+                  type: integer
+                source:
+                  type: array
+                  items:
+                    type: string
+                status:
+                  type: string
+                title:
+                  type: string
+                updated:
+                  type: string
+      '404':
+        description: Wrong type passed, no profile found for ORCID ID
+      '502':
+        description: Connection error with ORCID API
+orcid-orcidId-orcid-work:
+  post:
+    summary: (internal) Add a work to the user's ORCID profile
+    description: >
+      Add a single work to the user's ORCID profile using the ORCID API
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/orcid-work-to'
+    responses:
+      '200':
+        description: ORCID work metadata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orcid-work-from'
+orcid-orcidId-orcid-works:
+  post:
+    summary: (internal) Bulk add multiple works to the user's ORCID profile
+    description: Bulk add one or more works to the user's ORCID profile
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/orcid-work-to'
+    responses:
+      '200':
+        description: ORCID work metadata
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/orcid-work-from'
+orcid-orcidId-orcid-works-putcode:
+  get:
+    summary: (internal) Get one or more works from the ORCID API
+    description: >
+      Get the details of one or more works from the user's profile
+      on the ORCID API
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/putcode'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    responses:
+      '200':
+        description: Returns work details from the ORCID API
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orcid-work-from'
+  put:
+    summary: (internal) Edit a work on the ORCID API
+    description: >
+      Edit the details of a work on the user's profile on the ORCID API
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/putcode'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    requestBody:
+      description: >
+        Use the return value from the GET method of this endpoint, modifying
+        fields as needed before sending as a body on this PUT method.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/orcid-work-to'
+    responses:
+      '200':
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orcid-work-from'
+      '409':
+        description: External ID conflict
+  delete:
+    summary: (internal) Delete a work from the ORCID API
+    description: >
+      Delete a work from the user's profile on the ORCID API
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/putcode'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    responses:
+      '204':
+        description: Work successfully deleted
+orcid-orcid-name:
+  get:
+    summary: (internal) Get name from ORCID profile
+    description: Get user's name from their ORCID profile
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    responses:
+      '200':
+        description: >
+          Returns personal details section of ORCID profile; name can
+          be parsed.
+      '502':
+        description: Connection error with ORCID API
+orcid-preferences:
+  get:
+    summary: (internal) Get ORCID preferences
+    description: Get ORCID preferences
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    responses:
+      '200':
+        description: ORCID preferences
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orcid-preferences'
+      '400':
+        description: Unauthorized or other error
+      '404':
+        description: User not found
+  post:
+    summary: (internal) Set ORCID preferences
+    description: Set ORCID preferences
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+      - $ref: '#/components/parameters/OrcidAuthorization'
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/orcid-preferences'
+    responses:
+      '200':
+        description: ORCID preferences
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orcid-preferences'
+      '400':
+        description: Unauthorized or other error
+      '404':
+        description: User not found
+      '500':
+        description: Database error
+orcid-update-orcid-profile:
+  get:
+    summary: (pipeline) Updates stored local profile using ORCID API
+    description: >
+      Calls the ORCID API to fetch and store a fresh copy of the ORCID
+      profile in local storage. For ORCID pipeline use.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+    responses:
+      '200':
+        description: Returns claimed bibcodes
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      '404':
+        description: Missing record or access token for user
+      '502':
+        description: Connection error with ORCID API
+orcid-update-status:
+  get:
+    summary: (pipeline) Get bibcode status for a given user
+    description: Get bibcode status for a given user. For ORCID pipeline use.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+    responses:
+      '200':
+        description: Bibcodes and statuses
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bibcodes:
+                  type: array
+                  items:
+                    type: string
+                status:
+                  type: string
+  post:
+    summary: (pipeline) Set bibcode status for a given user
+    description: Set bibcode status for a given user. For ORCID pipeline use.
+    tags:
+      - orcid
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/orcidId'
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              bibcodes:
+                type: array
+                items:
+                  type: string
+              status:
+                type: string
+    responses:
+      '200':
+        description: Bibcodes and statuses
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bibcode:
+                  type: string
+      '500':
+        description: Updated status not saved

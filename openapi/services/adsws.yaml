@@ -1,0 +1,845 @@
+accounts-bootstrap:
+  get:
+    summary: (internal) Create/return OAuthClient
+    description: >
+      If the user is not signed in, an anonymous user is created/returned.
+      If the user is authenticated as a real user, a Bumblebee client
+      OAuthClient and token is created/returned.
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: Client info
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                scopes:
+                  type: array
+                  items:
+                    type: string
+                client_id:
+                  type: string
+                access_token:
+                  type: string
+                client_name:
+                  type: string
+                token_type:
+                  type: string
+                ratelimit:
+                  type: integer
+                anonymous:
+                  type: boolean
+                client_secret:
+                  type: string
+                expire_in:
+                  type: string
+                refresh_token:
+                  type: string
+      '400':
+        description: Bad request
+accounts-csrf:
+  get:
+    summary: (internal) Return a CSRF token
+    description: Returns a CSRF token
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: CSRF token
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                csrf:
+                  type: string
+accounts-change-email:
+  post:
+    summary: (internal) Change current user's email
+    description: Change current user's email
+    tags:
+      - adsws
+    security:
+      - ApiKeySecurity: []
+      - XCsrfSecurity: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+              verify_url:
+                type: string
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+      '400':
+        description: Malformed request
+      '401':
+        description: Must validate old password
+      '403':
+        description: Email has already been registered
+accounts-change-password:
+  post:
+    summary: (internal) Change current user's password
+    description: Change current user's password
+    tags:
+      - adsws
+    security:
+      - ApiKeySecurity: []
+      - XCsrfSecurity: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              old_password:
+                type: string
+              new_password1:
+                type: string
+              new_password2:
+                type: string
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+      '400':
+        description: Malformed request, or passwords do not match
+      '401':
+        description: Must validate old password
+accounts-info:
+  get:
+    summary: (internal) Gets user info
+    description: >
+      Get user info from session ID, user ID, access token, or
+      client ID.
+    tags:
+      - adsws
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - name: account_data
+        description: >
+          User identifier; can be session ID, user ID, access token,
+          or client ID
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: User info
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hashed_user_id:
+                  type: string
+                hashed_client_id:
+                  type: string
+                anonymous:
+                  type: boolean
+                source:
+                  type: string
+      '404':
+        description: Identifier not found
+      '500':
+        description: Missing authentication
+accounts-logout:
+  post:
+    summary: (internal) Logout of the current user's account
+    description: Logout of the current user's account
+    tags:
+      - adsws
+    security:
+      - XCsrfSecurity: []
+    requestBody:
+      description: >
+        Empty; uses POST instead of GET to enable CSRF validation
+      content:
+        application/json:
+          schema:
+            type: object
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+accounts-protected:
+  get:
+    summary: (internal) OAuth check resource
+    description: Resource for checking that oauth requirement is satisfied
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Oauth info
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                app:
+                  type: string
+                oauth:
+                  type: string
+accounts-register:
+  post:
+    summary: (internal) Register a new user account
+    description: Register a new user account
+    tags:
+      - adsws
+    security:
+      - XCsrfSecurity: []
+    requestBody:
+      description: >
+        JSON containing the user registration information.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password1:
+                type: string
+              password2:
+                type: string
+              verify_url:
+                type: string
+              g-recaptcha-response:
+                type: string
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+      '400':
+        description: Malformed request; or passwords do not match
+      '403':
+        description: Captcha was not verified
+      '409':
+        description: Email already registered for an account
+accounts-reset-password:
+  get:
+    summary: (internal) Verify user's email before resetting password
+    description: Verify user's email before resetting password
+    tags:
+      - adsws
+    parameters:
+      - $ref: '#/components/parameters/token'
+    responses:
+      '200':
+        description: Email if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      '400':
+        description: User does not exist
+      '404':
+        description: Unknown verification token
+  post:
+    summary: (internal) Send password reset request
+    description: >
+      Send the password reset request email to the specified email
+      address. Note that "token" represents the raw email address
+      of the recipient and is not expected to be encoded.
+    tags:
+      - adsws
+    security:
+      - ApiKeySecurity: []
+      - XCsrfSecurity: []
+    parameters:
+      - name: token
+        description: Raw email address of recipient
+        in: path
+        required: true
+        schema:
+          type: string
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              g-recaptcha-response:
+                type: string
+              reset_url:
+                type: string
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+      '400':
+        description: Malformed request
+      '403':
+        description: Captcha not verified; email never verified
+      '404':
+        description: User does not exist
+  put:
+    summary: (internal) Reset password
+    description: Reset password
+    tags:
+      - adsws
+    security:
+      - XCsrfSecurity: []
+    parameters:
+      - $ref: '#/components/parameters/token'
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              password1:
+                type: string
+              password2:
+                type: string
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+      '400':
+        description: >
+          Malformed request; passwords do not match; validation error
+      '404':
+        description: Unknown verification token
+      '500':
+        description: User does not exist
+accounts-status:
+  get:
+    summary: (internal) Health check resource
+    description: Health check resource
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: Return if health check passes
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                app:
+                  type: string
+                status:
+                  type: string
+                  default: 'online'
+accounts-token:
+  get:
+    summary: (internal) Get API token
+    description: Fetch the API token for the current user
+    tags:
+      - adsws
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/TokenResponse'
+      '500':
+        description: No API token found
+  put:
+    summary: (internal) Create an API token
+    description: Create API token for the current user
+    tags:
+      - adsws
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/TokenResponse'
+      '503':
+        description: Database error
+accounts-user:
+  post:
+    summary: (internal) Login the user
+    description: >
+      Authenticate and login the user
+    tags:
+      - adsws
+    security:
+      - XCsrfSecurity: []
+    requestBody:
+      description: >
+        JSON containing the user login information.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+    responses:
+      '200':
+        description: Login successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+      '400':
+        description: Bad request
+      '401':
+        description: Unauthorized
+      '403':
+        description: Account has not been verified
+accounts-user-delete:
+  post:
+    summary: (internal) Delete current user's account
+    description: Delete the current user's account
+    tags:
+      - adsws
+    security:
+      - XCsrfSecurity: []
+    requestBody:
+      description: >
+        Empty; uses POST instead of GET to enable CSRF validation
+      content:
+        application/json:
+          schema:
+            type: object
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+accounts-verify:
+  get:
+    summary: (internal) Verify user's email
+    description: Verify user's email
+    tags:
+      - adsws
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/token'
+    responses:
+      '200':
+        description: Message if successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                message:
+                  type: string
+      '400':
+        description: Email has already been verified
+      '404':
+        description: Unknown verification token
+alive:
+  get:
+    summary: (internal) Health check
+    description: >
+      Signal that the application is healthy. Note that this endpoint
+      can be run on the main web application or on an individual
+      microservice (e.g. /v1/biblib/alive)
+    security:
+    - ApiKeySecurity: []
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: True if application is healthy
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                alive:
+                  type: boolean
+oauth-authorize:
+  get:
+    summary: (internal) Render authorization request
+    description: Render authorization request; returns an HTML page.
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    parameters:
+      - name: client_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: request
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: scopes
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+    responses:
+      '200':
+        description: Returns authorization page
+      '404':
+        description: No client provided
+  post:
+    summary: (internal) Confirm authorization request
+    description: Confirm authorization request
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Return true if authorized
+oauth-errors:
+  get:
+    summary: (internal) Error view for invalid oauth request
+    description: >
+      Error view for invalid oauth request; returns an HTML page
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: Returns rendered error page
+oauth-info:
+  get:
+    summary: (internal) Verify authentication with test scope
+    description: Verify authentication with test scope
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Response only if authenticated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                client:
+                  type: string
+                scopes:
+                  type: array
+                  items:
+                    type: string
+      '404':
+        description: Returned if not testing or in debug mode
+oauth-invalid:
+  get:
+    summary: (internal, testing only) Verify authentication
+    description: >
+      (testing only) Verify authentication with "invalid scope"; successful
+      response unreachable
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          Response if authenticated with "invalid" scope; unreachable
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ding:
+                  description: "dong"
+                  type: string
+      '404':
+        description: Returned if not testing or in debug mode
+oauth-ping:
+  get:
+    summary: (internal) Verify authentication
+    description: Verify authentication
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Response only if authenticated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ping:
+                  description: "pong"
+                  type: string
+  post:
+    summary: (internal) Verify authentication
+    description: Verify authentication
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Response only if authenticated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ping:
+                  description: "pong"
+                  type: string
+oauth-token:
+  get:
+    summary: (internal) Exchange/refresh access tokens
+    description: >
+      Exchange/refresh access tokens; implements OAuth2 token_handler
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: Token exchange successful
+  post:
+    summary: (internal) Exchange/refresh access tokens
+    description: >
+      Exchange/refresh access tokens; implements OAuth2 token_handler
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: Token exchange successful
+protected:
+  get:
+    summary: (internal) OAuth check resource
+    description: Resource for checking that oauth requirement is satisfied
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Oauth info
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                app:
+                  type: string
+                oauth:
+                  type: string
+ready:
+  get:
+    summary: (internal) Readiness check
+    description: >
+      Signal that the application is ready. Note that this endpoint
+      can be run on the main web application or on an individual
+      microservice (e.g. /v1/biblib/ready)
+    security:
+    - ApiKeySecurity: []
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: True if application is ready
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ready:
+                  type: boolean
+      '503':
+        description: Application not ready
+resources:
+  get:
+    summary: (internal) Show API resources
+    description: Show all resources adsws knows.
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: All API resources
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adsws.XXX:
+                  type: object
+                  properties:
+                    endpoints:
+                      type: array
+                      items:
+                        type: string
+                    base:
+                      type: string
+status:
+  get:
+    summary: (internal) Health check resource
+    description: Health check resource
+    tags:
+      - adsws
+    responses:
+      '200':
+        description: Return if health check passes
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                app:
+                  type: string
+                status:
+                  type: string
+                  default: 'online'
+user:
+  get:
+    summary: (internal) Get user info
+    description: Supply a user ID or email, get the other one back
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    parameters:
+      - name: identifier
+        description: User ID or user email
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: User info
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                email:
+                  type: string
+      '404':
+        description: User not found
+userfeedback:
+  post:
+    summary: (internal) Submit user feedback
+    description: Submit user feedback
+    tags:
+      - adsws
+    security:
+    - ApiKeySecurity: []
+    requestBody:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            properties:
+              _subject:
+                description: Type of feedback
+                type: string
+              name:
+                description: User's name
+                type: string
+              _replyto:
+                description: User email address to reply to
+                type: string
+              comments:
+                description: Feedback field
+                type: string
+              g-recaptcha-response:
+                type: string
+              origin:
+                type: string
+              currentuser:
+                description: Email of current logged-in user
+                type: string
+              browser.name:
+                type: string
+              browser.version:
+                type: string
+              engine:
+                type: string
+              platform:
+                type: string
+              os:
+                type: string
+              current_page:
+                type: string
+              url:
+                type: string
+              user-agent-string:
+                type: string
+    responses:
+      '200':
+        description: Returns empty object
+        content:
+          application/json:
+            schema:
+              type: object
+      '302':
+        description: Redirected due to wrong endpoint
+      '403':
+        description: Captcha not verified
+      '404':
+        description: Error (see message)

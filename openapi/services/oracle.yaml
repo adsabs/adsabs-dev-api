@@ -1,0 +1,209 @@
+oracle-matchdoc:
+  post:
+    summary: Given some input metadata, return the matched bibcode
+    description: >
+      Matches input metadata to an existing record and returns the bibcode
+      of the match. Can be used to find the bibcode of an input record or to
+      match various versions of the same record (e.g. the published paper
+      with its arXiv version). Also returned is the confidence score and
+      which input metadata fields were used in the matching.
+    tags:
+      - recommender
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input data for the recommender service
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - abstract
+              - title
+              - author
+              - year
+              - doctype
+            properties:
+              abstract:
+                type: string
+              title:
+                type: string
+              author:
+                description: Format is "Last1, First1; Last2, First2; ..."
+                type: string
+              year:
+                description: Type can be string or integer
+                type: integer
+              doctype:
+                description: >
+                  Doctype of input metadata
+                type: string
+              doi:
+                type: string
+              mustmatch:
+                description: >
+                  Set flag to true if you know ADS must have this paper; in some cases,
+                  the main matching algorithm may fail to find a match (e.g. if the
+                  abstract has changed significantly between the arXiv and published version).
+                  If this is the case, setting this flag to true allows a match to be made
+                  based on the title alone.
+                type: boolean
+              match_doctype:
+                description: >
+                  Expected doctype of matched record
+                type: array
+                items:
+                  type: string
+            example: {"abstract":"The nucleus of our nearest, large galactic neighbour, M31, contains an eccentric nuclear disc - a disc of stars on eccentric, apsidally aligned orbits around a supermassive black hole (SMBH). Previous studies of eccentric nuclear discs considered only an isolated disc, and did not study their dynamics under galaxy mergers (particularly a perturbing SMBH). Here, we present the first study of how eccentric discs are affected by a galactic merger. We perform N-body simulations to study the disc under a range of different possible SMBH initial conditions. A second SMBH in the disc always disrupts it, but more distant SMBHs can shut off differential precession and stabilize the disc. This results in a more aligned disc, nearly uniform eccentricity profile, and suppression of tidal disruption events compared to the isolated disc. We also discuss implications of our work for the presence of a secondary SMBH in M31.","title":"Galactic merger implications for eccentric nuclear discs: a mechanism for disc alignment","author":"Rodriguez, Alexander; Generozov, Aleksey; Madigan, Ann-Marie","year":2021,"doctype":"article","match_doctype":["article"],"mustmatch":false}
+    responses:
+      '200':
+        description: >
+          JSON containing any matches, plus information about the matching process.
+          Confidence and scores range between 0 (low) and 1 (high).
+
+
+          Note: If no matches are found, the service still returns a 200, but
+          instead of the "match" keyword, the "no match" keyword will be returned
+          in the JSON.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  description: >
+                    Solr query used to find the matches
+                  type: string
+                comment:
+                  description: >
+                    Logging from the matching algorithm
+                  type: string
+                match:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      bibcode:
+                        type: string
+                      confidence:
+                        type: integer
+                      scores:
+                        type: object
+                        properties:
+                          abstract:
+                            type: integer
+                          title:
+                            type: integer
+                          author:
+                            type: integer
+                          year:
+                            type: integer
+              example: {"query": "topn(10, similar(\"The nucleus of our nearest, large galactic neighbour, M31, contains an eccentric nuclear disc - a disc of stars on eccentric, apsidally aligned orbits around a supermassive black hole (SMBH). Previous studies of eccentric nuclear discs considered only an isolated disc, and did not study their dynamics under galaxy mergers (particularly a perturbing SMBH). Here, we present the first study of how eccentric discs are affected by a galactic merger. We perform N-body simulations to study the disc under a range of different possible SMBH initial conditions. A second SMBH in the disc always disrupts it, but more distant SMBHs can shut off differential precession and stabilize the disc. This results in a more aligned disc, nearly uniform eccentricity profile, and suppression of tidal disruption events compared to the isolated disc. We also discuss implications of our work for the presence of a secondary SMBH in M31.\", input abstract, 43, 1, 1)) doctype:(article) property:REFEREED", "comment": "Matching doctype `article`.", "match": [{"bibcode": "2021MNRAS.503.2713R", "confidence": 1, "scores": {"abstract": 1.0, "title": 1.0, "author": 1, "year": 1}}]}
+      '400':
+        description: No payload provided, or payload is missing needed parameters
+oracle-readhist:
+  post:
+    summary: Return recommendations for the current user
+    description: >
+      Returns paper recommendations for the given user, based on their reading history.
+    tags:
+      - recommender
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input data for the recommender service
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - function
+            properties:
+              function:
+                description: >
+                  Second-order operator used to generate recommendations; default is 'similar'
+                type: string
+                enum:
+                  - similar
+                  - trending
+                  - reviews
+                  - useful
+              sort:
+                description: >
+                  Sort order for recommendation query
+                type: string
+              num_docs:
+                description: >
+                  Number of recommendations to return
+                type: integer
+              top_n_reads:
+                description: >
+                  Number of input records to use in generating recomendations
+                type: integer
+              cutoff_days:
+                description: >
+                  Number of days back to generate recommendations; returned recommendations
+                  will have been entered into our database between now and N days ago, where N
+                  is the entered cutoff_days
+                type: integer
+              reader:
+                description: >
+                  Internal ID specifying the user; if not included, user will be
+                  determined via the API token used
+                type: string
+    responses:
+      '200':
+        description: >
+          JSON containing the returned recommendations and the query used to generate them
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bibcodes:
+                  type: string
+                query:
+                  type: string
+      '400':
+        description: No payload provided, or payload is missing needed parameters
+oracle-readhist-reader:
+  get:
+    summary: Return recommendations for the given user
+    description: >
+      Returns paper recommendations for the given user, based on their reading history.
+    tags:
+      - recommender
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - name: function
+        description: >
+          Second-order operator used to generate recommendations; most common is 'similar'
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: reader
+        description: >
+          Internal ID specifying the user to generate recommendations for
+        required: true
+        in: path
+        schema:
+          type: string
+    responses:
+      '200':
+        description: >
+          JSON containing the returned recommendations and the query used to generate them
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bibcodes:
+                  type: string
+                query:
+                  type: string
+      '400':
+        description: Reader was not provided

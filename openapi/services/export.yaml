@@ -1,0 +1,697 @@
+export-aastex:
+  post:
+    summary: AASTeX export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the AASTeX format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: AASTeX export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the AASTeX format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-ads:
+  post:
+    summary: ADS (generic tagged) export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the ADS format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: ADS (generic tagged) export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the ADS format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-bibtex:
+  post:
+    summary: BibTeX export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the BibTeX format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: BibTeX export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the BibTeX format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-bibtexabs:
+  post:
+    summary: BibTeX + abstract export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the BibTeX + abstract format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: BibTeX + abstract export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the BibTeX + abstract format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-csl:
+  post:
+    summary: CSL export for one or more bibcodes (POST)
+    description: >
+      Export the given bibcodes in the given style and format
+    tags:
+      - export (other)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the bibcodes to export, and the style and format
+        to export them in.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/bibcodesObject'
+              - type: object
+                required:
+                  - style
+                  - format
+                properties:
+                  style:
+                    description: Journal style to use
+                    type: string
+                    enum:
+                      - aastex
+                      - icarus
+                      - mnras
+                      - soph
+                      - aspc
+                      - apsj
+                      - aasj
+                      - ieee
+                  format:
+                    description: Output format; use 1 for Unicode, 2 for HTML, or 3 for LaTeX
+                    type: integer
+                  journalformat:
+                    description: >
+                      Format of journal name; used only for aastex, aspc, and aasj styles.
+                      Use 1 for AASTeX macros (default), 2 for journal abbreviations, or 3 for full journal name.
+                    type: integer
+                  sort:
+                    description: Sort order for export
+                    type: string
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+export-custom:
+  post:
+    summary: Custom-format export for one or more bibcodes (POST)
+    description: >
+      Export the given bibcodes in the given custom format
+    tags:
+      - export (other)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the bibcodes to export, and the custom format
+        to export them in.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/bibcodesObject'
+              - type: object
+                required:
+                  - format
+                properties:
+                  format:
+                    description: >
+                      Custom format; see the [main export documentation](https://ui.adsabs.harvard.edu/help/actions/export)
+                      for more information.
+                    type: string
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+export-dcxml:
+  post:
+    summary: Dublin Core (DC) XML export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the Dublin Core (DC) XML format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: Dublin Core (DC) XML export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the Dublin Core (DC) XML format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-endnote:
+  post:
+    summary: EndNote export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the EndNote format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: EndNote export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the EndNote format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-icarus:
+  post:
+    summary: Icarus export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the Icarus format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: Icarus export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the Icarus format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-ieee:
+  post:
+    summary: IEEE export (Unicode-encoded) for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the IEEE format
+    tags:
+      - export (other)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: IEEE export (Unicode-encoded) for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the IEEE format
+    tags:
+      - export (other)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-medlars:
+  post:
+    summary: MEDLARS export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the MEDLARS format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: MEDLARS export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the MEDLARS format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-mnras:
+  post:
+    summary: MNRAS export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the MNRAS format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: MNRAS export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the MNRAS format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-procite:
+  post:
+    summary: ProCite export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the ProCite format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: ProCite export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the ProCite format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-refabsxml:
+  post:
+    summary: REFABS-XML export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the REFABS-XML format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: REFABS-XML export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the REFABS-XML format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-refworks:
+  post:
+    summary: RefWorks export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the RefWorks format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: RefWorks export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the RefWorks format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-refxml:
+  post:
+    summary: REF-XML export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the REF-XML format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: REF-XML export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the REF-XML format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-ris:
+  post:
+    summary: RIS (Refman) export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the RIS (Refman) format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: RIS (Refman) export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the RIS (Refman) format
+    tags:
+      - export (tagged formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-rss:
+  post:
+    summary: RSS export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the RSS format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: RSS export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the RSS format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-rss-link:
+  get:
+    summary: RSS export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+      - $ref: '#/components/parameters/link'
+    description: >
+      Export the given bibcode in the RSS format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-soph:
+  post:
+    summary: Solar Physics (SoPh) export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the Solar Physics (SoPh) format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: Solar Physics (SoPh) export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the Solar Physics (SoPh) format
+    tags:
+      - export (LaTeX formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr
+export-votable:
+  post:
+    summary: VOTables export for multiple bibcodes (POST)
+    description: >
+      Export the given bibcodes in the VOTables format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      $ref: '#/components/requestBodies/exportBody'
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponse'
+      '404':
+        description: >
+          No result from Solr
+  get:
+    summary: VOTables export for a single bibcode (GET)
+    parameters:
+      - $ref: '#/components/parameters/bibcode'
+    description: >
+      Export the given bibcode in the VOTables format
+    tags:
+      - export (XML formats)
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/ExportResponseGet'
+      '404':
+        description: >
+          No result from Solr

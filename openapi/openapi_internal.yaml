@@ -1,0 +1,194 @@
+openapi: 3.0.3
+info:
+  title: Internal API for Astrophysics Data System (ADS)
+  description: >
+    Internal API endpoints
+  termsOfService: https://ui.adsabs.harvard.edu/help/terms/
+  contact:
+    name: ADS Help
+    url: https://github.com/adsabs/adsabs-dev-api
+    email: adshelp@cfa.harvard.edu
+  version: 1.0.0
+servers:
+  - url: https://api.adsabs.harvard.edu/{basePath}
+    description: Production Server
+    variables:
+      basePath:
+        default: v1
+        enum:
+          - v1
+  - url: https://devapi.adsabs.harvard.edu/{basePath}
+    description: Development Server
+    variables:
+      basePath:
+        default: v1
+        enum:
+          - v1
+tags:
+  - name: adsws
+  - name: libraries
+  - name: graphics
+  - name: classic import
+  - name: objects
+  - name: orcid
+  - name: reference
+  - name: resolver
+  - name: notifications
+  - name: vault
+components:
+  securitySchemes:
+    ApiKeySecurity:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    XCsrfSecurity:
+      type: apiKey
+      in: header
+      name: x-csrftoken
+  parameters:
+    token:
+      $ref: 'parameters.yaml#/token'
+    user_id:
+      $ref: 'parameters.yaml#/user_id'
+    orcidId:
+      $ref: 'parameters.yaml#/orcidId'
+    putcode:
+      $ref: 'parameters.yaml#/putcode'
+    OrcidAuthorization:
+      $ref: 'parameters.yaml#/OrcidAuthorization'
+    iso_datestring:
+      $ref: 'parameters.yaml#/iso_datestring'
+  responses:
+    TokenResponse:
+      $ref: 'responses.yaml#/TokenResponse'
+  schemas:
+    orcid-work-to:
+      $ref: 'schemas.yaml#/orcid-work-to'
+    orcid-work-from:
+      $ref: 'schemas.yaml#/orcid-work-from'
+    orcid-preferences:
+      $ref: 'schemas.yaml#/orcid-preferences'
+    myADSsetupResponse:
+      $ref: 'schemas.yaml#/myADSsetupResponse'
+security:
+  - ApiKeySecurity: []
+  - XCsrfSecurity: []
+paths:
+  /alive:
+    $ref: 'services/adsws.yaml#/alive'
+  /ready:
+    $ref: 'services/adsws.yaml#/ready'
+  /accounts/bootstrap:
+    $ref: 'services/adsws.yaml#/accounts-bootstrap'
+  /accounts/protected:
+    $ref: 'services/adsws.yaml#/accounts-protected'
+  /accounts/csrf:
+    $ref: 'services/adsws.yaml#/accounts-csrf'
+  /accounts/user:
+    $ref: 'services/adsws.yaml#/accounts-user'
+  /accounts/user/delete:
+    $ref: 'services/adsws.yaml#/accounts-user-delete'
+  /accounts/register:
+    $ref: 'services/adsws.yaml#/accounts-register'
+  /accounts/logout:
+    $ref: 'services/adsws.yaml#/accounts-logout'
+  /accounts/token:
+    $ref: 'services/adsws.yaml#/accounts-token'
+  /accounts/info/{account_data}:
+    $ref: 'services/adsws.yaml#/accounts-info'
+  /accounts/change-password:
+    $ref: 'services/adsws.yaml#/accounts-change-password'
+  /accounts/change-email:
+    $ref: 'services/adsws.yaml#/accounts-change-email'
+  /accounts/verify/{token}:
+    $ref: 'services/adsws.yaml#/accounts-verify'
+  /accounts/reset-password/{token}:
+    $ref: 'services/adsws.yaml#/accounts-reset-password'
+  /accounts/status:
+    $ref: 'services/adsws.yaml#/accounts-status'
+  /status:
+    $ref: 'services/adsws.yaml#/status'
+  /protected:
+    $ref: 'services/adsws.yaml#/protected'
+  /user/{identifier}:
+    $ref: 'services/adsws.yaml#/user'
+  /userfeedback:
+    $ref: 'services/adsws.yaml#/userfeedback'
+  /resources:
+    $ref: 'services/adsws.yaml#/resources'
+  /oauth/authorize:
+    $ref: 'services/adsws.yaml#/oauth-authorize'
+  /oauth/token:
+    $ref: 'services/adsws.yaml#/oauth-token'
+  /oauth/errors:
+    $ref: 'services/adsws.yaml#/oauth-errors'
+  /oauth/ping:
+    $ref: 'services/adsws.yaml#/oauth-ping'
+  /oauth/info:
+    $ref: 'services/adsws.yaml#/oauth-info'
+  /oauth/invalid:
+    $ref: 'services/adsws.yaml#/oauth-invalid'
+  /biblib/twopointoh:
+    $ref: 'services/biblib.yaml#/biblib-twopointoh'
+  /biblib/classic:
+    $ref: 'services/biblib.yaml#/biblib-classic'
+  /graphics/{bibcode}:
+    $ref: 'services/graphics.yaml#/graphics'
+  /harbour/auth/twopointoh:
+    $ref: 'services/harbour.yaml#/harbour-auth-twopointoh'
+  /harbour/export/twopointoh/{export}:
+    $ref: 'services/harbour.yaml#/harbour-export-twopointoh'
+  /harbour/libraries/twopointoh/{user_id}:
+    $ref: 'services/harbour.yaml#/harbour-libraries-twopointoh'
+  /harbour/libraries/classic/{user_id}:
+    $ref: 'services/harbour.yaml#/harbour-libraries-classic'
+  /harbour/myads/classic/{user_id}:
+    $ref: 'services/harbour.yaml#/harbour-myads-classic'
+  /orcid/exchangeOAuthCode:
+    $ref: 'services/orcid.yaml#/orcid-exchangeOAuthCode'
+  /orcid/{orcidId}/orcid-profile:
+    $ref: 'services/orcid.yaml#/orcid-orcidId-orcid-profile'
+  /orcid/{orcidId}/orcid-profile/{type}:
+    $ref: 'services/orcid.yaml#/orcid-orcidId-orcid-profile-type'
+  /orcid/{orcidId}/orcid-works/{putcode}:
+    $ref: 'services/orcid.yaml#/orcid-orcidId-orcid-works-putcode'
+  /orcid/{orcidId}/orcid-work:
+    $ref: 'services/orcid.yaml#/orcid-orcidId-orcid-work'
+  /orcid/{orcidId}/orcid-works:
+    $ref: 'services/orcid.yaml#/orcid-orcidId-orcid-works'
+  /orcid/export/{iso_datestring}:
+    $ref: 'services/orcid.yaml#/orcid-export'
+  /orcid/get-profile/{orcidId}:
+    $ref: 'services/orcid.yaml#/orcid-get-profile'
+  /orcid/update-orcid-profile/{orcidId}:
+    $ref: 'services/orcid.yaml#/orcid-update-orcid-profile'
+  /orcid/preferences/{orcidId}:
+    $ref: 'services/orcid.yaml#/orcid-preferences'
+  /orcid/update-status/{orcidId}:
+    $ref: 'services/orcid.yaml#/orcid-update-status'
+  /orcid/orcid-name/{orcidId}:
+    $ref: 'services/orcid.yaml#/orcid-orcid-name'
+  /objects/nedsrv:
+    $ref: 'services/objects.yaml#/objects-nedsrv'
+  /reference/pickle_source_matcher:
+    $ref: 'services/reference.yaml#/reference-pickle_source_matcher'
+  /reference/pickle_crf:
+    $ref: 'services/reference.yaml#/reference-pickle_crf'
+  /resolver/update:
+    $ref: 'services/resolver.yaml#/resolver-update'
+  /resolver/delete:
+    $ref: 'services/resolver.yaml#/resolver-delete'
+  /vault/configuration:
+    $ref: 'services/vault.yaml#/vault-configuration'
+  /vault/configuration/{key}:
+    $ref: 'services/vault.yaml#/vault-configuration-key'
+  /vault/user-data:
+    $ref: 'services/vault.yaml#/vault-user-data'
+  /vault/get-myads/{user_id}:
+    $ref: 'services/vault.yaml#/vault-get-myads-user_id'
+  /vault/get-myads/{user_id}/{iso_datestring}:
+    $ref: 'services/vault.yaml#/vault-get-myads-user_id-iso_datestring'
+  /vault/myads-users/{iso_datestring}:
+    $ref: 'services/vault.yaml#/vault-myads-users'
+  /vault/myads-import:
+    $ref: 'services/vault.yaml#/vault-myads-import'

@@ -1,0 +1,633 @@
+vault-configuration:
+  get:
+    summary: (internal) Fetch data from VAULT_BUMBLEBEE_OPTIONS
+    description: >
+      Fetch data from VAULT_BUMBLEBEE_OPTIONS, default key.
+    tags:
+      - vault
+    responses:
+      '200':
+        description: Vault configuration
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                defalt_key:
+                  description: >
+                    Default vault Bumblebee options key, as defined in config
+                  type: string
+      '404':
+        description: No default key setup in config
+      '500':
+        description: Default key misconfigured
+vault-configuration-key:
+  get:
+    summary: (internal) Fetch data from VAULT_BUMBLEBEE_OPTIONS
+    description: >
+      Fetch data from VAULT_BUMBLEBEE_OPTIONS from the key specified
+    tags:
+      - vault
+    parameters:
+      - name: key
+        description: Key to return from vault configuration
+        required: true
+        in: path
+        schema:
+          default: link_servers
+          type: string
+    responses:
+      '200':
+        description: Library link servers or other vault config info
+      '404':
+        description: Unknown key
+      '500':
+        description: Server misconfiguration
+vault-execute_query:
+  get:
+    summary: Search using a stored query
+    description: >
+      Search using the stored query and return the same data as Search API
+      endpoint.
+
+
+      ## Example response
+
+
+      ```JSON
+        {
+          "response": {
+              "docs": [
+                  {
+                      "id": "10690723"
+                  },
+                  {
+                      "id": "11057363"
+                  },
+                  {
+                      "id": "10564749"
+                  },
+                  {
+                      "id": "10796089"
+                  },
+                  {
+                      "id": "10867252"
+                  },
+                  {
+                      "id": "10867221"
+                  },
+                  {
+                      "id": "10867251"
+                  },
+                  {
+                      "id": "10867277"
+                  },
+                  {
+                      "id": "11057812"
+                  }
+              ],
+              "numFound": 9,
+              "start": 0
+          },
+          "responseHeader": {
+              "QTime": 6,
+              "params": {
+                  "fl": "id",
+                  "fq": "{!bitset}",
+                  "q": "*:*",
+                  "wt": "json"
+              },
+              "status": 0
+          }
+        }
+      ```
+    parameters:
+      - $ref: '#/components/parameters/queryId'
+      - name: jsonobj
+        description: >-
+          You can submit query parameters that override parts of the saved
+          query.
+        required: false
+        in: header
+        schema:
+          $ref: '#/components/schemas/vaultObject'
+    tags:
+      - stored search
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/SearchResults'
+      '404':
+        description: QID object not found
+vault-get-myads-user_id:
+  get:
+    summary: (pipeline) Fetch myADS profile for a given user
+    description: >
+      Fetch a myADS profile, with the notification setups, for a given
+      user. Used by the myADS pipeline.
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/user_id'
+    responses:
+      '200':
+        description: >
+          Metadata and constructed queries for all active notification
+          setups for the user.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/myADSsetupResponse'
+      '404':
+        description: No notifications found for the given user.
+vault-get-myads-user_id-iso_datestring:
+  get:
+    summary: (pipeline) Fetch myADS profile for a given user
+    description: >
+      Fetch a myADS profile, with the notification setups, for a given
+      user, using the provided query start date. Used by the myADS pipeline.
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/user_id'
+      - $ref: '#/components/parameters/iso_datestring'
+    responses:
+      '200':
+        description: >
+          Metadata and constructed queries for all active notification
+          setups for the user. The start date of the queries will be that
+          provided as a parameter.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/myADSsetupResponse'
+      '404':
+        description: No notifications found for the given user.
+vault-myads-import:
+  get:
+    summary: (internal) Import myADS settings from Classic
+    description: >
+      Import myADS settings from Classic for the current user. Fetches
+      setups from Classic and performs an upsert with the current
+      myADS settings.
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: myADS metadata
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                existing:
+                  description: Metadata of existing myADS setups.
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      frequency:
+                        type: string
+                      name:
+                        type: string
+                      template:
+                        type: string
+                new:
+                  description: Metadata of imported myADS setup.
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      frequency:
+                        type: string
+                      name:
+                        type: string
+                      template:
+                        type: string
+      '400':
+        description: Unauthorized
+vault-myads-users:
+  get:
+    summary: (pipeline) Fetch users updated after the given date/time
+    description: >
+      Fetch all myADS users who have updated their profiles after a given
+      date/time. Used by the myADS pipeline.
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/iso_datestring'
+    responses:
+      '200':
+        description: Recently updated myADS users
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: string
+vault-notification_query:
+  get:
+    summary: Return a constructed myADS query
+    description: >
+      Given a myADS ID for a single notification setup, use the inputed data
+      to build the full query(ies), ready for execution.
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/myadsId'
+    responses:
+      '200':
+        description: >
+          Constructed query and sort parameter. For the keyword and arxiv template-type queries,
+          more than one query and sort parameter will be returned.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  q:
+                    type: string
+                  sort:
+                    type: string
+      '400':
+        description: Malformed request
+      '404':
+        description: Notification not found
+vault-notifications:
+  get:
+    summary: View all myADS notifications set up for the current user
+    description: >
+      View all myADS notifications set up for the current user, associated
+      with the given API token
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Details of notifications set up for the current user
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/myADSsummaryResponse'
+      '400':
+        description: Malformed request
+      '404':
+        description: No notifications found for the given user
+  post:
+    summary: Create a myADS notification
+    description: >
+      Create a myADS notification for the current user
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the notifications setup. There are two types of notifications:
+
+
+        * template-type notifications: Notify the user about new papers that match a templated query.
+        The following keywords are required:
+
+          * template: The template to use to construct the query. The options are:
+
+            * arxiv: Meant for daily frequency; notifies of new arXiv papers. Requires the data and classes keywords:
+
+              * classes: (required) Array of arXiv categories and sub-categories to include in notifications
+
+              * data: (optional) Formatted search terms to search for within designated classes. If included,
+                notifications will include all papers that match the given categories, and papers that match
+                the search terms in this data keyword will be highlighted.
+
+            * authors: Meant for weekly frequency; notify the user of up to 5 new papers about given authors.
+            Requires the data keyword:
+
+              * data: (required) Must be formatted as `author:\"Last, First\"` or `orcid:\"ORCID-ID\"`. Can
+              combine multiple author queries using `OR`
+
+            * citations: Meant for weekly frequency; notify the user of new citations to papers by a given author.
+            Requires the data keyword:
+
+              * data: (required) Must be formatted as `author:\"Last, First\"` or `orcid:\"ORCID-ID\"`
+
+            * keyword: Meant for weekly frequency; notify the user of new papers matching a given set of
+            keywords. Three queries are constructed for the given set of search terms: recent papers,
+            trending papers, and useful papers. Requires the data keyword:
+
+              * data: (required) Formatted search terms or keywords
+
+        * query-type notifications: These notify the user about new papers that match a given query.
+        The following keywords are required:
+
+          * name: Name to call the notification
+
+          * qid: Query ID returned from the `/vault/query` endpoint, pointing to the stored query
+
+          * frequency: Daily or weekly notification frequency
+
+          * stateful: Set to true to only be notified of new papers; set to false to be notified of
+          the top matches to a query, whether or not you've seen them before
+
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - type
+            properties:
+              type:
+                type: string
+                enum:
+                  - template
+                  - query
+              name:
+                description: Optional for type=template; required for type=query
+                type: string
+              qid:
+                description: Only used for type=query
+                type: string
+              active:
+                description: Set to true to receive this notification
+                type: boolean
+              stateful:
+                description: Only used for type=query
+                type: boolean
+              frequency:
+                type: string
+                enum:
+                  - daily
+                  - weekly
+              template:
+                description: Only used for type=template
+                type: string
+                enum:
+                  - arxiv
+                  - authors
+                  - citations
+                  - keyword
+              classes:
+                description: Only used for type=template and template=arxiv
+                type: array
+                items:
+                  type: string
+              data:
+                type: string
+    responses:
+      '200':
+        description: Returns notification setup details
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/myADSsummaryResponse'
+                - $ref: '#/components/schemas/myADSdetailResponse'
+      '400':
+        description: Malformed request
+      '404':
+        description: Query associated with give QID does not exist
+      '500':
+        description: User does not exist or other error
+vault-notifications-myads_id:
+  get:
+    summary: View the details for one myADS notification
+    description: >
+      View the details for one myADS notification set up for the current user, associated
+      with the given API token
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/myadsId'
+    responses:
+      '200':
+        description: Details of none otification set up for the current user
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/myADSsummaryResponse'
+                - $ref: '#/components/schemas/myADSdetailResponse'
+      '400':
+        description: Malformed request
+      '404':
+        description: Notification not found
+  put:
+    summary: Edit the details for one myADS notification
+    description: >
+      Edit the details for one myADS notification set up for the current user, associated
+      with the given API token
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/myadsId'
+    requestBody:
+      description: >
+        JSON containing metadata of notification to edit.
+
+
+        Note: only need to include information that needs to be changed.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+              name:
+                type: string
+              classes:
+                type: array
+                items:
+                  type: string
+              active:
+                type: boolean
+              stateful:
+                type: boolean
+              frequency:
+                type: string
+                enum:
+                  - daily
+                  - weekly
+    responses:
+      '200':
+        description: Details of none otification set up for the current user
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/myADSsummaryResponse'
+                - $ref: '#/components/schemas/myADSdetailResponse'
+      '400':
+        description: Malformed request
+      '404':
+        description: Notification not found
+      '500':
+        description: User does not exist or other error
+  delete:
+    summary: Delete one myADS notification
+    description: >
+      Delete one myADS notification set up for the current user, associated
+      with the given API token
+    tags:
+      - notifications
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/myadsId'
+    responses:
+      '204':
+        description: Successfully deleted the notification
+      '404':
+        description: Notification not found
+      '500':
+        description: Error during request
+vault-query:
+  post:
+    summary: Save a query
+    description: |
+      Save a query for later execution. Can be either a regular query or a bigquery.
+
+      ## Example request
+
+      ```bash
+        $ curl 'https://api.adsabs.harvard.edu/v1/vault/query' -H 'Authorization: Bearer:TOKEN' \
+          -X POST -d $'{"q":"*:*", "bigquery": "bibcode\\n2015IAUGA..2257982A\\n2015IAUGA..2257768A\\n2015IAUGA..2257639R", "fq": "{!bitset}"}' \
+          -H 'Content-Type: application/json'
+
+        > {"qid": "00b39fe4274760f5d8b348815a661ee2", "numFound": 3}
+      ```
+    requestBody:
+      description: >
+        JSON object holding the values to submit.
+
+
+        Note: to correctly format the POST payload if running a bigquery,
+        including the newline (\n) characters, in a bash curl request,
+        use ANSI-C quoting (e.g. `$'...'`) as shown in the examples.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/vaultObject'
+    tags:
+      - stored search
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/VaultResponse'
+      '404':
+        description: QID object not found
+vault-query-queryId:
+  get:
+    summary: Retrieve information about a stored query
+    description: |
+      Retrive information about the previously stored query.
+
+      ## Example output
+
+      ```JSON
+      {
+          "numfound": 9,
+          "qid": "dcd173130bbbbb957eafd866baf38b2c",
+          "query": "{\"query\": \"fq=%7B%21bitset%7D&q=%2A%3A%2A\", \"bigquery\": \"bibcode\\n15ASPC..495..40015IAUGA..2257982A\\n2015IAUGA..2257768A\\n2015IAUGA..2257639R\\n2015ASPC..492..208G\\n2015ASPC..492..204F\\n2015ASPC..492..189A\\n2015ASPC..492..150T\\n2015ASPC..492...85E\\n2015ASPC..492...80H\\n2015AAS...22533656H\"}"
+      }
+      ```
+    parameters:
+      - $ref: '#/components/parameters/queryId'
+    tags:
+      - stored search
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        $ref: '#/components/responses/VaultResponse'
+      '404':
+        description: QID object not found
+vault-query2svg:
+  get:
+    summary: Return an SVG for a stored query
+    description: >
+      Returns an SVG for a stored query. The image shows the number of
+      results returned by the stored query.
+    tags:
+      - stored search
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/queryId'
+    responses:
+      '200':
+        description: Code of the SVG image
+        content:
+          image/svg+xml:
+            schema:
+              type: string
+              xml:
+                name: svg
+vault-user-data:
+  get:
+    summary: (internal) Retrieve user preferences
+    description: >
+      Retrieve preferences for the current user.
+    tags:
+      - vault
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: User preferences
+        content:
+          application/json:
+            schema:
+              type: object
+      '400':
+        description: Error with authentication
+  post:
+    summary: (internal) Store user preferences
+    description: >
+      Store preferences for the current user.
+    tags:
+      - vault
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: JSON containing only keys/values to update/add.
+      content:
+        application/json:
+          schema:
+            type: object
+    responses:
+      '200':
+        description: Update successful, all user settings returned
+      '400':
+        description: >
+          Error with authentication; payload error; too many keys stored;
+          too much data stored
+      '500':
+        description: Database error

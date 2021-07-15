@@ -1,0 +1,116 @@
+ExportResponse:
+  description: >
+        Returns export
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          msg:
+            type: string
+          export:
+            type: string
+ExportResponseGet:
+  description: >
+        Returns export
+  content:
+    application/json:
+      schema:
+        type: string
+QTree:
+  description: Abstract Syntax Tree of a Parsed query
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/qtree'
+ResolverResponse:
+  description: >
+    JSON containing the available external resources,
+    including links
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          action:
+            type: string
+          links:
+            type: object
+            properties:
+              count:
+                type: integer
+              link_type:
+                type: string
+              records:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bibcode:
+                      type: string
+                    count:
+                      type: integer
+                    title:
+                      type: string
+                    type:
+                      type: string
+                    url:
+                      type: string
+SearchResults:
+  description: Results returned by the search engine
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/results'
+TokenResponse:
+  description: API token details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          access_token:
+            description: API token
+            type: string
+          anonymous:
+            type: boolean
+          client_id:
+            type: string
+          expire_in:
+            type: string
+          refresh_token:
+            type: string
+          scopes:
+            type: array
+            items:
+              type: string
+          token_type:
+            type: string
+          user_id:
+            type: string
+          username:
+            type: string
+VaultResponse:
+  description: Response from vault storage service
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          numfound:
+            readOnly: true
+            type: integer
+            description: >
+              Number of docs this query found (the last time it was executed; this
+              number is up to date only when the query is stored). But if you see number higher
+              than 0 then you can be sure that the query was executed.
+          qid:
+            readOnly: true
+            type: string
+            description: >
+              Query ID (unique hash identifying all the parameters; it is computed
+              from the supplied query parameters)
+          query:
+            type: string
+            description: >
+              Serialized JSON input search parameters

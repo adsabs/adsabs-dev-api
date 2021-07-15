@@ -1,0 +1,245 @@
+resolver-bibcode:
+  get:
+    summary: Return links to external resources for a given bibcode
+    description: >
+      Return links to external resources, such as a publisher's full text,
+      data links, etc., for a given bibcode
+    tags:
+      - resolver
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - name: bibcode
+        description: Bibcode to return resources for
+        required: true
+        in: path
+        schema:
+          type: string
+    responses:
+      '200':
+        $ref: '#/components/responses/ResolverResponse'
+      '400':
+        description: Malformed request
+      '404':
+        description: Did not find any matching records
+resolver-bibcode-link_type:
+  get:
+    summary: Return links to a given external resource for a bibcode
+    description: >
+      Return links to a specific external resource, such as a publisher's
+      full text or data links, for a given bibcode
+    tags:
+      - resolver
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - name: bibcode
+        description: Bibcode to return resources for
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: link_type
+        description: >
+          External resource type to return (case-insensitive). The available link types
+          for a given bibcode can be discovered by returning all available resources
+          for a bibcode (via `/resolver/{bibcode}`) and looking at the `type` keywords.
+
+          Note: for `link_type` of `arXiv` or `doi`, an additional parameter, the `id`
+          is required. The syntax is `/resolver/{bibcode}/{link_type}:{id}`.
+
+
+          For example:
+
+
+          `/resolver/2010ApJ...713L.103B/doi:10.1088/2041-8205/713/2/L103`
+
+
+          `/resolver/2018arXiv180303598K/arXiv:1803.03598`
+
+
+          Available values for `link_type`:
+
+          * `abstract` Abstract
+
+          * `citations` Citations to the Article
+
+          * `references` References in the Article
+
+          * `coreads` Also-Read Articles
+
+          * `toc` Table of Contents
+
+          * `openurl`
+
+          * `metrics`
+
+          * `graphics`
+
+          * `esource` Full text sources
+
+            * `pub_pdf` Publisher PDF
+
+            * `eprint_pdf` Arxiv eprint
+
+            * `author_pdf` Link to PDF page provided by author
+
+            * `ads_pdf` ADS PDF
+
+            * `pub_html` Electronic on-line publisher article (HTML)
+
+            * `eprint_html` Arxiv article
+
+            * `author_html` Link to HTML page provided by author
+
+            * `ads_scan` ADS scanned article
+
+            * `gif` backward compatibility similar to /ads_scan
+
+            * `preprint` backward compatibility similar to /eprint_html
+
+            * `ejournal` backward compatibility similar to /pub_html
+
+          * `data` On-line data
+
+            * `aca` Acta Astronomica Data Files
+
+            * `alma` Atacama Large Millimeter/submillimeter Array
+
+            * `ari` Astronomisches Rechen-Institut
+
+            * `astroverse` CfA Dataverse
+
+            * `atnf` Australia Telescope Online Archive
+
+            * `author` Author Hosted Dataset
+
+            * `bavj` Data of the German Association for Variable Stars
+
+            * `bicep2` BICEP/Keck Data
+
+            * `cadc` Canadian Astronomy Data Center
+
+            * `cds` Strasbourg Astronomical Data Center
+
+            * `chandra` Chandra X-Ray Observatory
+
+            * `dryad` International Repository of Research Data
+
+            * `esa` ESAC Science Data Center
+
+            * `eso` European Southern Observatory
+
+            * `figshare` Online Open Access Repository
+
+            * `gcpd` The General Catalogue of Photometric Data
+
+            * `github` Git Repository Hosting Service
+
+            * `gtc` Gran Telescopio CANARIAS Public Archive
+
+            * `heasarc` NASA's High Energy Astrophysics Science Archive Research Center
+
+            * `herschel` Herschel Science Center
+
+            * `ibvs` Information Bulletin on Variable Stars
+
+            * `ines` IUE Newly Extracted Spectra
+
+            * `iso` Infrared Space Observatory
+
+            * `jwst` JWST Proposal Info
+
+            * `koa` Keck Observatory Archive
+
+            * `mast` Mikulski Archive for Space Telescopes
+
+            * `ned` NASA/IPAC Extragalactic Database
+
+            * `nexsci` NASA Exoplanet Archive
+
+            * `noao` National Optical Astronomy Observatory
+
+            * `pangaea` Digital Data Library and a Data Publisher for Earth System Science
+
+            * `pasa` Publication of the Astronomical Society of Australia Datasets
+
+            * `pdg` Particle Data Group
+
+            * `pds` The NASA Planetary Data System
+
+            * `protocols` Collaborative Platform and Preprint Server for Science Methods and Protocols
+
+            * `simbad` SIMBAD Database at the CDS
+
+            * `spitzer` Spitzer Space Telescope
+
+            * `tns` Transient Name Server
+
+            * `vizier` VizieR Catalog Service
+
+            * `xmm` XMM Newton Science Archive
+
+            * `zenodo` Zenodo Archive
+
+          * `inspire` HEP/Spires Information
+
+          * `librarycatalog`
+
+          * `presentation` Multimedia Presentation
+
+          * `associated` Associated Articles
+        required: true
+        in: path
+        schema:
+          type: string
+    responses:
+      '200':
+        $ref: '#/components/responses/ResolverResponse'
+      '400':
+        description: Malformed request
+      '404':
+        description: Did not find any matching records
+resolver-update:
+  put:
+    summary: (pipeline) Add/update records in resolver database
+    description: >
+      Add/update records in resolver database. Used by master pipeline.
+    tags:
+      - resolver
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: Protobuf objects
+      content:
+        application/json:
+          schema:
+            type: object
+    responses:
+      '200':
+        description: Successfully populated database
+      '400':
+        description: >
+          Too many records sent; unable to extract protobufs;
+          error updating database
+resolver-delete:
+  delete:
+    summary: (pipeline) Delete records from resolver database
+    description: >
+      Delete records from the resolver database. Used by master pipeline.
+
+      **Note**: This endpoint requires a request body, or payload,
+      consisting of an array of the bibcodes to be deleted. However,
+      OpenAPI v3.0.3 does not allow endpoints with the DELETE method to have
+      request bodies defined; this is resolved in OpenAPI v.3.1+, which is
+      not yet available.
+    tags:
+      - resolver
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Successfully deleted records
+      '400':
+        description: >
+          Error with payload; too many bibcodes sent; error updating database

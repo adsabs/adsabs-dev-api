@@ -1,0 +1,289 @@
+vis-author-network:
+  post:
+    summary: Returns author network data
+    description: >
+      Used to generate our author network visualization, given an input set of bibcodes,
+      returns the author network data
+    tags:
+      - visualizations
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input bibcodes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/bibcodesObject'
+    responses:
+      '200':
+        description: Author network data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msg:
+                  type: object
+                  properties:
+                    start:
+                      type: integer
+                    rows:
+                      type: integer
+                    numFound:
+                      type: integer
+                data:
+                  type: object
+                  properties:
+                    bibcode_dict:
+                      type: object
+                      properties:
+                        bibcode:
+                          type: object
+                          properties:
+                            read_count:
+                              type: integer
+                            authors:
+                              type: array
+                              items:
+                                type: string
+                            citation_count:
+                              type: integer
+                            title:
+                              type: string
+                    root:
+                      type: object
+                      properties:
+                        name:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              nodeName:
+                                type: string
+                              nodeWeight:
+                                type: integer
+                              delete:
+                                type: boolean
+                        children:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              read_count:
+                                type: integer
+                              name:
+                                type: string
+                              citation_count:
+                                type: integer
+                              numberName:
+                                type: integer
+                              papers:
+                                type: array
+                                items:
+                                  type: string
+                              size:
+                                type: number
+                    link_data:
+                      type: array
+                      items:
+                        type: array
+                        items:
+                          type: integer
+      '403':
+        description: Error with request
+vis-paper-network:
+  post:
+    summary: Returns author network data
+    description: >
+      Used to generate our author network visualization, given an input set of bibcodes,
+      returns the author network data
+    tags:
+      - visualizations
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input bibcodes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/bibcodesObject'
+    responses:
+      '200':
+        description: Paper network data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                msg:
+                  type: object
+                  properties:
+                    start:
+                      type: integer
+                    rows:
+                      type: integer
+                    numFound:
+                      type: integer
+                data:
+                  type: object
+                  properties:
+                    summaryGraph:
+                      type: object
+                      properties:
+                        directed:
+                          type: boolean
+                        graph:
+                          type: array
+                          default: []
+                          items:
+                            type: integer
+                        nodes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              paper_count:
+                                type: integer
+                              node_label:
+                                type: object
+                                properties:
+                                  label:
+                                    type: number
+                              total_citations:
+                                type: integer
+                              node_name:
+                                type: integer
+                              top_common_references:
+                                type: object
+                                properties:
+                                  bibcode:
+                                    type: number
+                              total_reads:
+                                type: integer
+                              stable_index:
+                                type: integer
+                              id:
+                                type: integer
+                        links:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              source:
+                                type: integer
+                              target:
+                                type: integer
+                              weight:
+                                type: integer
+                        multigraph:
+                          type: boolean
+                    fullGraph:
+                      type: object
+                      properties:
+                        directed:
+                          type: boolean
+                        graph:
+                          type: array
+                          default: []
+                          items:
+                            type: integer
+                        nodes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              read_count:
+                                type: integer
+                              group:
+                                type: integer
+                              title:
+                                type: string
+                              first_author:
+                                type: string
+                              citation_count:
+                                type: integer
+                              node_name:
+                                type: string
+                              id:
+                                type: integer
+                              nodeWeight:
+                                type: integer
+                        links:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              source:
+                                type: integer
+                              overlap:
+                                type: array
+                                items:
+                                  type: string
+                              weight:
+                                type: integer
+                              target:
+                                type: integer
+      '403':
+        description: Error with request
+vis-word-cloud:
+  post:
+    summary: Returns the word cloud data
+    description: >
+      Used to generate our word/concept cloud visualization, given an input query,
+      returns the word cloud data
+    tags:
+      - visualizations
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input query
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              q:
+                description: >
+                  Query string; can include search tags. If using
+                  quotes, make sure to escape them.
+                type: array
+                items:
+                  type: string
+                example: ["author:\"huchra, john\""]
+              sort:
+                type: array
+                items:
+                  type: string
+                example: ["date desc, bibcode desc"]
+              rows:
+                description: >
+                  Number of records to use in generating the word cloud;
+                  currently the maximum allowed is 500.
+                type: array
+                items:
+                  type: integer
+                example: [150]
+    responses:
+      '200':
+        description: Word cloud data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                word:
+                  description: Keywords are the words in the cloud
+                  type: object
+                  properties:
+                    idf:
+                      description: Inverse document frequency
+                      type: number
+                    record_count:
+                      type: integer
+                    total_occurrences:
+                      type: integer
+      '403':
+        description: Error with request

@@ -1,0 +1,745 @@
+biblib-classic:
+  get:
+    summary: (deprecated) Import libraries from ADS Classic
+    description: >
+      (deprecated) Import libraries from ADS Classic for the current user
+    tags:
+      - libraries
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Returns/upserts user's libraries
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  action:
+                    type: string
+                  description:
+                    type: string
+                  library_id:
+                    type: string
+                  name:
+                    type: string
+                  num_added:
+                    type: integer
+      '400':
+        description: User details not specified
+biblib-documents:
+  post:
+    summary: Add or remove documents from a library
+    parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      Add or delete a document to a given library. Returns the number
+      of documents added or removed.
+
+
+      The following type of user can add or remove documents:
+
+      * owner
+
+      * admin
+
+      * write
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the action to be performed and metadata of the library to be created.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - action
+              - bibcode
+            properties:
+              bibcode:
+                type: array
+                description: >
+                  List of bibcodes to be added or removed
+                items:
+                  type: string
+              action:
+                type: string
+                description: >
+                  'add' or 'remove' to add or remove the given bibcodes from the specified library
+    responses:
+      '200':
+        description:
+          Returns number of bibcodes added or removed
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number_added:
+                  type: integer
+                  description: >
+                    Number of bibcodes added, if 'add' is used
+                number_removed:
+                  type: integer
+                  description: >
+                    Number of bibcodes removed, if 'remove' is used
+      '400':
+        description: >
+          No username passed, bad library ID passed, wrong type passed,
+          or user requested a non-standard operation
+      '403':
+        description: >
+          User does not have permission to perform this operation
+  put:
+    summary: Update the metadata of a library
+    parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      Update the metadata of a given library.
+
+
+      The following type of user can edit library metadata:
+
+      * owner
+
+      * admin
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the metadata to update. If some fields don't
+        need to be changed, they don't need to be included in the payload.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: >
+                  New name of the library
+              description:
+                type: string
+                description: >
+                  New library description
+              public:
+                type: boolean
+                description: >
+                  true if the library should be publicly viewable,
+                  false if it should be private (note that this is case
+                  sensitive and should be lower case)
+    responses:
+      '200':
+        description: >
+          Returns the key/value that was requested to be updated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                public:
+                  type: boolean
+      '400':
+        description: >
+          No username passed, bad library ID passed, or wrong type passed
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '409':
+        description: >
+          Duplicate library name exists
+      '410':
+        description: >
+          Library specified does not exist
+  delete:
+    summary: Delete a library
+    parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      Delete the given library.
+
+
+      The following type of user can delete the library:
+
+      * owner
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          Returns empty object
+        content:
+          application/json:
+            schema:
+              type: object
+      '400':
+        description: >
+          No username passed or bad library ID passed
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '410':
+        description: >
+          Library specified does not exist
+biblib-libraries:
+  get:
+    summary: View all libraries for a given user
+    description: >
+      View all libraries for the user associated with the given API token.
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Metadata for all libraries for a given user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                libraries:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/libraryMetadata'
+      '400':
+        description: >
+          No username passed
+  post:
+    summary: Create a new library
+    description: >
+      Create a library for the requesting user. Returns the metadata of the
+      library created.
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the metadata and bibcodes of the library to be created.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: >
+                  (optional) name of the library (must be unique for that user).
+                  The default is Untitled Library, with an incremented integer
+                  starting with 1 appended.
+              description:
+                type: string
+                description: >
+                  (optional) description of the library. The default is "My ADS library"
+              public:
+                type: boolean
+                default: false
+                description: >
+                  (optional) set to true to allow public access. The default is false,
+                  or a private library
+              bibcode:
+                type: array
+                description: >
+                  (optional) list of bibcodes to add. The default is an empty library
+                items:
+                  type: string
+    responses:
+      '200':
+        description: >
+          Metadata of the library just created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                id:
+                  type: string
+                description:
+                  type: string
+                bibcode:
+                  type: array
+                  items:
+                    type: string
+      '400':
+        description: >
+          No username passed, or wrong type passed
+      '409':
+        description:
+          Duplicate library name exists
+biblib-libraries-library_id:
+  get:
+    summary: View a single library
+    parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      View metadata and contents of a specific library.
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Metadata and contents of the given library
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metadata:
+                  $ref: '#/components/schemas/libraryMetadata'
+                documents:
+                  type: array
+                  description: Array of bibcodes in library
+                  items:
+                    type: string
+                solr:
+                  type: object
+                  description: Response from solr, when validating library contents
+                  properties:
+                    response:
+                      type: object
+                      properties:
+                        docs:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              bibcode:
+                                type: string
+                        numFound:
+                          type: integer
+                        start:
+                          type: integer
+                    responseHeader:
+                      type: object
+                      properties:
+                        QTime:
+                          type: integer
+                        params:
+                          type: object
+                          properties:
+                            q:
+                              type: string
+                            fl:
+                              type: string
+                            start:
+                              type: string
+                            internal_logging_params:
+                              type: string
+                            sort:
+                              type: string
+                            fq:
+                              type: string
+                            rows:
+                              type: string
+                            wt:
+                              type: string
+                        status:
+                          type: integer
+                updates:
+                  type: object
+                  description: Updates from Solr validation
+                  properties:
+                    duplicates_removed:
+                      type: integer
+                      description: Number of bibcodes removed because they are duplicates
+                    update_list:
+                      type: array
+                      description: >
+                        List of dictionaries such that a single element describes
+                        the original bibcode (key) and the updated bibcode now being stored (item)
+                      items:
+                        type: object
+                    num_updated:
+                      type: integer
+                      description: Number of documents modified based on the response from Solr
+biblib-libraries-operations:
+  post:
+    summary: Perform set operations on one or more libraries
+    parameters:
+      - name: library_id
+        description: Library ID for the primary library
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      Perform set operations on one or more libraries. The library_id (string) is
+      the unique identifier of the primary library, as specified in the /libraries
+      GET response. Depending on the operation, a secondary library ID may need to
+      be passed in the post payload.
+
+      ## Examples
+
+      **Union**: take the union of 3 libraries, using the default description and public settings
+
+      ``` bash
+        $ curl -H "Authorization: Bearer $token" -H "Content-Type: application/json" \
+          https://api.adsabs.harvard.edu/v1/biblib/libraries/operations/iRZhyhvaSWe0uWwcXKt77w \
+          -X POST \
+          -d '{"action": "union", "libraries": ["rdRs4g4AQ522k9TJ2umtVA", "s56fjycaRMKxw6tDEr31XQ"], "name": "New union library"}'
+      ```
+
+
+      *Response*:
+
+
+      `{"id": "BeUbSWXtTPCaRhRV3nec_w", "bibcode": ["2009A&A...502..515G", "2011ApJ...734...87R", "2010ApJ...710..248C", "2003ApJ...595..665X", "2011ApJ...731L..12S", "2010ApJ...721..505R", "2010ApJ...710L.156R", "2010ApJ...723.1255R", "2006ApJ...639L..51A", "2001AJ....122.2993S", "2010ASPC..423..355R", "2010A&A...518A..59G", "2010ApJ...721L..48K"], "description": "Union of 891661ca-1bda-4967-b4b9-6c1c5cab7bef with [u'rdRs4g4AQ522k9TJ2umtVA', u's56fjycaRMKxw6tDEr31XQ']", "name": "New union library"}`
+
+
+      **Intersection**: take the intersection of 2 libraries, using the default public settings
+
+      ``` bash
+        $ curl -H "Authorization: Bearer $token" -H "Content-Type: application/json" \
+          https://api.adsabs.harvard.edu/v1/biblib/libraries/operations/BeUbSWXtTPCaRhRV3nec_w \
+          -X POST \
+          -d '{"action": "intersection", "libraries": ["rdRs4g4AQ522k9TJ2umtVA"], "name": "New intersection library", "description": "Sample intersection library"}'
+      ```
+
+
+      *Response*:
+
+
+      `{"id": "8V8DzNqyQuOyTX6RF9x7qQ", "bibcode": ["2001AJ....122.2993S", "2009A&A...502..515G", "2006ApJ...639L..51A", "2010ApJ...710..248C", "2003ApJ...595..665X", "2010A&A...518A..59G", "2011ApJ...731L..12S"], "description": "Sample intersection library", "name": "New intersection library"}`
+
+
+      **Difference**: take the difference of 2 libraries
+
+      ``` bash
+        $ curl -H "Authorization: Bearer $token" -H "Content-Type: application/json" \
+          https://api.adsabs.harvard.edu/v1/biblib/libraries/operations/BeUbSWXtTPCaRhRV3nec_w \
+          -X POST \
+          -d '{"action": "difference", "libraries": ["rdRs4g4AQ522k9TJ2umtVA"], "name": "New difference library", "description": "Sample difference library", "public": true}'
+      ```
+
+
+      *Response*:
+
+
+      `{"id": "9KBh8sVHQxaVkoPALtoXgg", "bibcode": ["2011ApJ...734...87R", "2010ApJ...723.1255R", "2010ApJ...710L.156R", "2010ASPC..423..355R", "2010ApJ...721L..48K", "2010ApJ...721..505R"], "description": "Sample difference library", "name": "New difference library"}`
+
+
+      **Empty**: empty a library of all of its bibcode contents
+
+      ``` bash
+        $ curl -H "Authorization: Bearer $token" -H "Content-Type: application/json" \
+          https://api.adsabs.harvard.edu/v1/biblib/libraries/operations/9KBh8sVHQxaVkoPALtoXgg \
+          -X POST \
+          -d '{"action": "empty"}'
+      ```
+
+      *Response*:
+
+
+      `{"public": true, "bibcode": [], "name": "New difference library", "description": "Sample difference library"}`
+
+
+      **Copy**: copy the bibcode contents from the primary library to the secondary library (this will not empty the library first)
+
+      ``` bash
+        $ curl -H "Authorization: Bearer $token" -H "Content-Type: application/json" \
+          https://api.adsabs.harvard.edu/v1/biblib/libraries/operations/BeUbSWXtTPCaRhRV3nec_w \
+          -X POST \
+          -d '{"action": "copy", "libraries": ["9KBh8sVHQxaVkoPALtoXgg"]}'
+      ```
+
+
+      *Response*:
+
+
+      `{"public": true, "bibcode": ["2009A&A...502..515G", "2010ApJ...710L.156R", "2010ApJ...710..248C", "2003ApJ...595..665X", "2011ApJ...731L..12S", "2010ApJ...721..505R", "2011ApJ...734...87R", "2010ApJ...723.1255R", "2006ApJ...639L..51A", "2001AJ....122.2993S", "2010ASPC..423..355R", "2010A&A...518A..59G", "2010ApJ...721L..48K"], "name": "New difference library", "description": "Sample difference library"}`
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the action to be performed and metadata of the library to be created.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - action
+            properties:
+              action:
+                type: string
+                description: >
+                  Set operation to perform; allowed values are:
+                    * union: take the union of the primary and the secondary
+                    libraries. The result is saved to a new library.
+                    * intersection: take the intersection of the primary and the
+                    secondary libraries. The result is saved to a new library
+                    * difference: take the difference between the primary and the
+                    secondary libraries. The result is saved to a new library
+                    * copy: copy the contents of the primary library into the
+                    secondary library. The secondary library is not emptied first;
+                    use the empty operation on the secondary library first in order
+                    to create a duplicate of the primary library in the secondary library
+                    * empty: empty the primary library of its contents (no secondary
+                    library ID is needed)
+              libraries:
+                type: array
+                description: >
+                  list of secondary library IDs; multiple secondary libraries are allowed
+                  for [union, intersection, difference]; one secondary library is allowed
+                  for copy; no secondary libraries are allowed for empty
+                items:
+                  type: string
+              name:
+                type: string
+                description: >
+                  name of the new library to be created for [union, intersection, difference];
+                  the name must be unique for a given user; if no name is specified, the
+                  name used will be "Untitled" with a timestamp
+              description:
+                type: string
+                description: >
+                  description of the new library to be created for [union, intersection,
+                  difference]; if no description is specified, the description used will
+                  include the set operation used and the primary and secondary library IDs
+              public:
+                type: boolean
+                description: >
+                  sets whether the new library created by [union, intersection,
+                  difference] is publicly viewable or not; the new library will be
+                  private unless otherwise specified
+    responses:
+      '200':
+        description: Metadata for created/modified library
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: ID of created library (if any)
+                  type: string
+                name:
+                  description: Name of created/modified library
+                  type: string
+                description:
+                  description: Description of created/modified library
+                  type: string
+                bibcode:
+                  description: Bibcodes in created/modified library
+                  items:
+                    type: string
+      '400':
+        description: >
+          No username passed, bad library ID passed, wrong type passed,
+          secondary libraries not specified where required, too many secondary libraries
+          specified, or user requested a non-standard operation
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '409':
+        description: >
+          Duplicate library name exists
+biblib-permissions:
+  get:
+    summary: View permissions of a library
+    parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      View permissions of a specific library.
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: List of all permissions for the user for the library
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: array
+                  description: >
+                    Key is email of the user, item is a list of that user's
+                    permissions for the given library
+                  items:
+                    type: string
+      '400':
+        description: >
+          No username passed, or bad library ID passed
+      '403':
+        description: >
+          User does not have permission to perform this operation
+  post:
+    summary: Edit permission of a library
+    parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      Edit the permissions of a library
+
+
+      The following type of user can add or remove documents:
+
+      * owner
+
+      * admin
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the email of the user whose permissions will be modified
+        and the permissions to be added or removed. User may not modify their
+        own permissions
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - permission
+            properties:
+              email:
+                type: string
+                description: >
+                  Email address of user whose permissions will be modified
+              permission:
+                type: object
+                description: >
+                  Only required to include permissions that will be modified
+                properties:
+                  read:
+                    type: boolean
+                  write:
+                    type: boolean
+                  admin:
+                    type: boolean
+    responses:
+      '200':
+        description: >
+          Returns empty object
+        content:
+          application/json:
+            schema:
+              type: object
+      '400':
+        description: >
+          No username passed, bad library ID passed, or wrong type passed
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '404':
+        description: >
+          User does not have an ADS account
+biblib-transfer:
+  post:
+    summary: Transfer ownership of a library
+    parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
+    description: >
+      Transfer ownership of a library from one user to another
+
+
+      The following type of user can add or remove documents:
+
+      * owner
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the email of the user that library ownership will
+        be transferred to
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+                description: >
+                  Email address of user who ownership will be transferred to
+    responses:
+      '200':
+        description: >
+          Returns empty object
+        content:
+          application/json:
+            schema:
+              type: object
+      '400':
+        description: >
+          No username passed, bad library ID passed, or wrong type passed
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '404':
+        description: >
+          User does not have an ADS account
+biblib-twopointoh:
+  get:
+    summary: (retired) Import libraries from ADS 2.0
+    description: >
+      (retired) Import libraries from ADS 2.0 for the current user
+    tags:
+      - libraries
+    security:
+    - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Success (returns/upserts user's libraries)
+      '400':
+        description: User details not specified

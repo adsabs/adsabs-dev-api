@@ -1,0 +1,52 @@
+graphics:
+  get:
+    summary: (internal) Return graphics for a bibcode
+    description: Return graphics information for a bibcode
+    tags:
+      - graphics
+    security:
+    - ApiKeySecurity: []
+    parameters:
+      - name: bibcode
+        required: true
+        in: path
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Graphics info for the bibcode
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  bibcode:
+                    type: string
+                  number:
+                    type: integer
+                  pick:
+                    type: string
+                  header:
+                    type: string
+                  figures:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        figure_label:
+                          type: string
+                        figure_caption:
+                          type: string
+                        figure_type:
+                          type: string
+                        images:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              thumbnail:
+                                type: string
+                              highres:
+                                type: string

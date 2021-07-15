@@ -1,0 +1,99 @@
+author-affiliation-export:
+  post:
+    summary: Export the author-affiliations report
+    description: >
+      Export the author-affiliations report, generally used for reporting
+      co-authors and their affiliations to grant agencies. Outputs to CSV,
+      Excel, text, or directly to the browser/terminal. To save to file,
+      use your terminal's flags or programming language's functionality.
+    tags:
+      - author affiliation
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: Formatted report to output, along with format string
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              format:
+                description: >
+                  Formatting string for the export.
+                type: string
+                enum:
+                  - "| Lastname, Firstname | Affiliation | Last Active Date | [csv]"
+                  - "| Lastname | Firstname | Affiliation | Last Active Date | [csv]"
+                  - "| Lastname, Firstname | Affiliation | Last Active Date | [excel]"
+                  - "| Lastname | Firstname | Affiliation | Last Active Date | [excel]"
+                  - "Lastname, Firstname(Affiliation)Last Active Date[text]"
+                  - "Lastname, Firstname(Affiliation)Last Active Date[browser]"
+              selected:
+                description: >
+                  Formatted data to export.
+                type: array
+                items:
+                  type: string
+                  description: >
+                    Format: Author name (last, first) | affiliation | last active date (year/month)
+    responses:
+      '200':
+        description: Returns file or text, depending on format requested
+      '400':
+        description: Bad request, check payload
+author-affiliation-search:
+  post:
+    summary: Create the author-affiliations report
+    description: >
+      Create the author-affiliations report, generally used for reporting
+      co-authors and their affiliations to grant agencies. Returns
+      information in JSON.
+    tags:
+      - author affiliation
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: JSON containing the bibcode(s) to produce the author affiliations for.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/bibcodesObject'
+              - type: object
+                properties:
+                  maxauthor:
+                    description: First N authors for each paper to report on
+                    type: integer
+                  numyears:
+                    description: Last N years to retrieve affiliations for
+                    type: integer
+    responses:
+      '200':
+        description: JSON containing the requested author affiliations
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      authorName:
+                        type: string
+                      affiliations:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          years:
+                            type: array
+                            items:
+                              type: string
+                          lastActiveDate:
+                            type: string
+      '400':
+        description: Bad request, check payload
+      '404':
+        description: No result from Solr

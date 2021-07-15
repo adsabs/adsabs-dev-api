@@ -1,0 +1,202 @@
+reference-pickle_crf:
+  put:
+    summary: (internal) Create new crf text model file
+    description: >
+      Endpoint to be called internally whwnever the models (either text
+      or xml) have been changed, to create a new crf text model file.
+    tags:
+      - reference
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: New crf text matcher file created successfully
+reference-pickle_source_matcher:
+  put:
+    summary: (internal) Create new source matcher file
+    description: >
+      Endpoint to be called internally whenever the files of source
+      matcher have been updated, to create a new source matcher file.
+    tags:
+      - reference
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: New source matcher file created successfully
+      '400':
+        description: Error creating new source matcher file
+reference-text:
+  post:
+    summary: Resolve one or more reference strings into a bibcode
+    description: >
+      Given one or more reference strings (such as from the references section
+      of a published paper), returns the bibcode of the matching paper.
+    tags:
+      - reference
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input reference strings
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - reference
+            properties:
+              reference:
+                type: array
+                items:
+                  type: string
+            example: {"reference":["Kravchenko et al. 2020, A&A 637, L6"]}
+    responses:
+      '200':
+        description: >
+          JSON containing the input reference, the matching bibcode, and the confidence score
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resolved:
+                  type: object
+                  properties:
+                    bibcode:
+                      description: Output matching bibcode
+                      type: string
+                    refstring:
+                      description: Input reference string
+                      type: string
+                    score:
+                      description: Confidence score, ranging from 0 (low) to 1 (high)
+                      type: string
+                    comment:
+                      description: Error message if parsing fails
+                      type: string
+              example: {'refstring': 'Kravchenko et al. 2020, A&A 637, L6', 'score': '1.0', 'bibcode': '2020A&A...637L...6K'}
+      '400':
+        description: Bad request, check payload
+reference-text-reference:
+  get:
+    summary: Resolve a reference string into a bibcode
+    description: >
+      Given a reference string (such as from the references section
+      of a published paper), returns the bibcode of the matching paper.
+    tags:
+      - reference
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - name: reference
+        description: URL-encoded reference string
+        required: true
+        in: path
+        schema:
+          type: string
+        example: "Kravchenko%20et%20al.%202020%2C%20A%26A%20637%2C%20L6"
+    responses:
+      '200':
+        description: >
+          JSON containing the input reference, the matching bibcode, and the confidence score
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resolved:
+                  type: object
+                  properties:
+                    bibcode:
+                      description: Output matching bibcode
+                      type: string
+                    refstring:
+                      description: Input reference string
+                      type: string
+                    score:
+                      description: Confidence score, ranging from 0 (low) to 1 (high)
+                      type: string
+                    comment:
+                      description: Error message if parsing fails
+                      type: string
+              example: {"resolved": {"refstring": "Kravchenko et al. 2020, A&A 637, L6", "score": "1.0", "bibcode": "2020A&A...637L...6K"}}
+reference-xml:
+  post:
+    summary: Resolve one or more parsed references into a bibcode
+    description: >
+      Given one or more parsed reference strings, returns the bibcode
+      of the matching paper.
+    tags:
+      - reference
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the parsed input references.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - parsed_reference
+            properties:
+              parsed_reference:
+                type: array
+                items:
+                  type: string
+                  description: >
+                    Parsed references, passed as serialized JSON. The following
+                    keywords are accepted (note that each value should be formatted
+                    as a string):
+
+                    * authors (value is formatted as "Last1, First1, Last2, First2")
+
+                    * journal
+
+                    * title
+
+                    * volume
+
+                    * issue
+
+                    * page
+
+                    * year
+
+                    * doi
+
+                    * arxiv
+
+                    * refstr (used for output only)
+
+                    * issn
+
+                    * refplaintext (if the parsed input fails, this is used for parsing)
+                example: ["{'authors': 'Baumjohann, W., Haerendel, G.H.', 'journal': 'Geophysical Monograph', 'title': 'Physics of Magnetic Flux Ropes', 'volume': '58', 'page': '627', 'year': '1990', 'refstr': 'Baumjohann, W., Haerendel, G.H., 1990. Geophysical Monograph, Physics of Magnetic Flux Ropes, 58, 627.', 'refplaintext': 'Baumjohann, W., Haerendel, G.H., 1990. Geophysical Monograph, Physics of Magnetic Flux Ropes, 58, 627.'}"]
+    responses:
+      '200':
+        description: >
+          JSON containing the input reference, the matching bibcode, and the confidence score
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resolved:
+                  type: object
+                  properties:
+                    bibcode:
+                      description: Output matching bibcode
+                      type: string
+                    refstring:
+                      description: Input reference string
+                      type: string
+                    score:
+                      description: Confidence score, ranging from 0 (low) to 1 (high)
+                      type: string
+                    comment:
+                      description: Error message if parsing fails
+                      type: string
+      '400':
+        description: Bad request, check payload
