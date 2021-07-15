@@ -1,0 +1,37 @@
+citation_helper:
+  post:
+    summary: Suggest missing citations
+    description: >
+      Given a set of bibcodes, this endpoint uses a "friends of friends" analysis
+      to suggest up to 10 missing citations. These missing citations cite
+      and/or are cited by the papers in the given list, but are not in the list.
+      The score given with each returned paper reflects how many papers in the input
+      list the result is associated with.
+    tags:
+      - citation helper
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: JSON containing the bibcode(s) to run the citation helper for
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/bibcodesObject'
+    responses:
+      '200':
+        description: JSON containing the suggested papers
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  author:
+                    type: string
+                  bibcode:
+                    type: string
+                  score:
+                    type: integer
+                  title:
+                    type: string

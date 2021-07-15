@@ -1,0 +1,245 @@
+search-bigquery:
+  post:
+    summary: Search using bigquery
+    description: >
+      Search endpoint which accepts a list of many IDs (bibcodes). Supports
+      paging.
+
+
+      This endpoint accepts standard search query parameters and returns
+      standard search results, but it also accepts as input a very large query
+      (i.e. a query that can be expressed only as a list of search
+      criteria, typically IDs). There is currently no limit to the size of the
+      submitted data (besides buffer/time limits imposed by our API
+      frontend); however, there are severe limits on how often you can call
+      this endpoint. Typically, only 100 requests per day per user are allowed.
+
+
+      The `bigquery` is always executed as a filter **after** the main query
+      (to filter out unwanted results and keep only the results
+      specified by the `bigquery`). You may want to use `q=*:*` to filter
+      contents of the whole database, however it is advisable to make
+      the `q` as specific as possible. Broad queries have higher `qTime`
+      (execution time) and that will be counted towards your rate-limit
+      (in the future).
+
+
+      The bigquery filter is *applied only after* the main search (i.e. it
+      limits results of the main search).
+
+
+      ## Example requests
+
+
+      Python
+
+
+      ```
+        import requests
+        bibcodes="bibcode\n1907AN....174...59.\n1908PA.....16..445.\n1989LNP...334..242S"
+        r = requests.post('https://api.adsabs.harvard.edu/v1/search/bigquery',
+             params={'q':'*:*', 'wt':'json', 'fq':'{!bitset}', 'fl':'bibcode'},
+             headers={'Authorization': 'Bearer:TOKEN'},
+             data=bibcodes)
+      ```
+
+
+      Bash curl
+
+
+      ```
+        curl 'https://api.adsabs.harvard.edu/v1/search/bigquery?q=*:*&fl=bibcode' \
+        -X 'POST' -H 'Authorization: Bearer TOKEN' -H 'Content-Type: big-query/csv' \
+        -d $'bibcode\n1907AN....174...59.\n1908PA.....16..445.\n1989LNP...334..242S'
+      ```
+    security:
+      - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/q'
+      - $ref: '#/components/parameters/fq'
+      - $ref: '#/components/parameters/fl'
+      - $ref: '#/components/parameters/start'
+      - $ref: '#/components/parameters/rows'
+      - $ref: '#/components/parameters/sort'
+    requestBody:
+      description: >
+        Newline separated list of values; the first line specifies the index
+        field, the rest are the search values. <br/> Currently, we
+        allow searching in `bibcode` index only. You can submit `canonical`
+        as well as `alternate` bibcodes - the search will automatically
+        match both. In the future, the list of available indexes may be
+        extended.
+
+
+        Note: to correctly format the POST payload, including the newline (\n)
+        characters, in a bash curl request, use ANSI-C quoting (e.g. `$'...'`)
+        as shown in the examples.
+      content:
+        big-query/csv:
+          schema:
+            type: string
+    responses:
+      '200':
+        $ref: '#/components/responses/SearchResults'
+      '404':
+        $ref: '#/components/responses/SearchResults'
+      '499':
+        description: Server too busy
+      '500':
+        description: Server error
+    tags:
+      - search
+search-qtree:
+  get:
+    summary: (advanced) Search ADS and return a query tree object
+    description: >
+      Returns a `query tree` (Abstract Syntax Tree - AST) as understood by our
+      query parser. The structure can be used by external applications to
+      rewrite the query or check its syntactic correctness.
+
+
+      ## Example result
+
+      ```JSON
+
+      {
+           "qtree": "\n{\"name\":\"OPERATOR\", \"label\":\"DEFOP\", \"children\": [\n    {\"name\":\"MODIFIER\", \"label\":\"MODIFIER\", \"children\": [\n        {\"name\":\"TMODIFIER\", \"label\":\"TMODIFIER\", \"children\": [\n            {\"name\":\"FIELD\", \"label\":\"FIELD\", \"children\": [\n                {\"name\":\"QNORMAL\", \"label\":\"QNORMAL\", \"children\": [\n                    {\"name\":\"TERM_NORMAL\", \"input\":\"star\", \"start\":0, \"end\":3}]\n                }]\n            }]\n        }]\n    }]\n}",
+           "responseHeader": {
+            "status": 0,
+            "QTime": 6,
+            "params": {
+             "q": "star",
+             "wt": "json",
+             "fl": "id"
+            }
+           }
+          }
+      ```
+    parameters:
+      - $ref: '#/components/parameters/q'
+      - $ref: '#/components/parameters/fq'
+      - $ref: '#/components/parameters/fl'
+      - $ref: '#/components/parameters/start'
+      - $ref: '#/components/parameters/rows'
+      - $ref: '#/components/parameters/sort'
+    responses:
+      '200':
+        $ref: '#/components/responses/QTree'
+      '400':
+        description: Malformed request
+      '404':
+        description: Resource not found
+      '499':
+        description: Server too busy
+      '500':
+        description: Server error
+    tags:
+      - search
+search-query:
+  get:
+    summary: Search ADS
+    description: >
+      Do a search.
+
+
+      Query the search engine and return results. All parameters have to be
+      properly url-encoded UTF-8. The response body will always be JSON
+      encoded.
+
+
+      ## Example Search
+
+      `q=bibcode:2012A%26A...542A..16R&fl=bibcode,author,pub,identifier,title,property,abstract,keyword,aff`
+
+      ## Example Response
+
+      ```{
+        "responseHeader":{
+          "status":0,
+          "QTime":3,
+          "params":{
+            "q":"bibcode:2012A&A...542A..16R",
+            "fl":"bibcode,author,pub,identifier,title,property,abstract,keyword",
+            "start":"0",
+            "rows":"10",
+            "wt":"json"}},
+        "response":{"numFound":1,"start":0,"docs":[
+          {
+            "identifier":["2012arXiv1204.4485R",
+              "2012A&A...542A..16R",
+              "10.1051/0004-6361/201118723",
+              "10.1051/0004-6361/201118723",
+              "arXiv:1204.4485",
+              "2012arXiv1204.4485R"],
+            "abstract":"X-ray surveys contain sizable numbers [...],
+            "property":["ARTICLE",
+              "ASSOCIATED",
+              "DATA",
+              "EPRINT_OPENACCESS",
+              "ESOURCE",
+              "OPENACCESS",
+              "PUB_OPENACCESS",
+              "REFEREED"],
+            "bibcode":"2012A&A...542A..16R",
+            "author":["Ranalli, P.",
+              "Comastri, A.",
+              "Zamorani, G.",
+              "Cappelluti, N.",
+              "Civano, F.",
+              "Georgantopoulos, I.",
+              "Gilli, R.",
+              "Schinnerer, E.",
+              "Smolčić, V.",
+              "Vignali, C."],
+            "pub":"Astronomy and Astrophysics",
+            "keyword":["X-rays: galaxies",
+              "radio continuum: galaxies",
+              "galaxies: fundamental parameters",
+              "galaxies: star formation",
+              "galaxies: active",
+              "galaxies: high-redshift",
+              "Astrophysics - Cosmology and Extragalactic Astrophysics"],
+            "title":["X-ray properties of radio-selected star forming galaxies in the Chandra-COSMOS survey"]}]
+        }}
+      ```
+
+      ## Example Search Requests
+
+      Query | Explanation
+
+      ------|-------------------------------------------------
+       `q=bibcode:2011ApJ...737..103S` |  Search by bibcode
+       `q=black+holes&fq=database:astronomy` |  Search for "black holes", restricted to astronomy content
+       `q=dark+energy&fq=author:"Civano,+F"&sort=citation_count+desc` |  Search for "dark energy", filter by author, sort by citation count
+      `q=dark+energy&sort=citation_count+desc&fl=bibcode,property` |   Return
+      *bibcode* and *property* values
+
+      `q=author:"Kurtz,+M"&fq=property:refereed`|   Limit a search to only
+      refereed articles
+
+      `q=transiting+exoplanets&rows=200`|  Search for "transiting exoplanets",
+      get 200 rows
+
+      `q=transiting+exoplanets&rows=200&start=201`|   Same search but get the
+      next 200 rows
+
+    parameters:
+      - $ref: '#/components/parameters/q'
+      - $ref: '#/components/parameters/fq'
+      - $ref: '#/components/parameters/fl'
+      - $ref: '#/components/parameters/start'
+      - $ref: '#/components/parameters/rows'
+      - $ref: '#/components/parameters/sort'
+    responses:
+      '200':
+        $ref: '#/components/responses/SearchResults'
+      '400':
+        description: Malformed request
+      '404':
+        description: Resource not found
+      '499':
+        description: Server too busy
+      '500':
+        description: Server error
+    tags:
+      - search

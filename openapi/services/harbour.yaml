@@ -1,0 +1,315 @@
+harbour-auth-classic:
+  post:
+    summary: Sign into ADS Classic account
+    description: >
+      Sign into ADS Classic account and link it to your main ADS account
+    tags:
+      - classic import
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: JSON containing the user's Classic ADS authentication
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - classic_email
+              - classic_mirror
+              - classic_password
+            properties:
+              classic_email:
+                type: string
+              classic_mirror:
+                type: string
+              classic_password:
+                type: string
+    responses:
+      '200':
+        description: >
+          JSON containing user's stored Classic information.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                classic_email:
+                  type: string
+                classic_mirror:
+                  type: string
+                classic_authed:
+                  type: boolean
+      '400':
+        description: Malformed payload; see error message for details
+      '404':
+        description: Classic authentication failed
+      '500':
+        description: Classic did not return a cookie
+      '504':
+        description: Classic timeout
+harbour-auth-twopointoh:
+  post:
+    summary: (retired) Authenticate user in ADS 2.0
+    description: >
+      (retired) Audenticate user's ADS 2.0 credentials with the
+      external ADS Classic endpoint
+    tags:
+      - classic import
+    security:
+    - ApiKeySecurity: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              twopointoh_email:
+                type: string
+              twopointoh_password:
+                type: string
+    responses:
+      '200':
+        description: User info
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                twopointoh_authed:
+                  type: boolean
+                twopointoh_email:
+                  type: string
+      '400':
+        description: Malformed request
+      '404':
+        description: Unknown user; incorrect password; failed authentication
+      '500':
+        description: Unknown error
+      '504':
+        description: Timeout
+harbour-export-twopointoh:
+  get:
+    summary: (retired) Export ADS 2.0 libraries
+    description: >
+      (retired) Return ADS 2.0 libraries in a format users can use to
+      import them to other services. The following third-party services
+      are supported: Zotero, Papers, Mendeley.
+    tags:
+      - classic import
+    security:
+    - ApiKeySecurity: []
+    parameters:
+      - name: export
+        description: Service to export to
+        required: true
+        in: path
+        schema:
+          type: string
+    responses:
+      '200':
+        description: URL to file import
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+      '400':
+        description: Missing user account; user has no libraries
+      '500':
+        description: Unknown error
+harbour-libraries-classic:
+  get:
+    summary: (deprecated) Fetch ADS Classic libraries
+    description: >
+      (deprecated) Collect user's ADS Classic libraries and return
+      them as a JSON.
+    tags:
+      - classic import
+    security:
+    - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/user_id'
+    responses:
+      '200':
+        description: JSON of user's Classic libraries
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  documents:
+                    type: array
+                    items:
+                      type: string
+      '400':
+        description: Missing user account
+      '500':
+        description: Unknown error
+      '504':
+        description: Classic timeout
+harbour-libraries-twopointoh:
+  get:
+    summary: (retired) Fetch ADS 2.0 libraries
+    description: >
+      (retired) Collect user's ADS 2.0 libraries and return as a JSON.
+    tags:
+      - classic import
+    security:
+    - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/user_id'
+    responses:
+      '200':
+        description: JSON of user's ADS 2.0 libraries
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  documents:
+                    type: array
+                    items:
+                      type: string
+      '400':
+        description: Missing user account; user has no libraries
+      '500':
+        description: Unknown error
+harbour-mirrors:
+  get:
+    summary: Fetch a list of ADS Classic mirrors
+    description: >
+      Returns the list of mirrors used by ADS Classic
+    tags:
+      - classic import
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: Array of available mirrors
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+harbour-myads-classic:
+  get:
+    summary: (internal) Fetch ADS Classic myADS setup
+    description: >
+      Collect user's ADS Classic myADS setups for use by the importing
+      endpoint.
+    tags:
+      - classic import
+    security:
+    - ApiKeySecurity: []
+    parameters:
+      - $ref: '#/components/parameters/user_id'
+    responses:
+      '200':
+        description: User's Classic myADS setups
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    description: User ID
+                    type: integer
+                  email:
+                    description: User email
+                    type: string
+                  firstname:
+                    description: User first name
+                    type: string
+                  lastname:
+                    description: User last name
+                    type: string
+                  daily_t1:
+                    description: keywords 1 (daily arXiv)
+                    type: string
+                  groups:
+                    description: arXiv classes (daily)
+                    type: array
+                    items:
+                      type: string
+                  phy_t1:
+                    description: keywords 1 (physics)
+                    type: string
+                  phy_t2:
+                    description: keywords 2 (physics)
+                    type: string
+                  phy_aut:
+                    description: authors (physics)
+                    type: string
+                  pre_t1:
+                    description: keywords 1 (weekly arXiv)
+                    type: string
+                  pre_t2:
+                    description: keywords 2 (weekly arXiv)
+                    type: string
+                  pre_aut:
+                    description: authors (weekly arXiv)
+                    type: string
+                  ast_t1:
+                    description: keywords 1 (astronomy)
+                    type: string
+                  ast_t2:
+                    description: keywords 2 (astronomy)
+                    type: string
+                  ast_aut:
+                    description: authors (astronomy)
+                    type: string
+                  disabled:
+                    description: Categories for which emails are disabled
+                    type: array
+                    items:
+                      type: string
+      '400':
+        description: Missing user account
+      '500':
+        description: Unknown error
+      '504':
+        description: Classic timeout
+harbour-user:
+  get:
+    summary: Fetch user's ADS Classic information
+    description: >
+      Returns a user's ADS Classic registration email and mirror
+    tags:
+      - classic import
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          JSON containing user's Classic information. User is determined
+          by the API token used.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                classic_email:
+                  type: string
+                classic_mirror:
+                  type: string
+                twopointoh_email:
+                  type: string
+      '400':
+        description: User does not have an ADS Classic account

@@ -1,0 +1,136 @@
+objects:
+  post:
+    summary: Return object identifers for a given string
+    description: >
+      For a given string, returns the object identifiers from either NED or
+      SIMBAD, whichever is specified
+    tags:
+      - objects
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing either a list of object names ("objects") or a list
+        of SIMBAD object identifiers ("identifiers")
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              source:
+                type: string
+                enum:
+                  - simbad
+                  - ned
+                example: "SIMBAD"
+              identifiers:
+                type: array
+                items:
+                  type: string
+                example: ["1575544"]
+              objects:
+                type: array
+                items:
+                  type: string
+                example: ["M31"]
+    responses:
+      '200':
+        description: >
+          JSON containing the input object or identifier as the key and the values
+          are the canonical names or identifiers. If the object or identifier was
+          not recognized, the value returned with be None.
+
+
+          Note: this service also returns a 200 even if an error was encountered;
+          be sure to read the returned error message carefully in that case.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                object or identifier:
+                  type: object
+                  properties:
+                    id:
+                      description: Integer or string, depending on input source
+                      type: string
+                    canonical:
+                      type: string
+              example: {"1575544": {"id": "1575544","canonical": "M  31"}}
+objects-nedsrv:
+  post:
+    summary: (internal) Returns object NED refcodes for a given object list
+    description: Returns object NED refcodes for a given object list
+    tags:
+      - objects
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              objects:
+                type: array
+                items:
+                  type: string
+              output_format:
+                type: string
+    responses:
+      '200':
+        description: NED refcodes
+        content:
+          text/plain:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: string
+                ambiguous:
+                  type: array
+                  items:
+                    type: string
+      '400':
+        description: Error with NED API
+      '504':
+        description: Connection error with NED API
+objects-query:
+  post:
+    summary: Return a Solr query with object identifiers
+    description: >
+      For a given object, return a Solr query that expands the object
+      to include the SIMBAD and NED identifiers.
+    tags:
+      - objects
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input object query to expand
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              query:
+                type: array
+                items:
+                  type: string
+            example: {"query":["object:m31"]}
+    responses:
+      '200':
+        description: >
+          JSON containing the expanded search query.
+
+
+          Note: this service also returns a 200 even if an error was encountered;
+          be sure to read the returned error message carefully in that case.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+              example: {"query": "((=abs:m31 OR simbid:1575544 OR nedid:MESSIER_031) database:astronomy)"}
