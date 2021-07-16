@@ -128,12 +128,7 @@ components:
       $ref: 'schemas.yaml#/libraryMetadata'
   requestBodies:
     exportBody:
-      description: >
-          JSON containing the bibcodes to export
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/bibcodeObject'
+      $ref: 'requestBodies.yaml#/exportBody'
 security:
   - ApiKeySecurity: []
 paths:
