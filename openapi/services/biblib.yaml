@@ -229,7 +229,7 @@ biblib-libraries:
                 libraries:
                   type: array
                   items:
-                    $ref: '#/components/schemas/libraryMetadata'
+                    $ref: '../schemas.yaml#/libraryMetadata'
       '400':
         description: >
           No username passed
@@ -322,7 +322,7 @@ biblib-libraries-library_id:
               type: object
               properties:
                 metadata:
-                  $ref: '#/components/schemas/libraryMetadata'
+                  $ref: '../schemas.yaml#/libraryMetadata'
                 documents:
                   type: array
                   description: Array of bibcodes in library

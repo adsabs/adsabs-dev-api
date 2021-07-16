@@ -11,14 +11,14 @@ export-aastex:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: AASTeX export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the AASTeX format
     tags:
@@ -27,7 +27,7 @@ export-aastex:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -44,14 +44,14 @@ export-ads:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: ADS (generic tagged) export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the ADS format
     tags:
@@ -60,7 +60,7 @@ export-ads:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -77,14 +77,14 @@ export-bibtex:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: BibTeX export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the BibTeX format
     tags:
@@ -93,7 +93,7 @@ export-bibtex:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -110,14 +110,14 @@ export-bibtexabs:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: BibTeX + abstract export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the BibTeX + abstract format
     tags:
@@ -126,7 +126,7 @@ export-bibtexabs:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -147,7 +147,7 @@ export-csl:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/bibcodesObject'
+              - $ref: '../schemas.yaml#/bibcodesObject'
               - type: object
                 required:
                   - style
@@ -178,7 +178,7 @@ export-csl:
                     type: string
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
@@ -199,7 +199,7 @@ export-custom:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/bibcodesObject'
+              - $ref: '../schemas.yaml#/bibcodesObject'
               - type: object
                 required:
                   - format
@@ -211,7 +211,7 @@ export-custom:
                     type: string
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
@@ -228,14 +228,14 @@ export-dcxml:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: Dublin Core (DC) XML export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the Dublin Core (DC) XML format
     tags:
@@ -244,7 +244,7 @@ export-dcxml:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -261,14 +261,14 @@ export-endnote:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: EndNote export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the EndNote format
     tags:
@@ -277,7 +277,7 @@ export-endnote:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -294,14 +294,14 @@ export-icarus:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: Icarus export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the Icarus format
     tags:
@@ -310,7 +310,7 @@ export-icarus:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -327,14 +327,14 @@ export-ieee:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: IEEE export (Unicode-encoded) for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the IEEE format
     tags:
@@ -343,7 +343,7 @@ export-ieee:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -360,14 +360,14 @@ export-medlars:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: MEDLARS export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the MEDLARS format
     tags:
@@ -376,7 +376,7 @@ export-medlars:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -393,14 +393,14 @@ export-mnras:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: MNRAS export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the MNRAS format
     tags:
@@ -409,7 +409,7 @@ export-mnras:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -426,14 +426,14 @@ export-procite:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: ProCite export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the ProCite format
     tags:
@@ -442,7 +442,7 @@ export-procite:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -459,14 +459,14 @@ export-refabsxml:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: REFABS-XML export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the REFABS-XML format
     tags:
@@ -475,7 +475,7 @@ export-refabsxml:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -492,14 +492,14 @@ export-refworks:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: RefWorks export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the RefWorks format
     tags:
@@ -508,7 +508,7 @@ export-refworks:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -525,14 +525,14 @@ export-refxml:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: REF-XML export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the REF-XML format
     tags:
@@ -541,7 +541,7 @@ export-refxml:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -558,14 +558,14 @@ export-ris:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: RIS (Refman) export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the RIS (Refman) format
     tags:
@@ -574,7 +574,7 @@ export-ris:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -591,14 +591,14 @@ export-rss:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: RSS export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the RSS format
     tags:
@@ -607,7 +607,7 @@ export-rss:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -615,8 +615,8 @@ export-rss-link:
   get:
     summary: RSS export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
-      - $ref: '#/components/parameters/link'
+      - $ref: '../parameters.yaml#/bibcode'
+      - $ref: '../parameters.yaml#/link'
     description: >
       Export the given bibcode in the RSS format
     tags:
@@ -625,7 +625,7 @@ export-rss-link:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -642,14 +642,14 @@ export-soph:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: Solar Physics (SoPh) export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the Solar Physics (SoPh) format
     tags:
@@ -658,7 +658,7 @@ export-soph:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr
@@ -675,14 +675,14 @@ export-votable:
       $ref: '#/components/requestBodies/exportBody'
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponse'
+        $ref: '../responses.yaml#/ExportResponse'
       '404':
         description: >
           No result from Solr
   get:
     summary: VOTables export for a single bibcode (GET)
     parameters:
-      - $ref: '#/components/parameters/bibcode'
+      - $ref: '../parameters.yaml#/bibcode'
     description: >
       Export the given bibcode in the VOTables format
     tags:
@@ -691,7 +691,7 @@ export-votable:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/ExportResponseGet'
+        $ref: '../responses.yaml#/ExportResponseGet'
       '404':
         description: >
           No result from Solr

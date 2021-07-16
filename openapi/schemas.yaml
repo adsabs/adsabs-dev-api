@@ -330,7 +330,7 @@ orcid-work-from:
   description: >
     JSON from the ORCID API, describing a single record
   allOf:
-    - $ref: '#/components/schemas/orcid-work-to'
+    - $ref: 'schemas.yaml#/orcid-work-to'
     - type: object
       properties:
         created-date:
@@ -473,7 +473,7 @@ qtree:
   type: object
   properties:
     responseHeader:
-      $ref: '#/components/schemas/responseHeader'
+      $ref: 'schemas.yaml#/responseHeader'
     qtree:
       type: string
       description: serialized JSON
@@ -504,7 +504,7 @@ results:
   type: object
   properties:
     responseHeader:
-      $ref: '#/components/schemas/responseHeader'
+      $ref: 'schemas.yaml#/responseHeader'
     numFound:
       type: integer
     start:
@@ -512,20 +512,20 @@ results:
     docs:
       type: array
       items:
-        $ref: '#/components/schemas/doc'
+        $ref: 'schemas.yaml#/doc'
 vaultObject:
   type: object
   properties:
     q:
-      $ref: '#/components/parameters/q'
+      $ref: 'parameters.yaml#/q'
     fl:
-      $ref: '#/components/parameters/fl'
+      $ref: 'parameters.yaml#/fl'
     start:
-      $ref: '#/components/parameters/start'
+      $ref: 'parameters.yaml#/start'
     rows:
-      $ref: '#/components/parameters/rows'
+      $ref: 'parameters.yaml#/rows'
     sort:
-      $ref: '#/components/parameters/sort'
+      $ref: 'parameters.yaml#/sort'
     fq:
       type: string
       description: >

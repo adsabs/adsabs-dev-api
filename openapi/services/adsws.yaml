@@ -262,7 +262,7 @@ accounts-reset-password:
     tags:
       - adsws
     parameters:
-      - $ref: '#/components/parameters/token'
+      - $ref: '../parameters.yaml#/token'
     responses:
       '200':
         description: Email if successful
@@ -329,7 +329,7 @@ accounts-reset-password:
     security:
       - XCsrfSecurity: []
     parameters:
-      - $ref: '#/components/parameters/token'
+      - $ref: '../parameters.yaml#/token'
     requestBody:
       content:
         application/json:
@@ -386,7 +386,7 @@ accounts-token:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/TokenResponse'
+        $ref: '../responses.yaml#/TokenResponse'
       '500':
         description: No API token found
   put:
@@ -398,7 +398,7 @@ accounts-token:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/TokenResponse'
+        $ref: '../responses.yaml#/TokenResponse'
       '503':
         description: Database error
 accounts-user:
@@ -472,7 +472,7 @@ accounts-verify:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/token'
+      - $ref: '../parameters.yaml#/token'
     responses:
       '200':
         description: Message if successful

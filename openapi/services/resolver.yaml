@@ -17,7 +17,7 @@ resolver-bibcode:
           type: string
     responses:
       '200':
-        $ref: '#/components/responses/ResolverResponse'
+        $ref: '../responses.yaml#/ResolverResponse'
       '400':
         description: Malformed request
       '404':
@@ -195,7 +195,7 @@ resolver-bibcode-link_type:
           type: string
     responses:
       '200':
-        $ref: '#/components/responses/ResolverResponse'
+        $ref: '../responses.yaml#/ResolverResponse'
       '400':
         description: Malformed request
       '404':

@@ -29,7 +29,7 @@ orcid-export:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/iso_datestring'
+      - $ref: '../parameters.yaml#/iso_datestring'
     responses:
       '200':
         description: Recently updated ORCID users
@@ -59,7 +59,7 @@ orcid-get-profile:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
+      - $ref: '../parameters.yaml#/orcidId'
     responses:
       '200':
         description: ORCID user profile
@@ -91,8 +91,8 @@ orcid-orcidId-orcid-profile:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     responses:
       '200':
         description: JSON profile from ORCID API
@@ -105,8 +105,8 @@ orcid-orcidId-orcid-profile:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     responses:
       '200':
         description: JSON profile from ORCID API
@@ -122,7 +122,7 @@ orcid-orcidId-orcid-profile-type:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
+      - $ref: '../parameters.yaml#/orcidId'
       - name: type
         description: >
           'Simple' to return bibcodes and statuses only; 'full' to return
@@ -140,7 +140,7 @@ orcid-orcidId-orcid-profile-type:
         in: query
         schema:
           type: boolean
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     responses:
       '200':
         description: >
@@ -184,20 +184,20 @@ orcid-orcidId-orcid-work:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     requestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/orcid-work-to'
+            $ref: '../schemas.yaml#/orcid-work-to'
     responses:
       '200':
         description: ORCID work metadata
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/orcid-work-from'
+              $ref: '../schemas.yaml#/orcid-work-from'
 orcid-orcidId-orcid-works:
   post:
     summary: (internal) Bulk add multiple works to the user's ORCID profile
@@ -207,15 +207,15 @@ orcid-orcidId-orcid-works:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     requestBody:
       content:
         application/json:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/orcid-work-to'
+              $ref: '../schemas.yaml#/orcid-work-to'
     responses:
       '200':
         description: ORCID work metadata
@@ -224,7 +224,7 @@ orcid-orcidId-orcid-works:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/orcid-work-from'
+                $ref: '../schemas.yaml#/orcid-work-from'
 orcid-orcidId-orcid-works-putcode:
   get:
     summary: (internal) Get one or more works from the ORCID API
@@ -236,16 +236,16 @@ orcid-orcidId-orcid-works-putcode:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/putcode'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/putcode'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     responses:
       '200':
         description: Returns work details from the ORCID API
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/orcid-work-from'
+              $ref: '../schemas.yaml#/orcid-work-from'
   put:
     summary: (internal) Edit a work on the ORCID API
     description: >
@@ -255,9 +255,9 @@ orcid-orcidId-orcid-works-putcode:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/putcode'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/putcode'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     requestBody:
       description: >
         Use the return value from the GET method of this endpoint, modifying
@@ -265,14 +265,14 @@ orcid-orcidId-orcid-works-putcode:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/orcid-work-to'
+            $ref: '../schemas.yaml#/orcid-work-to'
     responses:
       '200':
         description: Success
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/orcid-work-from'
+              $ref: '../schemas.yaml#/orcid-work-from'
       '409':
         description: External ID conflict
   delete:
@@ -284,9 +284,9 @@ orcid-orcidId-orcid-works-putcode:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/putcode'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/putcode'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     responses:
       '204':
         description: Work successfully deleted
@@ -299,8 +299,8 @@ orcid-orcid-name:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     responses:
       '200':
         description: >
@@ -317,15 +317,15 @@ orcid-preferences:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     responses:
       '200':
         description: ORCID preferences
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/orcid-preferences'
+              $ref: '../schemas.yaml#/orcid-preferences'
       '400':
         description: Unauthorized or other error
       '404':
@@ -338,20 +338,20 @@ orcid-preferences:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
-      - $ref: '#/components/parameters/OrcidAuthorization'
+      - $ref: '../parameters.yaml#/orcidId'
+      - $ref: '../parameters.yaml#/OrcidAuthorization'
     requestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/orcid-preferences'
+            $ref: '../schemas.yaml#/orcid-preferences'
     responses:
       '200':
         description: ORCID preferences
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/orcid-preferences'
+              $ref: '../schemas.yaml#/orcid-preferences'
       '400':
         description: Unauthorized or other error
       '404':
@@ -369,7 +369,7 @@ orcid-update-orcid-profile:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
+      - $ref: '../parameters.yaml#/orcidId'
     responses:
       '200':
         description: Returns claimed bibcodes
@@ -392,7 +392,7 @@ orcid-update-status:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
+      - $ref: '../parameters.yaml#/orcidId'
     responses:
       '200':
         description: Bibcodes and statuses
@@ -415,7 +415,7 @@ orcid-update-status:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/orcidId'
+      - $ref: '../parameters.yaml#/orcidId'
     requestBody:
       content:
         application/json:

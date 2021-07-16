@@ -14,7 +14,7 @@ vis-author-network:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/bibcodesObject'
+            $ref: '../schemas.yaml#/bibcodesObject'
     responses:
       '200':
         description: Author network data
@@ -108,7 +108,7 @@ vis-paper-network:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/bibcodesObject'
+            $ref: '../schemas.yaml#/bibcodesObject'
     responses:
       '200':
         description: Paper network data
