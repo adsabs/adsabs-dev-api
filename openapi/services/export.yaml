@@ -15,6 +15,7 @@ export-aastex:
       '404':
         description: >
           No result from Solr
+export-aastex-get:
   get:
     summary: AASTeX export for a single bibcode (GET)
     parameters:
@@ -48,6 +49,7 @@ export-ads:
       '404':
         description: >
           No result from Solr
+export-ads-get:
   get:
     summary: ADS (generic tagged) export for a single bibcode (GET)
     parameters:
@@ -81,6 +83,7 @@ export-bibtex:
       '404':
         description: >
           No result from Solr
+export-bibtex-get:
   get:
     summary: BibTeX export for a single bibcode (GET)
     parameters:
@@ -114,6 +117,7 @@ export-bibtexabs:
       '404':
         description: >
           No result from Solr
+export-bibtexabs-get:
   get:
     summary: BibTeX + abstract export for a single bibcode (GET)
     parameters:
@@ -232,6 +236,7 @@ export-dcxml:
       '404':
         description: >
           No result from Solr
+export-dcxml-get:
   get:
     summary: Dublin Core (DC) XML export for a single bibcode (GET)
     parameters:
@@ -265,6 +270,7 @@ export-endnote:
       '404':
         description: >
           No result from Solr
+export-endnote-get:
   get:
     summary: EndNote export for a single bibcode (GET)
     parameters:
@@ -298,6 +304,7 @@ export-icarus:
       '404':
         description: >
           No result from Solr
+export-icarus-get:
   get:
     summary: Icarus export for a single bibcode (GET)
     parameters:
@@ -331,6 +338,7 @@ export-ieee:
       '404':
         description: >
           No result from Solr
+export-ieee-get:
   get:
     summary: IEEE export (Unicode-encoded) for a single bibcode (GET)
     parameters:
@@ -364,6 +372,7 @@ export-medlars:
       '404':
         description: >
           No result from Solr
+export-medlars-get:
   get:
     summary: MEDLARS export for a single bibcode (GET)
     parameters:
@@ -397,6 +406,7 @@ export-mnras:
       '404':
         description: >
           No result from Solr
+export-mnras-get:
   get:
     summary: MNRAS export for a single bibcode (GET)
     parameters:
@@ -430,6 +440,7 @@ export-procite:
       '404':
         description: >
           No result from Solr
+export-procite-get:
   get:
     summary: ProCite export for a single bibcode (GET)
     parameters:
@@ -463,6 +474,7 @@ export-refabsxml:
       '404':
         description: >
           No result from Solr
+export-refabsxml-get:
   get:
     summary: REFABS-XML export for a single bibcode (GET)
     parameters:
@@ -496,6 +508,7 @@ export-refworks:
       '404':
         description: >
           No result from Solr
+export-refworks-get:
   get:
     summary: RefWorks export for a single bibcode (GET)
     parameters:
@@ -529,6 +542,7 @@ export-refxml:
       '404':
         description: >
           No result from Solr
+export-refxml-get:
   get:
     summary: REF-XML export for a single bibcode (GET)
     parameters:
@@ -562,6 +576,7 @@ export-ris:
       '404':
         description: >
           No result from Solr
+export-ris-get:
   get:
     summary: RIS (Refman) export for a single bibcode (GET)
     parameters:
@@ -595,6 +610,7 @@ export-rss:
       '404':
         description: >
           No result from Solr
+export-rss-get:
   get:
     summary: RSS export for a single bibcode (GET)
     parameters:
@@ -646,6 +662,7 @@ export-soph:
       '404':
         description: >
           No result from Solr
+export-soph-get:
   get:
     summary: Solar Physics (SoPh) export for a single bibcode (GET)
     parameters:
@@ -679,6 +696,7 @@ export-votable:
       '404':
         description: >
           No result from Solr
+export-votable-get:
   get:
     summary: VOTables export for a single bibcode (GET)
     parameters:
