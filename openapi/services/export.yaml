@@ -8,7 +8,7 @@ export-aastex:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -41,7 +41,7 @@ export-ads:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -74,7 +74,7 @@ export-bibtex:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -107,7 +107,7 @@ export-bibtexabs:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -225,7 +225,7 @@ export-dcxml:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -258,7 +258,7 @@ export-endnote:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -291,7 +291,7 @@ export-icarus:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -324,7 +324,7 @@ export-ieee:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -357,7 +357,7 @@ export-medlars:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -390,7 +390,7 @@ export-mnras:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -423,7 +423,7 @@ export-procite:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -456,7 +456,7 @@ export-refabsxml:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -489,7 +489,7 @@ export-refworks:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -522,7 +522,7 @@ export-refxml:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -555,7 +555,7 @@ export-ris:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -588,7 +588,7 @@ export-rss:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -639,7 +639,7 @@ export-soph:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
@@ -672,7 +672,7 @@ export-votable:
     security:
       - ApiKeySecurity: []
     requestBody:
-      $ref: '#/components/requestBodies/exportBody'
+      $ref: '../requestBodies.yaml#/exportBody'
     responses:
       '200':
         $ref: '../responses.yaml#/ExportResponse'
