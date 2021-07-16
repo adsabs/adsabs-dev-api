@@ -158,42 +158,78 @@ paths:
     $ref: 'services/biblib.yaml#/biblib-permissions'
   /biblib/transfer/{library_id}:
     $ref: 'services/biblib.yaml#/biblib-transfer'
+  /export/bibtexabs/{bibcode}:
+    $ref: 'services/export.yaml#/export-bibtexabs-get'
   /export/bibtexabs:
     $ref: 'services/export.yaml#/export-bibtexabs'
+  /export/bibtex/{bibcode}:
+    $ref: 'services/export.yaml#/export-bibtex-get'
   /export/bibtex:
     $ref: 'services/export.yaml#/export-bibtex'
+  /export/ads/{bibcode}:
+    $ref: 'services/export.yaml#/export-ads-get'
   /export/ads:
     $ref: 'services/export.yaml#/export-ads'
+  /export/endnote/{bibcode}:
+    $ref: 'services/export.yaml#/export-endnote-get'
   /export/endnote:
     $ref: 'services/export.yaml#/export-endnote'
+  /export/procite/{bibcode}:
+    $ref: 'services/export.yaml#/export-procite-get'
   /export/procite:
     $ref: 'services/export.yaml#/export-procite'
+  /export/ris/{bibcode}:
+    $ref: 'services/export.yaml#/export-ris-get'
   /export/ris:
     $ref: 'services/export.yaml#/export-ris'
+  /export/refworks/{bibcode}:
+    $ref: 'services/export.yaml#/export-refworks-get'
   /export/refworks:
     $ref: 'services/export.yaml#/export-refworks'
+  /export/medlars/{bibcode}:
+    $ref: 'services/export.yaml#/export-medlars-get'
   /export/medlars:
     $ref: 'services/export.yaml#/export-medlars'
+  /export/aastex/{bibcode}:
+    $ref: 'services/export.yaml#/export-aastex-get'
   /export/aastex:
     $ref: 'services/export.yaml#/export-aastex'
+  /export/icarus/{bibcode}:
+    $ref: 'services/export.yaml#/export-icarus-get'
   /export/icarus:
     $ref: 'services/export.yaml#/export-icarus'
+  /export/mnras/{bibcode}:
+    $ref: 'services/export.yaml#/export-mnras-get'
   /export/mnras:
     $ref: 'services/export.yaml#/export-mnras'
+  /export/soph/{bibcode}:
+    $ref: 'services/export.yaml#/export-soph-get'
   /export/soph:
     $ref: 'services/export.yaml#/export-soph'
+  /export/dcxml/{bibcode}:
+    $ref: 'services/export.yaml#/export-dcxml-get'
   /export/dcxml:
     $ref: 'services/export.yaml#/export-dcxml'
+  /export/refxml/{bibcode}:
+    $ref: 'services/export.yaml#/export-refxml-get'
   /export/refxml:
     $ref: 'services/export.yaml#/export-refxml'
+  /export/refabsxml/{bibcode}:
+    $ref: 'services/export.yaml#/export-refabsxml-get'
   /export/refabsxml:
     $ref: 'services/export.yaml#/export-refabsxml'
+  /export/votable/{bibcode}:
+    $ref: 'services/export.yaml#/export-votable-get'
   /export/votable:
     $ref: 'services/export.yaml#/export-votable'
+  /export/rss/{bibcode}:
+    $ref: 'services/export.yaml#/export-rss-get'
   /export/rss:
     $ref: 'services/export.yaml#/export-rss'
-  /export/rss/{link}:
+  /export/rss/{bibcode}/{link}:
     $ref: 'services/export.yaml#/export-rss-link'
+  /export/ieee/{bibcode}:
+    $ref: 'services/export.yaml#/export-ieee-get'
   /export/ieee:
     $ref: 'services/export.yaml#/export-ieee'
   /export/csl:
