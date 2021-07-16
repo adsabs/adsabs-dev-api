@@ -32,7 +32,7 @@ metrics:
         application/json:
           schema:
             allOf:
-              - $ref: '#/components/schemas/bibcodesObject'
+              - $ref: '../schemas.yaml#/bibcodesObject'
               - type: object
                 properties:
                   types:
@@ -78,7 +78,7 @@ metrics:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/basicMetricsResponse'
+                - $ref: '../schemas.yaml#/basicMetricsResponse'
                 - type: object
                   properties:
                     indicators:
@@ -193,7 +193,7 @@ metrics-bibcode:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/basicMetricsResponse'
+                - $ref: '../schemas.yaml#/basicMetricsResponse'
       '403':
         description: >
           Unable to get results
@@ -214,7 +214,7 @@ metrics-detail:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/bibcodesObject'
+            $ref: '../schemas.yaml#/bibcodesObject'
     responses:
       '200':
         description: JSON containing the requested metrics

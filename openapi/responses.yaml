@@ -22,7 +22,7 @@ QTree:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/qtree'
+        $ref: 'schemas.yaml#/qtree'
 ResolverResponse:
   description: >
     JSON containing the available external resources,
@@ -61,7 +61,7 @@ SearchResults:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/results'
+        $ref: 'schemas.yaml#/results'
 TokenResponse:
   description: API token details
   content:

@@ -55,12 +55,12 @@ search-bigquery:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/q'
-      - $ref: '#/components/parameters/fq'
-      - $ref: '#/components/parameters/fl'
-      - $ref: '#/components/parameters/start'
-      - $ref: '#/components/parameters/rows'
-      - $ref: '#/components/parameters/sort'
+      - $ref: '../parameters.yaml#/q'
+      - $ref: '../parameters.yaml#/fq'
+      - $ref: '../parameters.yaml#/fl'
+      - $ref: '../parameters.yaml#/start'
+      - $ref: '../parameters.yaml#/rows'
+      - $ref: '../parameters.yaml#/sort'
     requestBody:
       description: >
         Newline separated list of values; the first line specifies the index
@@ -80,9 +80,9 @@ search-bigquery:
             type: string
     responses:
       '200':
-        $ref: '#/components/responses/SearchResults'
+        $ref: '../responses.yaml#/SearchResults'
       '404':
-        $ref: '#/components/responses/SearchResults'
+        $ref: '../responses.yaml#/SearchResults'
       '499':
         description: Server too busy
       '500':
@@ -116,15 +116,15 @@ search-qtree:
           }
       ```
     parameters:
-      - $ref: '#/components/parameters/q'
-      - $ref: '#/components/parameters/fq'
-      - $ref: '#/components/parameters/fl'
-      - $ref: '#/components/parameters/start'
-      - $ref: '#/components/parameters/rows'
-      - $ref: '#/components/parameters/sort'
+      - $ref: '../parameters.yaml#/q'
+      - $ref: '../parameters.yaml#/fq'
+      - $ref: '../parameters.yaml#/fl'
+      - $ref: '../parameters.yaml#/start'
+      - $ref: '../parameters.yaml#/rows'
+      - $ref: '../parameters.yaml#/sort'
     responses:
       '200':
-        $ref: '#/components/responses/QTree'
+        $ref: '../responses.yaml#/QTree'
       '400':
         description: Malformed request
       '404':
@@ -224,15 +224,15 @@ search-query:
       next 200 rows
 
     parameters:
-      - $ref: '#/components/parameters/q'
-      - $ref: '#/components/parameters/fq'
-      - $ref: '#/components/parameters/fl'
-      - $ref: '#/components/parameters/start'
-      - $ref: '#/components/parameters/rows'
-      - $ref: '#/components/parameters/sort'
+      - $ref: '../parameters.yaml#/q'
+      - $ref: '../parameters.yaml#/fq'
+      - $ref: '../parameters.yaml#/fl'
+      - $ref: '../parameters.yaml#/start'
+      - $ref: '../parameters.yaml#/rows'
+      - $ref: '../parameters.yaml#/sort'
     responses:
       '200':
-        $ref: '#/components/responses/SearchResults'
+        $ref: '../responses.yaml#/SearchResults'
       '400':
         description: Malformed request
       '404':

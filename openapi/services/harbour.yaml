@@ -130,7 +130,7 @@ harbour-libraries-classic:
     security:
     - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/user_id'
+      - $ref: '../parameters.yaml#/user_id'
     responses:
       '200':
         description: JSON of user's Classic libraries
@@ -165,7 +165,7 @@ harbour-libraries-twopointoh:
     security:
     - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/user_id'
+      - $ref: '../parameters.yaml#/user_id'
     responses:
       '200':
         description: JSON of user's ADS 2.0 libraries
@@ -217,7 +217,7 @@ harbour-myads-classic:
     security:
     - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/user_id'
+      - $ref: '../parameters.yaml#/user_id'
     responses:
       '200':
         description: User's Classic myADS setups

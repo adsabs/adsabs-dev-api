@@ -102,7 +102,7 @@ vault-execute_query:
         }
       ```
     parameters:
-      - $ref: '#/components/parameters/queryId'
+      - $ref: '../parameters.yaml#/queryId'
       - name: jsonobj
         description: >-
           You can submit query parameters that override parts of the saved
@@ -110,14 +110,14 @@ vault-execute_query:
         required: false
         in: header
         schema:
-          $ref: '#/components/schemas/vaultObject'
+          $ref: '../schemas.yaml#/vaultObject'
     tags:
       - stored search
     security:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/SearchResults'
+        $ref: '../responses.yaml#/SearchResults'
       '404':
         description: QID object not found
 vault-get-myads-user_id:
@@ -131,7 +131,7 @@ vault-get-myads-user_id:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/user_id'
+      - $ref: '../parameters.yaml#/user_id'
     responses:
       '200':
         description: >
@@ -140,7 +140,7 @@ vault-get-myads-user_id:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/myADSsetupResponse'
+              $ref: '../schemas.yaml#/myADSsetupResponse'
       '404':
         description: No notifications found for the given user.
 vault-get-myads-user_id-iso_datestring:
@@ -154,8 +154,8 @@ vault-get-myads-user_id-iso_datestring:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/user_id'
-      - $ref: '#/components/parameters/iso_datestring'
+      - $ref: '../parameters.yaml#/user_id'
+      - $ref: '../parameters.yaml#/iso_datestring'
     responses:
       '200':
         description: >
@@ -165,7 +165,7 @@ vault-get-myads-user_id-iso_datestring:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/myADSsetupResponse'
+              $ref: '../schemas.yaml#/myADSsetupResponse'
       '404':
         description: No notifications found for the given user.
 vault-myads-import:
@@ -228,7 +228,7 @@ vault-myads-users:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/iso_datestring'
+      - $ref: '../parameters.yaml#/iso_datestring'
     responses:
       '200':
         description: Recently updated myADS users
@@ -252,7 +252,7 @@ vault-notification_query:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/myadsId'
+      - $ref: '../parameters.yaml#/myadsId'
     responses:
       '200':
         description: >
@@ -291,7 +291,7 @@ vault-notifications:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/myADSsummaryResponse'
+                $ref: '../schemas.yaml#/myADSsummaryResponse'
       '400':
         description: Malformed request
       '404':
@@ -402,8 +402,8 @@ vault-notifications:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/myADSsummaryResponse'
-                - $ref: '#/components/schemas/myADSdetailResponse'
+                - $ref: '../schemas.yaml#/myADSsummaryResponse'
+                - $ref: '../schemas.yaml#/myADSdetailResponse'
       '400':
         description: Malformed request
       '404':
@@ -421,7 +421,7 @@ vault-notifications-myads_id:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/myadsId'
+      - $ref: '../parameters.yaml#/myadsId'
     responses:
       '200':
         description: Details of none otification set up for the current user
@@ -429,8 +429,8 @@ vault-notifications-myads_id:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/myADSsummaryResponse'
-                - $ref: '#/components/schemas/myADSdetailResponse'
+                - $ref: '../schemas.yaml#/myADSsummaryResponse'
+                - $ref: '../schemas.yaml#/myADSdetailResponse'
       '400':
         description: Malformed request
       '404':
@@ -445,7 +445,7 @@ vault-notifications-myads_id:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/myadsId'
+      - $ref: '../parameters.yaml#/myadsId'
     requestBody:
       description: >
         JSON containing metadata of notification to edit.
@@ -481,8 +481,8 @@ vault-notifications-myads_id:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/myADSsummaryResponse'
-                - $ref: '#/components/schemas/myADSdetailResponse'
+                - $ref: '../schemas.yaml#/myADSsummaryResponse'
+                - $ref: '../schemas.yaml#/myADSdetailResponse'
       '400':
         description: Malformed request
       '404':
@@ -499,7 +499,7 @@ vault-notifications-myads_id:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/myadsId'
+      - $ref: '../parameters.yaml#/myadsId'
     responses:
       '204':
         description: Successfully deleted the notification
@@ -533,14 +533,14 @@ vault-query:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/vaultObject'
+            $ref: '../schemas.yaml#/vaultObject'
     tags:
       - stored search
     security:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/VaultResponse'
+        $ref: '../responses.yaml#/VaultResponse'
       '404':
         description: QID object not found
 vault-query-queryId:
@@ -559,14 +559,14 @@ vault-query-queryId:
       }
       ```
     parameters:
-      - $ref: '#/components/parameters/queryId'
+      - $ref: '../parameters.yaml#/queryId'
     tags:
       - stored search
     security:
       - ApiKeySecurity: []
     responses:
       '200':
-        $ref: '#/components/responses/VaultResponse'
+        $ref: '../responses.yaml#/VaultResponse'
       '404':
         description: QID object not found
 vault-query2svg:
@@ -580,7 +580,7 @@ vault-query2svg:
     security:
       - ApiKeySecurity: []
     parameters:
-      - $ref: '#/components/parameters/queryId'
+      - $ref: '../parameters.yaml#/queryId'
     responses:
       '200':
         description: Code of the SVG image
