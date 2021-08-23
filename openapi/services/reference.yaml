@@ -31,7 +31,9 @@ reference-text:
     summary: Resolve one or more reference strings into a bibcode
     description: >
       Given one or more reference strings (such as from the references section
-      of a published paper), returns the bibcode of the matching paper.
+      of a published paper), returns the bibcode(s) of the matching paper(s).
+      Multiple references should be passed as individual strings in a
+      comma-delimited list.
     tags:
       - reference
     security:
@@ -50,7 +52,7 @@ reference-text:
                 type: array
                 items:
                   type: string
-            example: {"reference":["Kravchenko et al. 2020, A&A 637, L6"]}
+            example: {"reference":["Kravchenko et al. 2020, A&A 637, L6", "Blandford, R. D., & Znajek, R. L. 1977, MNRAS, 179, 433"]}
     responses:
       '200':
         description: >
