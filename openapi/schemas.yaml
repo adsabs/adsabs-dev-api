@@ -195,6 +195,7 @@ bibcodesObject:
       description: >
         Input bibcodes
       items:
+        type: string
 doc:
   type: object
   required:
