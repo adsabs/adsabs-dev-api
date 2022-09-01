@@ -94,10 +94,10 @@ vis-author-network:
         description: Error with request
 vis-paper-network:
   post:
-    summary: Returns author network data
+    summary: Returns paper network data
     description: >
-      Used to generate our author network visualization, given an input set of bibcodes,
-      returns the author network data
+      Used to generate our paper network visualization, given an input set of bibcodes,
+      returns the paper network data
     tags:
       - visualizations
     security:
