@@ -151,7 +151,7 @@ export-csl:
         application/json:
           schema:
             allOf:
-              - $ref: '../schemas.yaml#/bibcodesObject'
+              - $ref: '../schemas.yaml#/bibcodeObject'
               - type: object
                 required:
                   - style
@@ -203,7 +203,7 @@ export-custom:
         application/json:
           schema:
             allOf:
-              - $ref: '../schemas.yaml#/bibcodesObject'
+              - $ref: '../schemas.yaml#/bibcodeObject'
               - type: object
                 required:
                   - format

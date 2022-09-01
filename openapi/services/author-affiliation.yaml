@@ -58,7 +58,7 @@ author-affiliation-search:
         application/json:
           schema:
             allOf:
-              - $ref: '../schemas.yaml#/bibcodesObject'
+              - $ref: '../schemas.yaml#/bibcodeObject'
               - type: object
                 properties:
                   maxauthor:

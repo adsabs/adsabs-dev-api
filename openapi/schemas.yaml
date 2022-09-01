@@ -182,7 +182,7 @@ bibcodeObject:
     bibcode:
       type: array
       description: >
-        Input bibcodes
+        Input list of one or more bibcodes
       items:
         type: string
 bibcodesObject:
@@ -193,7 +193,7 @@ bibcodesObject:
     bibcodes:
       type: array
       description: >
-        Input bibcodes
+        Input list of one or more bibcodes
       items:
         type: string
 doc:
