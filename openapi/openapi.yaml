@@ -360,6 +360,8 @@ paths:
     $ref: 'services/reference.yaml#/reference-pickle_source_matcher'
   /reference/pickle_crf:
     $ref: 'services/reference.yaml#/reference-pickle_crf'
+  /reference/parse:
+    $ref: 'services/reference.yaml#/reference-parse'
   /resolver/update:
     $ref: 'services/resolver.yaml#/resolver-update'
   /resolver/delete:

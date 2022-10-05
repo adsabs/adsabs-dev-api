@@ -1,3 +1,60 @@
+reference-parse:
+  post:
+    summary: Parse one or more input reference strings
+    description: >
+      Given one or more reference strings (such as from the references section
+      of a published paper), returns the parsed reference data. Multiple
+      references should be passed as individual strings in a comma-delimited
+      list.
+    tags:
+      - reference
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the input reference strings
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - reference
+            properties:
+              reference:
+                type: array
+                items:
+                  type: string
+            example: {"reference":["Giraud et al., 1986, A&A, 170, 1"]}
+    responses:
+      '200':
+        description: >
+          JSON containing the parsed reference(s)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parsed:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      authors:
+                        type: string
+                      year:
+                        type: string
+                      volume:
+                        type: string
+                      page:
+                        type: string
+                      journal:
+                        type: string
+                      refstr:
+                        description: Input reference string
+                        type: string
+              example: {"parsed": [{"authors": "Giraud et al.", "year": "1986", "volume": "170", "page": "1", "journal": "A&A", "refstr": "Giraud et al., 1986, A&A, 170, 1"}]}
+      '400':
+        description: Bad request, check payload
 reference-pickle_crf:
   put:
     summary: (internal) Create new crf text model file
