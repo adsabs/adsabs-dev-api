@@ -270,6 +270,8 @@ paths:
     $ref: 'services/reference.yaml#/reference-text'
   /reference/xml:
     $ref: 'services/reference.yaml#/reference-xml'
+  /reference/parse:
+    $ref: 'services/reference.yaml#/reference-parse'
   /resolver/{bibcode}:
     $ref: 'services/resolver.yaml#/resolver-bibcode'
   /resolver/{bibcode}/{link_type}:
