@@ -315,13 +315,13 @@ paths:
     $ref: 'services/harbour.yaml#/harbour-user'
   /harbour/auth/classic:
     $ref: 'services/harbour.yaml#/harbour-auth-classic'
-  /journals/Summary:
+  /journals/Summary/{bibstem}:
     $ref: 'services/journals.yaml#/Summary'
-  /journals/Journal:
+  /journals/Journal/{journalname}:
     $ref: 'services/journals.yaml#/Journal'
-  /journals/Holdings:
+  /journals/Holdings/{bibstem}/{volume}:
     $ref: 'services/journals.yaml#/Holdings'
-  /journals/Refsource:
+  /journals/Refsource/{bibstem}:
     $ref: 'services/journals.yaml#/Refsource'
   /metrics:
     $ref: 'services/metrics.yaml#/metrics'
