@@ -35,6 +35,7 @@ tags:
   - name: export (other)
   - name: graphics
   - name: classic import
+  - name: journals
   - name: metrics
   - name: objects
   - name: orcid
@@ -89,6 +90,12 @@ components:
       $ref: parameters.yaml#/queryId
     myadsId:
       $ref: parameters.yaml#/myadsId
+    bibstem:
+      $ref: parameters.yaml#/bibstem
+    volume:
+      $ref: parameters.yaml#/volume
+    queryName:
+      $ref: parameters.yaml#/queryName
   responses:
     QTree:
       $ref: responses.yaml#/QTree
@@ -308,6 +315,14 @@ paths:
     $ref: 'services/harbour.yaml#/harbour-user'
   /harbour/auth/classic:
     $ref: 'services/harbour.yaml#/harbour-auth-classic'
+  /journals/Summary:
+    $ref: 'services/journals.yaml#/Summary'
+  /journals/Journal:
+    $ref: 'services/journals.yaml#/Journal'
+  /journals/Holdings:
+    $ref: 'services/journals.yaml#/Holdings'
+  /journals/Refsource:
+    $ref: 'services/journals.yaml#/Refsource'
   /metrics:
     $ref: 'services/metrics.yaml#/metrics'
   /metrics/{bibcode}:

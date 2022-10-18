@@ -535,4 +535,135 @@ vaultObject:
       type: string
       description: >
         new line separated list of bibcodes, the first line is the name of
-        the index that will be searched, right now we only support search in `bibcode` index
+        the index that will be searched, right now we only support search
+        in `bibcode` index
+summary:
+  type: object
+  properties:
+    master:
+      type: object
+      properties:
+        bibstem:
+          type: string
+        journal_name:
+          type: string
+        primary_language:
+          type: string
+        multilingual:
+          type: boolean
+        defunct:
+          type: boolean
+        pubtype:
+          type: string
+        refereed:
+          type: string
+        collection:
+          type: string
+        notes:
+          type: string
+        not_indexed:
+          type: boolean
+    idents:
+      type: array
+      items:
+        type: object
+        properties:
+          id_type:
+            type: string
+          id_value:
+            type: string
+    abbrev:
+      type: array
+      items:
+        type: string
+    pubhist:
+      type: array
+      items:
+        type: object
+        properties:
+          publisher:
+            type: string
+          title:
+            type: object
+            properties:
+              year_start:
+                type: integer
+              year_end:
+                type: integer
+              vol_start:
+                type: string
+              vol_end:
+                type: string
+              complete:
+                type: string
+              successor_masterid:
+                type: integer
+              notes:
+                type: string
+    names:
+      type: object
+      properties:
+        name_english_translated: 
+          type: string
+        title_language:
+          type: string
+        name_native_language:
+          type: string
+        name_normalized:
+          type: string
+journal:
+  type: array
+  items:
+    type: object
+    properties:
+      bibstem:
+        type: string
+      name:
+        type: string
+holdings:
+  type: object
+  properties:
+    bibstem:
+      type: string
+    volume:
+      type: string
+    numFound:
+      type: integer
+    holdings:
+      type: array
+      items:
+        properties:
+          esources:
+            type: array
+            items:
+              type: string
+          page:
+            type: string
+refsource:
+  type: object
+  properties:
+    bibstem:
+      type: string
+    volumes:
+      type: array
+      items:
+        properties:
+          volume:
+            type: string
+          year:
+            type: string
+          refsources:
+            type: object
+            properties:
+              AUTHOR:
+                type: integer
+              OTHER:
+                type: integer
+              ISI:
+                type: integer
+              CROSSREF:
+                type: integer
+              OCR:
+                type: integer
+              PUBLISHER:
+                type: integer

@@ -225,3 +225,24 @@ user_id:
   in: path
   schema:
     type: string
+JournalBibstem:
+  name: bibstem
+  description: ADS identifier for publications embedded within bibcodes
+  in: path
+  required: true
+  schema:
+    type: string
+JournalVolume:
+  name: volume
+  description: publication volume
+  in: path
+  required: true
+  schema:
+    type: string
+JournalJournalName:
+  name: journalname
+  description: URL-encoded search string
+  required: true
+  in: path
+  schema:
+    type: string

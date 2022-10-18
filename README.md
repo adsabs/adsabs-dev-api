@@ -16,6 +16,7 @@ Note: sometimes Github's internal Jupyter notebook rendering agent fails. If tha
 - [Metrics API](Metrics_API.ipynb)
 - [Export API](Export_API.ipynb)
 - [Libraries API](Libraries_API.ipynb)
+- [Journals API](Journals_API.ipynb)
 - [Converting curl to Python - examples](Converting_curl_to_python.ipynb)
 
 ## Mailing List

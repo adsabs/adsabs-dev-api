@@ -16,6 +16,7 @@ info:
     * Citation helper: https://github.com/adsabs/citation_helper_service
     * Classic import: https://github.com/adsabs/harbour-service
     * Objects: https://github.com/adsabs/object_service
+    * Journals: https://github.com/adsabs/ADSJournalsDB
     * Recommender: https://github.com/adsabs/oracle_service
     * Reference: https://github.com/adsabs/reference_service
     * Resolver: https://github.com/adsabs/resolver_service
@@ -58,6 +59,7 @@ tags:
   - name: citation helper
   - name: classic import
   - name: objects
+  - name: journals
   - name: recommender
   - name: reference
   - name: resolver
@@ -258,6 +260,14 @@ paths:
     $ref: 'services/objects.yaml#/objects'
   /objects/query:
     $ref: 'services/objects.yaml#/objects-query'
+  /journals/Summary:
+    $ref: 'services/journals.yaml#/Summary'
+  /journals/Journal:
+    $ref: 'services/journals.yaml#/Journal'
+  /journals/Holdings:
+    $ref: 'services/journals.yaml#/Holdings'
+  /journals/Refsource:
+    $ref: 'services/journals.yaml#/Refsource'
   /oracle/matchdoc:
     $ref: 'services/oracle.yaml#/oracle-matchdoc'
   /oracle/readhist:
