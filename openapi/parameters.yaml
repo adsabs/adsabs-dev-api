@@ -227,8 +227,10 @@ user_id:
     type: string
 JournalBibstem:
   name: bibstem
-  description: ADS identifier for publications embedded within bibcodes
+  description: >
+    (Case-sensitive) ADS identifier for a publication, used to create bibcodes
   in: path
+  example: "ApJS"
   required: true
   schema:
     type: string
@@ -241,8 +243,9 @@ JournalVolume:
     type: string
 JournalJournalName:
   name: journalname
-  description: URL-encoded search string
+  description: Search string
   required: true
   in: path
+  example: "Astro%20Jour"
   schema:
     type: string

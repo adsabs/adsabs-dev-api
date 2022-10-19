@@ -36,13 +36,13 @@ Journal:
     summary: >
       Indexed journals that match a user-supplied search string
     description: >
-      For a user-supplied, URL-encoded search string, return a list of
-      publication titles and their accompanying bibstems, if the search string
-      matches one of the title's official name, translated or transliterated
-      names, or a known alternate title or abbreviation.  Spaces ("%20" in URL
-      encoded format) are treated as substring terminators, such that the
-      returned result of a search for `Astro%20J` would include both
-      `Astronomical Journal` and `Astrophysical Journal`.
+      For a user-supplied search string, return a list of publication titles
+      and their accompanying bibstems, if the search string matches one of the
+      title's official name, translated or transliterated names, or a known
+      alternate title or abbreviation.  Spaces ("%20" in URL-encoded format)
+      are treated as substring terminators, such that the returned result of
+      a search for `Astro%20Jour` would include both `Astronomical Journal`
+      and `Astrophysical Journal`.
     parameters:
       - $ref: '../parameters.yaml#/JournalJournalName'
     tags:
@@ -66,7 +66,7 @@ Journal:
 Holdings:
   get:
     summary: >
-      Electronic sources available via the ADS for a given bibstem and volume.
+      Electronic sources available via the ADS for a given bibstem and volume
     parameters:
       - $ref: '../parameters.yaml#/JournalBibstem'
       - $ref: '../parameters.yaml#/JournalVolume'
