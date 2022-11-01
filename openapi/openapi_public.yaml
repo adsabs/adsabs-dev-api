@@ -260,14 +260,14 @@ paths:
     $ref: 'services/objects.yaml#/objects'
   /objects/query:
     $ref: 'services/objects.yaml#/objects-query'
-  /journals/Summary/{bibstem}:
-    $ref: 'services/journals.yaml#/Summary'
-  /journals/Journal/{journalname}:
-    $ref: 'services/journals.yaml#/Journal'
-  /journals/Holdings/{bibstem}/{volume}:
-    $ref: 'services/journals.yaml#/Holdings'
-  /journals/Refsource/{bibstem}:
-    $ref: 'services/journals.yaml#/Refsource'
+  /journals/summary/{bibstem}:
+    $ref: 'services/journals.yaml#/summary'
+  /journals/journal/{journalname}:
+    $ref: 'services/journals.yaml#/journal'
+  /journals/holdings/{bibstem}/{volume}:
+    $ref: 'services/journals.yaml#/holdings'
+  /journals/refsource/{bibstem}:
+    $ref: 'services/journals.yaml#/refsource'
   /oracle/matchdoc:
     $ref: 'services/oracle.yaml#/oracle-matchdoc'
   /oracle/readhist:
