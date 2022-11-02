@@ -1,0 +1,129 @@
+Summary:
+  get:
+    summary: Summary information about a publication indexed by ADS
+    parameters:
+      - $ref: '../parameters.yaml#/JournalBibstem'
+    description: >
+      For a bibstem, return information about the publication, including the
+      official name and commonly-used variations, publisher and publisher
+      history (when available), and the ISSN and other identifiers when
+      available.
+    tags:
+      - journals
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          JSON object containing `master`, `idents`, `abbrev`, `pubhist`, and
+          `names` objects, which contain summary information about the
+          publication (master), known alphanumeric identifiers (idents),
+          known abbreviations for the title (abbrev), historical information
+          about the journal and its publisher(s) when available (pubhist),
+          and native-language and transliterated names for journals having
+          names in languages other than English, when available (names).
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../schemas.yaml#/summary'
+      '403':
+        description: Authentication failure, unable to get results
+      '500':
+        description: Internal error, unable to get results
+Journal:
+  get:
+    summary: >
+      Indexed journals that match a user-supplied search string
+    description: >
+      For a user-supplied search string, return a list of publication titles
+      and their accompanying bibstems, if the search string matches one of the
+      title's official name, translated or transliterated names, or a known
+      alternate title or abbreviation.  Spaces ("%20" in URL-encoded format)
+      are treated as substring terminators, such that the returned result of
+      a search for `Astro%20Jour` would include both `Astronomical Journal`
+      and `Astrophysical Journal`.
+    parameters:
+      - $ref: '../parameters.yaml#/JournalJournalName'
+    tags:
+      - journals
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          JSON list of possible matches containing both bibstem and the
+          publication's formal name of record.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../schemas.yaml#/journal'
+      '403':
+        description: Authentication failure, unable to get results
+      '500':
+        description: Internal error, unable to get results
+Holdings:
+  get:
+    summary: >
+      Electronic sources available via the ADS for a given bibstem and volume
+    parameters:
+      - $ref: '../parameters.yaml#/JournalBibstem'
+      - $ref: '../parameters.yaml#/JournalVolume'
+    description: >
+      For a user-supplied publication bibstem and volume, return a list of what
+      types of electronic sources are available in our catalog holdings of
+      papers from that publication.  This service doesn't provide the actual
+      links to the paper -- this is intended to provide librarians information
+      at a quick glance what esources are available, including publisher pdf
+      and html, eprints, and ADS-hosted PDF fulltext.
+    tags:
+      - journals
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          JSON object containing the bibcode, volume, number papers in the
+          volume, and an array of holdings objects containing the page number
+          and an array of esource types.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../schemas.yaml#/holdings'
+      '403':
+        description: Authentication failure, unable to get results
+      '500':
+        description: Internal error, unable to get results
+Refsource:
+  get:
+    summary: Sources of reference data for given publication
+    parameters:
+      - $ref: '../parameters.yaml#/JournalBibstem'
+    description: >
+      For a given bibstem, provide a tally of reference sources for each
+      volume for which references exist.  For a publication with references
+      supplied by the publisher for most or all papers, the `publisher` count
+      should approximately match the paper count for that volume.  References
+      may also originate from other sources for individual papers, such as
+      author-supplied (e.g. ArXiv) preprints and OCR by NASA ADS.
+    tags:
+      - journals
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          JSON object containing an array of refsource objects, each
+          of which contains the volume, the year, and a dictionary of
+          refsources containing the refsource type and count.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../schemas.yaml#/refsource'
+      '403':
+        description: Authentication failure, unable to get results
+      '500':
+        description: Internal error, unable to get results
