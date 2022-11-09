@@ -1,4 +1,4 @@
-Summary:
+summary:
   get:
     summary: Summary information about a publication indexed by ADS
     parameters:
@@ -31,7 +31,7 @@ Summary:
         description: Authentication failure, unable to get results
       '500':
         description: Internal error, unable to get results
-Journal:
+journal:
   get:
     summary: >
       Indexed journals that match a user-supplied search string
@@ -63,7 +63,7 @@ Journal:
         description: Authentication failure, unable to get results
       '500':
         description: Internal error, unable to get results
-Holdings:
+holdings:
   get:
     summary: >
       Electronic sources available via the ADS for a given bibstem and volume
@@ -96,7 +96,7 @@ Holdings:
         description: Authentication failure, unable to get results
       '500':
         description: Internal error, unable to get results
-Refsource:
+refsource:
   get:
     summary: Sources of reference data for given publication
     parameters:
