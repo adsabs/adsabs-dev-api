@@ -213,6 +213,8 @@ paths:
     $ref: 'services/biblib.yaml#/biblib-libraries-operations'
   /biblib/documents/{library_id}:
     $ref: 'services/biblib.yaml#/biblib-documents'
+  /biblib/query/{library_id}:
+    $ref: 'services/biblib.yaml#/biblib-query'  
   /biblib/permissions/{library_id}:
     $ref: 'services/biblib.yaml#/biblib-permissions'
   /biblib/transfer/{library_id}:
