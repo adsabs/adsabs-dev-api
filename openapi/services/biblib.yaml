@@ -251,7 +251,7 @@ biblib-query:
                 description: >
                   relevant query parameters for the expected SOLR query
                 items:
-                  type: string
+                  type: json
               action:
                 type: string
                 description: >
