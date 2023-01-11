@@ -247,11 +247,13 @@ biblib-query:
               - query
             properties:
               query:
-                type: array
+                type: object
+                required:
+                  - q
                 description: >
                   relevant query parameters for the expected SOLR query
                 items:
-                  type: json
+                  type: object
               action:
                 type: string
                 description: >
