@@ -226,7 +226,7 @@ biblib-query:
       ## Example Response
 
       ```
-      
+
       Example goes here...
 
       ```
@@ -250,8 +250,15 @@ biblib-query:
 
       `q=transiting+exoplanets&rows=200&start=201`|   Same search but get the
       next 200 rows
-
+    security:
+      - ApiKeySecurity: []
     parameters:
+      - name: library_id
+        description: Library ID
+        required: true
+        in: path
+        schema:
+          type: string
       - $ref: '../parameters.yaml#/q'
       - $ref: '../parameters.yaml#/fq'
       - $ref: '../parameters.yaml#/fl'
@@ -281,7 +288,7 @@ biblib-query:
         schema:
           type: string
     description: >
-      Add or delete a documents to a given library based on supplied SOLR query parameters. Returns the number
+      Add or delete a documents to a given library based on supplied search/ query parameters. Returns the number
       of documents added or removed.
 
 
