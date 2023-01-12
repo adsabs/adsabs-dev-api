@@ -349,44 +349,7 @@ biblib-query:
           or user requested a non-standard operation
       '403':
         description: >
-          User does not have permission to perform this operation
-  delete:
-    summary: Delete a library
-    parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
-    description: >
-      Delete the given library.
-
-
-      The following type of user can delete the library:
-
-      * owner
-    tags:
-      - libraries
-    security:
-      - ApiKeySecurity: []
-    responses:
-      '200':
-        description: >
-          Returns empty object
-        content:
-          application/json:
-            schema:
-              type: object
-      '400':
-        description: >
-          No username passed or bad library ID passed
-      '403':
-        description: >
-          User does not have permission to perform this operation
-      '410':
-        description: >
-          Library specified does not exist
+          User does not have permission to perform this operation.
 biblib-libraries:
   get:
     summary: View all libraries for a given user
