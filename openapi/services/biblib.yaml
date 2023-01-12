@@ -211,14 +211,12 @@ biblib-documents:
           Library specified does not exist
 biblib-query:
   get:
-    summary: Search ADS
+    summary: Add or remove documents from a library by query
     description: >
-      Do a search.
+      Add documents to a given library by passing a search query to the endpoint.
 
 
-      Query the search engine and return results. All parameters have to be
-      properly url-encoded UTF-8. The response body will always be JSON
-      encoded.
+      Queries can be performed as they would be using the search/ endpoint with all the same options available to the user.
 
 
       ## Example Search
@@ -227,54 +225,10 @@ biblib-query:
 
       ## Example Response
 
-      ```{
-        "responseHeader":{
-          "status":0,
-          "QTime":3,
-          "params":{
-            "q":"bibcode:2012A&A...542A..16R",
-            "fl":"bibcode,author,pub,identifier,title,property,abstract,keyword",
-            "start":"0",
-            "rows":"10",
-            "wt":"json"}},
-        "response":{"numFound":1,"start":0,"docs":[
-          {
-            "identifier":["2012arXiv1204.4485R",
-              "2012A&A...542A..16R",
-              "10.1051/0004-6361/201118723",
-              "10.1051/0004-6361/201118723",
-              "arXiv:1204.4485",
-              "2012arXiv1204.4485R"],
-            "abstract":"X-ray surveys contain sizable numbers [...],
-            "property":["ARTICLE",
-              "ASSOCIATED",
-              "DATA",
-              "EPRINT_OPENACCESS",
-              "ESOURCE",
-              "OPENACCESS",
-              "PUB_OPENACCESS",
-              "REFEREED"],
-            "bibcode":"2012A&A...542A..16R",
-            "author":["Ranalli, P.",
-              "Comastri, A.",
-              "Zamorani, G.",
-              "Cappelluti, N.",
-              "Civano, F.",
-              "Georgantopoulos, I.",
-              "Gilli, R.",
-              "Schinnerer, E.",
-              "Smolčić, V.",
-              "Vignali, C."],
-            "pub":"Astronomy and Astrophysics",
-            "keyword":["X-rays: galaxies",
-              "radio continuum: galaxies",
-              "galaxies: fundamental parameters",
-              "galaxies: star formation",
-              "galaxies: active",
-              "galaxies: high-redshift",
-              "Astrophysics - Cosmology and Extragalactic Astrophysics"],
-            "title":["X-ray properties of radio-selected star forming galaxies in the Chandra-COSMOS survey"]}]
-        }}
+      ```
+      
+      Example goes here...
+
       ```
 
       ## Example Search Requests
@@ -316,8 +270,7 @@ biblib-query:
       '500':
         description: Server error
     tags:
-      - libraries
-      
+      - libraries      
   post:
     summary: Add or remove documents from a library by SOLR query
     parameters:
