@@ -210,6 +210,114 @@ biblib-documents:
         description: >
           Library specified does not exist
 biblib-query:
+  get:
+    summary: Search ADS
+    description: >
+      Do a search.
+
+
+      Query the search engine and return results. All parameters have to be
+      properly url-encoded UTF-8. The response body will always be JSON
+      encoded.
+
+
+      ## Example Search
+
+      `q=bibcode:2012A%26A...542A..16R&fl=bibcode,author,pub,identifier,title,property,abstract,keyword,aff`
+
+      ## Example Response
+
+      ```{
+        "responseHeader":{
+          "status":0,
+          "QTime":3,
+          "params":{
+            "q":"bibcode:2012A&A...542A..16R",
+            "fl":"bibcode,author,pub,identifier,title,property,abstract,keyword",
+            "start":"0",
+            "rows":"10",
+            "wt":"json"}},
+        "response":{"numFound":1,"start":0,"docs":[
+          {
+            "identifier":["2012arXiv1204.4485R",
+              "2012A&A...542A..16R",
+              "10.1051/0004-6361/201118723",
+              "10.1051/0004-6361/201118723",
+              "arXiv:1204.4485",
+              "2012arXiv1204.4485R"],
+            "abstract":"X-ray surveys contain sizable numbers [...],
+            "property":["ARTICLE",
+              "ASSOCIATED",
+              "DATA",
+              "EPRINT_OPENACCESS",
+              "ESOURCE",
+              "OPENACCESS",
+              "PUB_OPENACCESS",
+              "REFEREED"],
+            "bibcode":"2012A&A...542A..16R",
+            "author":["Ranalli, P.",
+              "Comastri, A.",
+              "Zamorani, G.",
+              "Cappelluti, N.",
+              "Civano, F.",
+              "Georgantopoulos, I.",
+              "Gilli, R.",
+              "Schinnerer, E.",
+              "Smolčić, V.",
+              "Vignali, C."],
+            "pub":"Astronomy and Astrophysics",
+            "keyword":["X-rays: galaxies",
+              "radio continuum: galaxies",
+              "galaxies: fundamental parameters",
+              "galaxies: star formation",
+              "galaxies: active",
+              "galaxies: high-redshift",
+              "Astrophysics - Cosmology and Extragalactic Astrophysics"],
+            "title":["X-ray properties of radio-selected star forming galaxies in the Chandra-COSMOS survey"]}]
+        }}
+      ```
+
+      ## Example Search Requests
+
+      Query | Explanation
+
+      ------|-------------------------------------------------
+       `q=bibcode:2011ApJ...737..103S` |  Search by bibcode
+       `q=black+holes&fq=database:astronomy` |  Search for "black holes", restricted to astronomy content
+       `q=dark+energy&fq=author:"Civano,+F"&sort=citation_count+desc` |  Search for "dark energy", filter by author, sort by citation count
+      `q=dark+energy&sort=citation_count+desc&fl=bibcode,property` |   Return
+      *bibcode* and *property* values
+
+      `q=author:"Kurtz,+M"&fq=property:refereed`|   Limit a search to only
+      refereed articles
+
+      `q=transiting+exoplanets&rows=200`|  Search for "transiting exoplanets",
+      get 200 rows
+
+      `q=transiting+exoplanets&rows=200&start=201`|   Same search but get the
+      next 200 rows
+
+    parameters:
+      - $ref: '../parameters.yaml#/q'
+      - $ref: '../parameters.yaml#/fq'
+      - $ref: '../parameters.yaml#/fl'
+      - $ref: '../parameters.yaml#/start'
+      - $ref: '../parameters.yaml#/rows'
+      - $ref: '../parameters.yaml#/sort'
+    responses:
+      '200':
+        $ref: '../responses.yaml#/SearchResults'
+      '400':
+        description: Malformed request
+      '404':
+        description: Resource not found
+      '499':
+        description: Server too busy
+      '500':
+        description: Server error
+    tags:
+      - libraries
+      
   post:
     summary: Add or remove documents from a library by SOLR query
     parameters:
