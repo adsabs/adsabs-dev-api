@@ -102,7 +102,8 @@ biblib-documents:
       '400':
         description: >
           No username passed, bad library ID passed, wrong type passed,
-          or user requested a non-standard operation
+          user requested a non-standard operation or user supplied list of bibcodes
+          contained no valid bibcodes.
       '403':
         description: >
           User does not have permission to perform this operation
