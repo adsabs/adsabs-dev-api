@@ -96,7 +96,9 @@ biblib-documents:
                 invalid_bibcodes:
                   type: array
                   description: >
-                    List of bibcodes not found in ADS and could not be added as a result.
+                    List of bibcodes that were not found in ADS and could not be added to the library.
+                  items:
+                    type: string
       '400':
         description: >
           No username passed, bad library ID passed, wrong type passed,
