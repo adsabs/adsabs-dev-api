@@ -93,6 +93,10 @@ biblib-documents:
                   type: integer
                   description: >
                     Number of bibcodes removed, if 'remove' is used
+                invalid_bibcodes:
+                  type: array
+                  description: >
+                    List of bibcodes not found in ADS and could not be added as a result.
       '400':
         description: >
           No username passed, bad library ID passed, wrong type passed,
