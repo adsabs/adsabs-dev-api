@@ -235,14 +235,24 @@ biblib-query:
 
       ## Example Search
 
-      `<library_id>?q=black+holes&fq=database:astronomy`
+      `<library_id>?q=black+holes&fq=database:astronomy&rows=10`
 
       ## Example Response
 
       ```
-
-      Example goes here...
-
+      {"number_added": 10,
+       "bibcodes":
+       ["1973PhRvD...7.2333B",
+        "1973blho.conf..343N",
+        "1977MNRAS.179..433B",
+        "2016PhRvL.116f1102A",
+        "1975CMaPh..43..199H",
+        "1976PhRvD..14..870U",
+        "2013ARA&A..51..511K",
+        "2023MNRAS.518.1057E",
+        " 1973A&A....24..337S",
+        "1974Natur.248...30H"]
+      }
       ```
 
     security:
@@ -276,10 +286,10 @@ biblib-query:
                   type: integer
                   description: >
                     Number of bibcodes removed, if 'remove' is used
-                invalid_bibcodes:
+                bibcodes:
                   type: array
                   description: >
-                    List of bibcodes that were not found in ADS and could not be added to the library.
+                    List of bibcodes added to the library.
                   items:
                     type: string
       '400':
