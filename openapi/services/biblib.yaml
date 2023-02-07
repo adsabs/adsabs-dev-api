@@ -235,7 +235,7 @@ biblib-query:
 
       ## Example Search
 
-      `<library_id>?q=black+holes&fq=database:astronomy&rows=10`
+      `<library_id>?q=black+holes&fq=database:astronomy`
 
       ## Example Response
 
