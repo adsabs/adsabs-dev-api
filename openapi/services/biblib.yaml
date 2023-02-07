@@ -240,7 +240,7 @@ biblib-query:
       ## Example Response
 
       ```bash
-      {
+      {{
        "number_added": 10,
        "bibcodes":
          ["1973PhRvD...7.2333B",
@@ -253,7 +253,7 @@ biblib-query:
           "2023MNRAS.518.1057E",
           "1973A&A....24..337S",
           "1974Natur.248...30H"]
-      }
+      }}
       ```
 
     security:
@@ -337,7 +337,7 @@ biblib-query:
       ## Example Response
 
       ```bash
-      {
+      {{
        "number_added": 10,
        "bibcodes":
          ["1973PhRvD...7.2333B",
@@ -350,7 +350,7 @@ biblib-query:
           "2023MNRAS.518.1057E",
           "1973A&A....24..337S",
           "1974Natur.248...30H"]
-      }
+      }}
       ```
 
     tags:
