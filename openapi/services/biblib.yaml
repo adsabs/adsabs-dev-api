@@ -225,10 +225,17 @@ biblib-query:
 
       Queries can be performed as they would be using the search/ endpoint with all the same options available to the user.
 
+      The following type of user can add or remove documents:
+
+      * owner
+
+      * admin
+
+      * write
 
       ## Example Search
 
-      `q=bibcode:2012A%26A...542A..16R&fl=bibcode,author,pub,identifier,title,property,abstract,keyword,aff`
+      `<library_id>?q=black+holes&fq=database:astronomy`
 
       ## Example Response
 
@@ -238,25 +245,6 @@ biblib-query:
 
       ```
 
-      ## Example Search Requests
-
-      Query | Explanation
-
-      ------|-------------------------------------------------
-       `q=bibcode:2011ApJ...737..103S` |  Search by bibcode
-       `q=black+holes&fq=database:astronomy` |  Search for "black holes", restricted to astronomy content
-       `q=dark+energy&fq=author:"Civano,+F"&sort=citation_count+desc` |  Search for "dark energy", filter by author, sort by citation count
-      `q=dark+energy&sort=citation_count+desc&fl=bibcode,property` |   Return
-      *bibcode* and *property* values
-
-      `q=author:"Kurtz,+M"&fq=property:refereed`|   Limit a search to only
-      refereed articles
-
-      `q=transiting+exoplanets&rows=200`|  Search for "transiting exoplanets",
-      get 200 rows
-
-      `q=transiting+exoplanets&rows=200&start=201`|   Same search but get the
-      next 200 rows
     security:
       - ApiKeySecurity: []
     parameters:
@@ -268,15 +256,39 @@ biblib-query:
           type: string
       - $ref: '../parameters.yaml#/q'
       - $ref: '../parameters.yaml#/fq'
-      - $ref: '../parameters.yaml#/fl'
       - $ref: '../parameters.yaml#/start'
       - $ref: '../parameters.yaml#/rows'
       - $ref: '../parameters.yaml#/sort'
     responses:
       '200':
-        $ref: '../responses.yaml#/SearchResults'
+        description:
+          Returns number of bibcodes added or removed
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number_added:
+                  type: integer
+                  description: >
+                    Number of bibcodes added, if 'add' is used
+                number_removed:
+                  type: integer
+                  description: >
+                    Number of bibcodes removed, if 'remove' is used
+                invalid_bibcodes:
+                  type: array
+                  description: >
+                    List of bibcodes that were not found in ADS and could not be added to the library.
+                  items:
+                    type: string
       '400':
-        description: Malformed request
+        description: >
+          No username passed, bad library ID passed, wrong type passed,
+          user requested a non-standard operation or user supplied a malformed search query
+      '403':
+        description: >
+          User does not have permission to perform this operation
       '404':
         description: Resource not found
       '499':
@@ -306,6 +318,18 @@ biblib-query:
       * admin
 
       * write
+
+      ## Example Search
+
+      {"params": {"q": "black holes", "fq": "database:astronomy"}, "action": "add"}
+
+      ## Example Response
+
+      ```
+
+      Example goes here...
+
+      ```
     tags:
       - libraries
     security:
@@ -319,14 +343,14 @@ biblib-query:
             type: object
             required:
               - action
-              - query
+              - params
             properties:
               query:
                 type: object
                 required:
                   - q
                 description: >
-                  relevant query parameters for the expected SOLR query
+                  relevant query parameters for the expected SOLR query the only required search parameter is the query, q.
                 items:
                   type: object
               action:
@@ -350,10 +374,14 @@ biblib-query:
                   type: integer
                   description: >
                     Number of bibcodes removed, if 'remove' is used
+                bibcodes:
+                  type: array
+                  description: >
+                    All bibcodes added from the query
       '400':
         description: >
           No username passed, bad library ID passed, wrong type passed,
-          or user requested a non-standard operation
+          or user requested a non-standard operation User passed a malformed search query.
       '403':
         description: >
           User does not have permission to perform this operation.
