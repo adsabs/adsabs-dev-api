@@ -368,12 +368,17 @@ biblib-query:
               - action
               - params
             properties:
-              query:
+              params:
                 type: object
                 required:
                   - q
+                properties:
+                  q:
+                    type: string
+                    description: >
+                      The core query string
                 description: >
-                  relevant query parameters for the expected SOLR query the only required search parameter is the query, q.
+                  relevant query parameters
                 items:
                   type: object
               action:
