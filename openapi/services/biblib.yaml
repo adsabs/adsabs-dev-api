@@ -218,7 +218,7 @@ biblib-documents:
           Library specified does not exist
 biblib-query:
   get:
-    summary: Add or remove documents from a library by query
+    summary: Add documents to a library by query
     description: >
       Add documents to a given library by passing a search query to the endpoint.
 
@@ -240,8 +240,7 @@ biblib-query:
       ## Example Response
 
       ```bash
-      {{
-       "number_added": 10,
+      {"number_added": 10,
        "bibcodes":
          ["1973PhRvD...7.2333B",
           "1973blho.conf..343N",
@@ -252,8 +251,7 @@ biblib-query:
           "2013ARA&A..51..511K",
           "2023MNRAS.518.1057E",
           "1973A&A....24..337S",
-          "1974Natur.248...30H"]
-      }}
+          "1974Natur.248...30H"]}
       ```
 
     security:
@@ -309,7 +307,7 @@ biblib-query:
     tags:
       - libraries      
   post:
-    summary: Add or remove documents from a library by SOLR query
+    summary: Add or remove documents from a library by query
     parameters:
       - name: library_id
         description: Library ID
@@ -337,8 +335,7 @@ biblib-query:
       ## Example Response
 
       ```bash
-      {{
-       "number_added": 10,
+       {"number_added": 10,
        "bibcodes":
          ["1973PhRvD...7.2333B",
           "1973blho.conf..343N",
@@ -349,8 +346,7 @@ biblib-query:
           "2013ARA&A..51..511K",
           "2023MNRAS.518.1057E",
           "1973A&A....24..337S",
-          "1974Natur.248...30H"]
-      }}
+          "1974Natur.248...30H"]}
       ```
 
     tags:
