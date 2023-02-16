@@ -378,7 +378,7 @@ biblib-query:
                     description: >
                       The entry number of the query to begin on
                   rows:
-                    type: string
+                    type: int
                     description: >
                       How many entries to include from the query
                   sort:
