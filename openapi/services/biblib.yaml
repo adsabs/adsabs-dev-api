@@ -369,6 +369,22 @@ biblib-query:
                     type: string
                     description: >
                       The core query string
+                  fq:
+                    type: string
+                    description: >
+                      query context filtering
+                  start:
+                    type: int
+                    description: >
+                      The entry number of the query to begin on
+                  rows:
+                    type: string
+                    description: >
+                      How many entries to include from the query
+                  sort:
+                    type: string
+                    description: >
+                      The sort order for the returned query
                 description: >
                   relevant query parameters
                 items:
