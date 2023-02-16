@@ -220,10 +220,10 @@ biblib-query:
   get:
     summary: Add documents to a library by query
     description: >
-      Add documents to a given library by passing a search query to the endpoint.
+      Add documents to a given library by passing a query to the endpoint.
 
 
-      Queries can be performed as they would be using the search/ endpoint with all the same options available to the user.
+      Queries can be performed as they would be using the "search" endpoint with all the same options available to the user.
 
       The following type of user can add or remove documents:
 
@@ -233,7 +233,7 @@ biblib-query:
 
       * write
 
-      ## Example Search
+      ## Example Request
 
       `<library_id>?q=black+holes&fq=database:astronomy`
 
@@ -316,7 +316,7 @@ biblib-query:
         schema:
           type: string
     description: >
-      Add or delete a documents to a given library based on supplied search/ query parameters. Returns the number
+      Add or delete a documents to a given library based on supplied "search" query parameters. Returns the number
       of documents added or removed.
 
 
@@ -328,9 +328,9 @@ biblib-query:
 
       * write
 
-      ## Example Search
+      ## Example Payload
 
-      {"params": {"q": "black holes", "fq": "database:astronomy"}, "action": "add"}
+      `{"params": {"q": "black holes", "fq": "database:astronomy"}, "action": "add"}`
 
       ## Example Response
 
