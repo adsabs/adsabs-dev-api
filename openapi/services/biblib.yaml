@@ -281,10 +281,6 @@ biblib-query:
                   type: integer
                   description: >
                     Number of bibcodes added, if 'add' is used
-                number_removed:
-                  type: integer
-                  description: >
-                    Number of bibcodes removed, if 'remove' is used
                 bibcodes:
                   type: array
                   description: >
