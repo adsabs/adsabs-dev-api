@@ -18,7 +18,7 @@ Note: sometimes Github's internal Jupyter notebook rendering agent fails. If tha
 - Libraries API( ([Python](API_documentation_Python/Libraries_API_Python.ipynb), [bash/shell](API_documentation_UNIXshell/Libraries_API.ipynb))
 - Journals API ([Python](API_documentation_Python/Journals_API_Python.ipynb), [bash/shell](API_documentation_UNIXshell/Journals_API.ipynb))
 - Converting curl to Python ([bash/shell](API_documentation_UNIXshell/Converting_curl_to_python.ipynb))
-- Script examples ([Python](API_documentation_Python/API_examples)))
+- Script examples ([Python](API_documentation_Python/API_examples))
 
 
 ## Clients
