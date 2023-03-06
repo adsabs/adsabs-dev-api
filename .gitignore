@@ -33,3 +33,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+.ipynb_checkpoints
+.jekyll-cache
+.idea
+_site
+.DS_Store

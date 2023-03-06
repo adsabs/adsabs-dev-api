@@ -12,16 +12,14 @@ Note: sometimes Github's internal Jupyter notebook rendering agent fails. If tha
 
 - [Access](#access)
 - [Access Settings](#access-settings)
-- [Search API](Search_API.ipynb)
-- [Metrics API](Metrics_API.ipynb)
-- [Export API](Export_API.ipynb)
-- [Libraries API](Libraries_API.ipynb)
-- [Journals API](Journals_API.ipynb)
-- [Converting curl to Python - examples](Converting_curl_to_python.ipynb)
+- Search API ([Python](API_documentation_Python/Search_API_Python.ipynb), [bash/shell](API_documentation_UNIXshell/Search_API.ipynb))
+- Metrics API ([Python](API_documentation_Python/Metrics_API_Python.ipynb), [bash/shell](API_documentation_UNIXshell/Metrics_API.ipynb))
+- Export API ([Python](API_documentation_Python/Export_API_Python.ipynb), [bash/shell](API_documentation_UNIXshell/Export_API.ipynb))
+- Libraries API( ([Python](API_documentation_Python/Libraries_API_Python.ipynb), [bash/shell](API_documentation_UNIXshell/Libraries_API.ipynb))
+- Journals API ([Python](API_documentation_Python/Journals_API_Python.ipynb), [bash/shell](API_documentation_UNIXshell/Journals_API.ipynb))
+- Converting curl to Python ([bash/shell](API_documentation_UNIXshell/Converting_curl_to_python.ipynb))
+- Script examples ([Python](API_documentation_Python/API_examples))
 
-## Mailing List
-
-Announcements and discussion related to the Developer API are available via the Google Group, [adsabs-dev-api](https://groups.google.com/forum/#!forum/adsabs-dev-api). We encourage all API users to subscribe, as the functionality of the API, will likely be improving and changing rapidly.
 
 ## Clients
 
