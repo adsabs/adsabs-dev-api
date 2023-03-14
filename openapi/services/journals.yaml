@@ -127,3 +127,32 @@ refsource:
         description: Authentication failure, unable to get results
       '500':
         description: Internal error, unable to get results
+issn:
+  get:
+    summary: ADS bibstem for a given ISSN
+    parameters:
+      - $ref: '../parameters.yaml#/JournalISSN'
+    description: >
+      For a given ISSN, return a dictionary of the corresponding ADS bibstem,
+      journal name and ISSN type (e.g. print, electronic) if it exists.  If
+      the record is not found, return an empty dictionary.
+    tags:
+      - journals
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          JSON object containing a dictionary.  If results are found,
+          the dictionary contains the ISSN, ISSN type, ADS bibstem, and journal
+          name of record as key value pairs.  If no results are found, the
+          dictionary is empty.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../schemas.yaml#/issn'
+      '403':
+        description: Authentication failure, unable to get results
+      '500':
+        description: Internal error, unable to get results

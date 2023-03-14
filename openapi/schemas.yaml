@@ -673,3 +673,17 @@ refsource:
                     type: integer
                   PUBLISHER:
                     type: integer
+issn:
+  type: object
+  properties:
+    issn:
+      type: object
+      properties:
+        ISSN:
+          type: string
+        ISSN_type:
+          type: string
+        bibstem:
+          type: string
+        journal_name:
+          type: string
