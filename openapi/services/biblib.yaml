@@ -431,7 +431,7 @@ biblib-libraries:
         in: query
         schema:
           type: int
-        default: 0
+          default: 0
       - name: rows
         description: number of libraries to return
         required: false
