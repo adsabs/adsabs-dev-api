@@ -437,6 +437,18 @@ biblib-libraries:
         in: query
         schema:
           type: int
+      - name: sort
+        description: key to sort the libraries by
+        required: false
+        in: query
+        schema:
+          type: str
+      - name: order
+        description: order to sort the libraries in
+        required: false
+        in: query
+        schema:
+          type: str
     description: >
       View all libraries for the user associated with the given API token.
     tags:
