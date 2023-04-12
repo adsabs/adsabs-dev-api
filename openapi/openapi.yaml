@@ -94,6 +94,8 @@ components:
       $ref: parameters.yaml#/bibstem
     volume:
       $ref: parameters.yaml#/volume
+    issn:
+      $ref: parameters.yaml#/issn
     queryName:
       $ref: parameters.yaml#/queryName
   responses:
@@ -325,6 +327,8 @@ paths:
     $ref: 'services/journals.yaml#/holdings'
   /journals/refsource/{bibstem}:
     $ref: 'services/journals.yaml#/refsource'
+  /journals/issn/{issn}:
+    $ref: 'services/journals.yaml#/issn'
   /metrics:
     $ref: 'services/metrics.yaml#/metrics'
   /metrics/{bibcode}:

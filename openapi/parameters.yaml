@@ -249,3 +249,11 @@ JournalJournalName:
   example: "Astro%20Jour"
   schema:
     type: string
+JournalISSN:
+  name: issn
+  description: Search string
+  required: true
+  in: path
+  example: "0004-637X"
+  schema:
+    type: string
