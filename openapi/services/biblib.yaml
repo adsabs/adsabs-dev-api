@@ -458,7 +458,7 @@ biblib-libraries:
           enum:
             - asc
             - desc
-          default: desc
+          default: asc
     description: >
       View all libraries for the user associated with the given API token.
     tags:
