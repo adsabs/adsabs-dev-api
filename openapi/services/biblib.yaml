@@ -555,24 +555,23 @@ biblib-libraries-library_id:
         schema:
           type: string
       - name: start
-        description: starting entry
+        description: starting document index
         in: query
         schema:
           type: int
           default: 0
       - name: rows
-        description: number of entries to return
+        description: number of documents to return
         in: query
         schema:
           type: int
           default: 20
       - name: sort
-        description: entry sort order
+        description: document sort order
         in: query
         schema:
           type: string
           default: 'date desc'
-
       - name: fl
         description: returned fields
         in: query
@@ -582,7 +581,7 @@ biblib-libraries-library_id:
 
     description: >
       View metadata and contents of a specific library.
-      Takes pagination and field arguments consistent with the "search" endpoint.
+      Takes pagination and field arguments consistent with the "search" endpoint to support sorting and paging for documents within a library.
     tags:
       - libraries
     security:
