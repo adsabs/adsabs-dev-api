@@ -545,6 +545,7 @@ biblib-libraries:
         description:
           Duplicate library name exists
 biblib-libraries-library_id:
+  summary: Returns the metadata and contents of a specified library. Takes pagination and field arguments consistent with the "search" endpoint.
   get:
     summary: View a single library
     parameters:
@@ -552,6 +553,30 @@ biblib-libraries-library_id:
         description: Library ID
         required: true
         in: path
+        schema:
+          type: string
+      - name: start
+        description: starting entry
+        in: path
+        default: 0
+        schema:
+          type: int
+      - name: rows
+        description: number of entries to return
+        default: 20
+        in: path
+        schema:
+          type: int
+      - name: sort
+        description: entry sort order
+        in: path
+        default: 'date desc'
+        schema:
+          type: string
+      - name: fl
+        description: returned fields
+        in: path
+        default: 'bibcode'
         schema:
           type: string
     description: >
