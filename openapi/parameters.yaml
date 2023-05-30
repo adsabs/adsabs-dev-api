@@ -159,13 +159,13 @@ queryId:
     type: string
 rows:
   name: rows
-  description: How many records to return for this request (default=10, maximum=200)
+  description: How many records to return for this request (default=10, maximum=2000)
   in: query
   required: false
   schema:
     type: integer
     default: 10
-    maximum: 200
+    maximum: 2000
 sort:
   name: sort
   description: >
