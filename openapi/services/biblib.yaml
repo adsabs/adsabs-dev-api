@@ -546,7 +546,7 @@ biblib-libraries:
           Duplicate library name exists
 biblib-libraries-library_id:
   get:
-    summary: Returns a single library
+    summary: View a single library
     parameters:
       - name: library_id
         description: Library ID
