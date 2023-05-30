@@ -546,7 +546,7 @@ biblib-libraries:
           Duplicate library name exists
 biblib-libraries-library_id:
   get:
-    summary: Returns the metadata and contents of a specified library. Takes pagination and field arguments consistent with the "search" endpoint.
+    summary: Returns a single library
     parameters:
       - name: library_id
         description: Library ID
@@ -582,6 +582,7 @@ biblib-libraries-library_id:
 
     description: >
       View metadata and contents of a specific library.
+      Takes pagination and field arguments consistent with the "search" endpoint.
     tags:
       - libraries
     security:
