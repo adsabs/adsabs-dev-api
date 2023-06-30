@@ -578,10 +578,16 @@ biblib-libraries-library_id:
         schema:
           type: string
           default: 'bibcode'
-
+      - name: raw
+        description: returns raw bibcodes from database
+        in: query
+        schema:
+          type: boolean
+          default: false
     description: >
       View metadata and contents of a specific library.
       Takes pagination and field arguments consistent with the "search" endpoint to support sorting and paging for documents within a library.
+      The raw argument passes all bibcodes stored in the library, regardless of whether or not they are currently in ADS.
     tags:
       - libraries
     security:
