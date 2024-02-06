@@ -1,6 +1,49 @@
+account_data:
+  name: account_data
+  description: >
+    User identifier; can be session ID, user ID, access token,
+    or client ID
+  in: path
+  required: true
+  schema:
+    type: string
+access_type:
+  name: access_type
+  description: >
+    Type of access to library
+  in: query
+  required: false
+  schema:
+    type: string
+    enum: 
+      - all 
+      - owner 
+      - collaborator 
+    default: all 
 bibcode:
   name: bibcode
   description: Bibcode to export
+  required: true
+  in: path
+  schema:
+    type: string
+code: 
+  name: code
+  description: Code to exchange
+  required: true
+  in: query
+  schema:
+    type: string
+document_id: 
+  name: document_id
+  description: Bibcode
+  required: true
+  in: path
+  schema:
+    type: string
+export: 
+  name: export 
+  description: Service to export to
   required: true
   in: path
   schema:
@@ -85,6 +128,13 @@ fl:
         - vizier
         - volume
         - year
+fl_documents:
+  name: fl_documents
+  description: returned fields
+  in: query
+  schema:
+    type: string
+    default: 'bibcode'
 fq:
   name: fq
   description: Additional filters applied on top of the results of the main query.
@@ -105,6 +155,21 @@ iso_datestring:
   schema:
     type: string
   required: true
+key: 
+  name: key
+  description: Key to return from vault configuration
+  required: true
+  in: path
+  schema:
+    default: link_servers
+    type: string
+library_id: 
+  name: library_id
+  description: Library ID
+  required: true
+  in: path
+  schema:
+    type: string
 link:
   name: link
   description: Query URL
@@ -119,6 +184,13 @@ myadsId:
   in: path
   schema:
     type: integer
+notes: 
+  name: notes
+  description: Whether notes should be returned
+  in: query
+  schema:
+    type: boolean
+    default: true
 OrcidAuthorization:
   name: Orcid-Authorization
   in: header
@@ -133,6 +205,25 @@ orcidId:
   schema:
     type: string
   required: true
+order_library: 
+  name: order_library
+  description: order to sort the libraries in
+  required: false
+  in: query
+  schema: 
+    type: string
+    enum:
+      - asc
+      - desc
+      - name
+    default: asc
+password_reset_token:
+  name: token
+  description: Raw email address of recipient
+  in: path
+  required: true
+  schema:
+    type: string
 putcode:
   name: putcode
   description: Putcode (unique identifier for a work on the ORCID API)
@@ -157,6 +248,13 @@ queryId:
   in: path
   schema:
     type: string
+raw:
+  name: raw
+  description: returns raw bibcodes from database
+  in: query
+  schema:
+    type: boolean
+    default: false
 rows:
   name: rows
   description: How many records to return for this request (default=10, maximum=2000)
@@ -166,6 +264,21 @@ rows:
     type: integer
     default: 10
     maximum: 2000
+rows_documents:
+  name: rows
+  description: number of documents to return
+  in: query
+  schema:
+    type: integer
+    default: 20
+rows_library: 
+  name: rows_library
+  description: number of libraries to return
+  required: false
+  in: query
+  schema:
+    type: integer
+    default: None
 sort:
   name: sort
   description: >
@@ -201,6 +314,25 @@ sort:
       - entry_date desc
       - read_count desc
       - score desc
+sort_documents:
+  name: sort_documents
+  description: document sort order
+  in: query
+  schema:
+    type: string
+    default: 'date desc'
+sort_library: 
+  name: sort_library
+  description: key to sort the libraries by
+  required: false
+  in: query
+  schema:
+    type: string
+    enum:
+      - date_created
+      - date_last_modified
+      - name
+    default: date_created
 start:
   name: start
   description: For pagination, offset of the first returned result (default=0)

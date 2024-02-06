@@ -5,6 +5,8 @@ vault-configuration:
       Fetch data from VAULT_BUMBLEBEE_OPTIONS, default key.
     tags:
       - vault
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         description: Vault configuration
@@ -13,7 +15,7 @@ vault-configuration:
             schema:
               type: object
               properties:
-                defalt_key:
+                default_key:
                   description: >
                     Default vault Bumblebee options key, as defined in config
                   type: string
@@ -29,13 +31,9 @@ vault-configuration-key:
     tags:
       - vault
     parameters:
-      - name: key
-        description: Key to return from vault configuration
-        required: true
-        in: path
-        schema:
-          default: link_servers
-          type: string
+      - $ref: '../parameters.yaml#/key'
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         description: Library link servers or other vault config info

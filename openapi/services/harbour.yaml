@@ -99,12 +99,7 @@ harbour-export-twopointoh:
     security:
     - ApiKeySecurity: []
     parameters:
-      - name: export
-        description: Service to export to
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/export'
     responses:
       '200':
         description: URL to file import

@@ -22,6 +22,66 @@ This is currently a pain, for two competing reasons:
 
 Most tools that I've found will do one or the other (local files or multiple files), but not both. Given that our spec is now relatively mature, you should be able to get away with the Rapidoc validation approach below.
 
+### Latest: Redocly extension (VSCode)
+
+[Redocly](https://redocly.com/docs/redocly-openapi/)
+
+Add redocly.yaml with the content below to your project directory.
+
+```
+extends:
+  - recommended
+
+apis:
+  core@v3:
+    root: ./adsabs-dev-api/openapi/openapi.yaml
+    rules:
+      tag-description: off
+      # operation-summary: warn
+      # no-unresolved-refs: warn
+      # no-unused-components: warn
+      # operation-2xx-response: warn
+      # operation-operationId: warn
+      # operation-singular-tag: warn
+      # no-enum-type-mismatch: warn
+      # no-identical-paths: warn
+      # no-ambiguous-paths: warn
+      # security-defined: on 
+      rule/operation-description:
+        subject: 
+          type: Operation
+          property: description
+        assertions:
+          defined: true
+          minLength: 10
+  public@latest:
+    root: ./adsabs-dev-api/openapi/openapi_public.yaml
+    labels:
+      - public
+  internal@latest:
+    root: ./adsabs-dev-api/openapi/openapi_internal.yaml
+    labels:
+      - public
+    
+theme:
+  openapi:
+    hideLogo: true
+    schemaExpansionLevel: 2
+    hideOneOfDescription: true
+    sortOperationsAlphabetically: true
+    sortTagsAlphabetically: true
+    sortEnumValuesAlphabetically: true
+    sortPropsAlphabetically: true
+    generateCodeSamples:
+      languages:
+        - lang: curl
+        - lang: Python
+
+decorators:
+  remove-unused-components: on
+
+```
+
 ### Swagger Editor validation
 The online [Swagger Editor](https://editor.swagger.io/) can be helpful for validation, but it doesn't support specifications split across multiple files, as ours is. If you want to use it, you'll have to do a workaround (hope they fix this, merge the necessary files into a single file, etc.).
 

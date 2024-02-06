@@ -9,12 +9,7 @@ resolver-bibcode:
     security:
       - ApiKeySecurity: []
     parameters:
-      - name: bibcode
-        description: Bibcode to return resources for
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/bibcode'
     responses:
       '200':
         $ref: '../responses.yaml#/ResolverResponse'
@@ -33,12 +28,7 @@ resolver-bibcode-link_type:
     security:
       - ApiKeySecurity: []
     parameters:
-      - name: bibcode
-        description: Bibcode to return resources for
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/bibcode'
       - name: link_type
         description: >
           External resource type to return (case-insensitive). The available link types
