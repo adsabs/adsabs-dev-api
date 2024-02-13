@@ -186,7 +186,7 @@ myadsId:
     type: integer
 notes: 
   name: notes
-  description: Whether notes should be returned
+  description: Whether notes should be returned or not
   in: query
   schema:
     type: boolean
@@ -205,18 +205,6 @@ orcidId:
   schema:
     type: string
   required: true
-order_library: 
-  name: order_library
-  description: order to sort the libraries in
-  required: false
-  in: query
-  schema: 
-    type: string
-    enum:
-      - asc
-      - desc
-      - name
-    default: asc
 password_reset_token:
   name: token
   description: Raw email address of recipient
@@ -264,21 +252,6 @@ rows:
     type: integer
     default: 10
     maximum: 2000
-rows_documents:
-  name: rows
-  description: number of documents to return
-  in: query
-  schema:
-    type: integer
-    default: 20
-rows_library: 
-  name: rows_library
-  description: number of libraries to return
-  required: false
-  in: query
-  schema:
-    type: integer
-    default: None
 sort:
   name: sort
   description: >
@@ -314,25 +287,6 @@ sort:
       - entry_date desc
       - read_count desc
       - score desc
-sort_documents:
-  name: sort_documents
-  description: document sort order
-  in: query
-  schema:
-    type: string
-    default: 'date desc'
-sort_library: 
-  name: sort_library
-  description: key to sort the libraries by
-  required: false
-  in: query
-  schema:
-    type: string
-    enum:
-      - date_created
-      - date_last_modified
-      - name
-    default: date_created
 start:
   name: start
   description: For pagination, offset of the first returned result (default=0)

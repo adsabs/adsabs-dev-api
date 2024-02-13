@@ -606,9 +606,35 @@ biblib-libraries:
     summary: View all libraries for a given user
     parameters:
       - $ref: '../parameters.yaml#/start'
-      - $ref: '../parameters.yaml#/rows_library'
-      - $ref: '../parameters.yaml#/sort_library'
-      - $ref: '../parameters.yaml#/order_library'
+      - name: rows
+        description: number of libraries to return
+        required: false
+        in: query
+        schema:
+          type: integer
+          default: None
+      - name: sort
+        description: key to sort the libraries by
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+            - date_created
+            - date_last_modified
+            - name
+          default: date_created
+      - name: order
+        description: order to sort the libraries in
+        required: false
+        in: query
+        schema: 
+          type: string
+          enum:
+            - asc
+            - desc
+            - name
+          default: asc
       - $ref: '../parameters.yaml#/access_type'
     description: >
       View all libraries for the user associated with the given API token.
@@ -696,9 +722,24 @@ biblib-libraries-library_id:
     parameters:
       - $ref: '../parameters.yaml#/library_id'
       - $ref: '../parameters.yaml#/start'
-      - $ref: '../parameters.yaml#/rows_documents'
-      - $ref: '../parameters.yaml#/sort_documents'
-      - $ref: '../parameters.yaml#/fl_documents'
+      - name: rows
+        description: number of documents to return
+        in: query
+        schema:
+          type: integer
+          default: 20
+      - name: sort
+        description: document sort order
+        in: query
+        schema:
+          type: string
+          default: 'date desc'
+      - name: fl
+        description: returned fields
+        in: query
+        schema:
+          type: string
+          default: 'bibcode'
       - $ref: '../parameters.yaml#/raw'
       - $ref: '../parameters.yaml#/notes'
     description: >
