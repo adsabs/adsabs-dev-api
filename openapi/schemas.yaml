@@ -207,6 +207,37 @@ doc:
       type: string
     title:
       type: string
+libraryResponse: 
+  type: object
+  properties:
+    count: 
+      type: integer 
+      description: Number of libraries in collection depending on access_type selected
+    libraries:
+      type: array
+      description: List of all libraries with their metadata
+      items:
+        $ref: 'schemas.yaml#/libraryMetadata'
+libraryNote: 
+  type: object 
+  description: > 
+    Object that contains the notes' properties 
+  properties: 
+    id: 
+      type: string 
+      description: Note id
+    content: 
+      type: string 
+      description: Note content 
+    library_id: 
+      type: string 
+      description: Note library id 
+    date_created: 
+      type: string 
+      description: Date note was created
+    date_last_modified: 
+      type: string     
+      description: Date note was last modified
 libraryMetadata:
   type: object
   properties:
@@ -518,15 +549,31 @@ vaultObject:
   type: object
   properties:
     q:
-      $ref: 'parameters.yaml#/q'
+      type: string
+      description: >-
+        Query string; for detailed documentation go to
+        https://ui.adsabs.harvard.edu/help/search/search-syntax
     fl:
-      $ref: 'parameters.yaml#/fl'
+      type: string
+      description: Comma delimited set of fields to return; default is 'id'
+      example: "bibcode,author,title"
     start:
-      $ref: 'parameters.yaml#/start'
+      type: integer
+      description: For pagination, offset of the first returned result (default=0)
     rows:
-      $ref: 'parameters.yaml#/rows'
+      description: How many records to return for this request (default=10, maximum=2000)
+      type: integer
+      default: 10
+      maximum: 2000
     sort:
-      $ref: 'parameters.yaml#/sort'
+      description: >
+        The format is 'field' + 'direction' where direction is one of 'asc' or
+        'desc' and field is any of the valid indexes. The default sorting is by
+        relevance (computed by our search engine). Example\:
+        'sort=read_count+desc' Some useful fields to sort by may be date,
+        citation_count, or read_count.
+      type: 
+        string
     fq:
       type: string
       description: >

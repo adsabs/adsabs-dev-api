@@ -7,6 +7,8 @@ accounts-bootstrap:
       OAuthClient and token is created/returned.
     tags:
       - adsws
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         description: Client info
@@ -47,6 +49,7 @@ accounts-csrf:
     description: Returns a CSRF token
     tags:
       - adsws
+    security: []
     responses:
       '200':
         description: CSRF token
@@ -140,14 +143,7 @@ accounts-info:
     security:
       - ApiKeySecurity: []
     parameters:
-      - name: account_data
-        description: >
-          User identifier; can be session ID, user ID, access token,
-          or client ID
-        in: path
-        required: true
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/account_data'
     responses:
       '200':
         description: User info
@@ -263,6 +259,8 @@ accounts-reset-password:
       - adsws
     parameters:
       - $ref: '../parameters.yaml#/token'
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         description: Email if successful
@@ -289,12 +287,7 @@ accounts-reset-password:
       - ApiKeySecurity: []
       - XCsrfSecurity: []
     parameters:
-      - name: token
-        description: Raw email address of recipient
-        in: path
-        required: true
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/password_reset_token'
     requestBody:
       content:
         application/json:
@@ -363,6 +356,7 @@ accounts-status:
     description: Health check resource
     tags:
       - adsws
+    security: []
     responses:
       '200':
         description: Return if health check passes
@@ -558,6 +552,7 @@ oauth-errors:
       Error view for invalid oauth request; returns an HTML page
     tags:
       - adsws
+    security: []
     responses:
       '200':
         description: Returns rendered error page
@@ -655,6 +650,8 @@ oauth-token:
       Exchange/refresh access tokens; implements OAuth2 token_handler
     tags:
       - adsws
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         description: Token exchange successful
@@ -664,6 +661,8 @@ oauth-token:
       Exchange/refresh access tokens; implements OAuth2 token_handler
     tags:
       - adsws
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         description: Token exchange successful
@@ -716,6 +715,7 @@ resources:
     description: Show all resources adsws knows.
     tags:
       - adsws
+    security: []
     responses:
       '200':
         description: All API resources
@@ -739,6 +739,7 @@ status:
     description: Health check resource
     tags:
       - adsws
+    security: []
     responses:
       '200':
         description: Return if health check passes

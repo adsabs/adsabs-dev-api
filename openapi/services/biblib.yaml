@@ -33,12 +33,7 @@ biblib-documents:
   post:
     summary: Add or remove documents from a library
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       Add or delete a document to a given library. Returns the number
       of documents added or removed.
@@ -110,12 +105,7 @@ biblib-documents:
   put:
     summary: Update the metadata of a library
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       Update the metadata of a given library.
 
@@ -182,12 +172,7 @@ biblib-documents:
   delete:
     summary: Delete a library
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       Delete the given library.
 
@@ -216,6 +201,211 @@ biblib-documents:
       '410':
         description: >
           Library specified does not exist
+biblib-notes:
+  post:
+    summary: Add a note to a document in the library
+    parameters:
+      - $ref: '../parameters.yaml#/library_id'
+      - $ref: '../parameters.yaml#/document_id'
+    description: >
+      Add a note to a document in a given library. Returns the note added.
+
+      Only one note is allowed per document in library.
+      
+      The following type of user can post a note:
+
+      * owner
+
+      * admin
+
+      * write
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the note content
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - content
+            properties:
+              content:
+                type: string
+                description: >
+                  String with the note content
+                items:
+                  type: string
+    responses:
+      '200':
+        description:
+          Returns the newly created note content
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: > 
+                    New note content
+      '400':
+        description: >
+          No username passed, bad library ID passed, wrong type passed, 
+          invalid bibcode, duplicate note error
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '410': 
+        description: > 
+          Missing library error 
+  put:
+    summary: Update note for document in library 
+    parameters:
+      - $ref: '../parameters.yaml#/library_id'
+      - $ref: '../parameters.yaml#/document_id'
+    description: >
+      Update the note for a given document in library.
+
+
+      The following type of user can modify a note:
+
+      * owner
+
+      * admin
+
+      * write
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    requestBody:
+      description: >
+        JSON containing the note content
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - content
+            properties:
+              content:
+                type: string
+                description: >
+                  String with the note content
+                items:
+                  type: string
+    responses:
+      '200':
+        description:
+          Returns the newly modified note content
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: > 
+                    Modified note content
+      '400':
+        description: >
+          No username passed, bad library ID passed, wrong type passed, 
+          missing note error, invalid content error
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '410': 
+        description: > 
+          Missing library error 
+  get:
+    summary: Get note for document in library 
+    parameters:
+      - $ref: '../parameters.yaml#/library_id'
+      - $ref: '../parameters.yaml#/document_id'
+    description: >
+      Get the note for a given document in library.
+
+
+      The following type of user can read a note:
+
+      * owner
+
+      * admin
+
+      * read
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          Returns note object
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  description: > 
+                     Bibcode 
+                note: 
+                  $ref: '../schemas.yaml#/libraryNote'
+                library_metadata:
+                  $ref: '../schemas.yaml#/libraryMetadata'
+      '400':
+        description: >
+          No username passed, bad library ID passed, wrong type passed, 
+          missing note error, invalid content error
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '410': 
+        description: > 
+          Missing library error 
+  delete:
+    summary: Delete note for document in library 
+    parameters:
+      - $ref: '../parameters.yaml#/library_id'
+      - $ref: '../parameters.yaml#/document_id'
+    description: >
+      Delete the note for a given document in library.
+
+
+      The following type of user can modify a note:
+
+      * owner
+
+      * admin
+
+      * write
+    tags:
+      - libraries
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          Returns empty object
+        content:
+          application/json:
+            schema:
+              type: object
+      '400':
+        description: >
+          No username passed, bad library ID passed, wrong type passed, 
+          missing note error, invalid content error
+      '403':
+        description: >
+          User does not have permission to perform this operation
+      '410': 
+        description: > 
+          Missing library error 
 biblib-query:
   get:
     summary: Add documents to a library by query
@@ -257,12 +447,7 @@ biblib-query:
     security:
       - ApiKeySecurity: []
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
       - $ref: '../parameters.yaml#/q'
       - $ref: '../parameters.yaml#/fq'
       - $ref: '../parameters.yaml#/start'
@@ -305,12 +490,7 @@ biblib-query:
   post:
     summary: Add or remove documents from a library by query
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       Add or delete a documents to a given library based on supplied "search" query parameters. Returns the number
       of documents added or removed.
@@ -374,11 +554,11 @@ biblib-query:
                     description: >
                       query context filtering
                   start:
-                    type: int
+                    type: integer
                     description: >
                       The entry number of the query to begin on
                   rows:
-                    type: int
+                    type: integer
                     description: >
                       How many entries to include from the query
                   sort:
@@ -425,40 +605,37 @@ biblib-libraries:
   get:
     summary: View all libraries for a given user
     parameters:
-      - name: start
-        description: start index for response
-        required: false
-        in: query
-        schema:
-          type: int
-          default: 0
+      - $ref: '../parameters.yaml#/start'
       - name: rows
         description: number of libraries to return
         required: false
         in: query
         schema:
-          type: int
+          type: integer
           default: None
       - name: sort
         description: key to sort the libraries by
         required: false
         in: query
         schema:
-          type: str
+          type: string
           enum:
             - date_created
             - date_last_modified
+            - name
           default: date_created
       - name: order
         description: order to sort the libraries in
         required: false
         in: query
-        schema:
-          type: str
+        schema: 
+          type: string
           enum:
             - asc
             - desc
+            - name
           default: asc
+      - $ref: '../parameters.yaml#/access_type'
     description: >
       View all libraries for the user associated with the given API token.
     tags:
@@ -470,13 +647,8 @@ biblib-libraries:
         description: Metadata for all libraries for a given user
         content:
           application/json:
-            schema:
-              type: object
-              properties:
-                libraries:
-                  type: array
-                  items:
-                    $ref: '../schemas.yaml#/libraryMetadata'
+            schema: 
+              $ref: '../schemas.yaml#/libraryResponse'
       '400':
         description: >
           No username passed
@@ -548,23 +720,13 @@ biblib-libraries-library_id:
   get:
     summary: View a single library
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
-      - name: start
-        description: starting document index
-        in: query
-        schema:
-          type: int
-          default: 0
+      - $ref: '../parameters.yaml#/library_id'
+      - $ref: '../parameters.yaml#/start'
       - name: rows
         description: number of documents to return
         in: query
         schema:
-          type: int
+          type: integer
           default: 20
       - name: sort
         description: document sort order
@@ -578,12 +740,8 @@ biblib-libraries-library_id:
         schema:
           type: string
           default: 'bibcode'
-      - name: raw
-        description: returns raw bibcodes from database
-        in: query
-        schema:
-          type: boolean
-          default: false
+      - $ref: '../parameters.yaml#/raw'
+      - $ref: '../parameters.yaml#/notes'
     description: >
       View metadata and contents of a specific library.
       Takes pagination and field arguments consistent with the "search" endpoint to support sorting and paging for documents within a library.
@@ -668,16 +826,27 @@ biblib-libraries-library_id:
                     num_updated:
                       type: integer
                       description: Number of documents modified based on the response from Solr
+                notes: 
+                  type: object 
+                  description: Object with all the notes inside this library
+                  properties: 
+                    notes: 
+                      type: object 
+                      description: Object with all the notes where the key is the bibcode 
+                      properties: 
+                        bibcode: 
+                          $ref: '../schemas.yaml#/libraryNote'
+                    orphan_notes: 
+                      type: object 
+                      description: Object with notes that have no corresponding valid bibcode in library. Key is a previously valid bibcode
+                      properties: 
+                        bibcode:
+                          $ref: '../schemas.yaml#/libraryNote'
 biblib-libraries-operations:
   post:
     summary: Perform set operations on one or more libraries
     parameters:
-      - name: library_id
-        description: Library ID for the primary library
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       Perform set operations on one or more libraries. The library_id (string) is
       the unique identifier of the primary library, as specified in the /libraries
@@ -855,12 +1024,7 @@ biblib-permissions:
   get:
     summary: View permissions of a library
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       View permissions of a specific library.
     tags:
@@ -891,12 +1055,7 @@ biblib-permissions:
   post:
     summary: Edit permission of a library
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       Edit the permissions of a library
 
@@ -959,12 +1118,7 @@ biblib-transfer:
   post:
     summary: Transfer ownership of a library
     parameters:
-      - name: library_id
-        description: Library ID
-        required: true
-        in: path
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/library_id'
     description: >
       Transfer ownership of a library from one user to another
 

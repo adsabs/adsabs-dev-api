@@ -84,6 +84,10 @@ components:
       $ref: parameters.yaml#/sort
     bibcode:
       $ref: parameters.yaml#/bibcode
+    library_id:
+      $ref: parameters.yaml#/library_id
+    document_id:
+      $ref: parameters.yaml#/document_id
     link:
       $ref: parameters.yaml#/link
     queryId:
@@ -91,13 +95,15 @@ components:
     myadsId:
       $ref: parameters.yaml#/myadsId
     bibstem:
-      $ref: parameters.yaml#/bibstem
+      $ref: parameters.yaml#/JournalBibstem
     volume:
-      $ref: parameters.yaml#/volume
+      $ref: parameters.yaml#/JournalVolume
     issn:
-      $ref: parameters.yaml#/issn
-    queryName:
-      $ref: parameters.yaml#/queryName
+      $ref: parameters.yaml#/JournalISSN
+    export:
+      $ref: parameters.yaml#/export
+    code:
+      $ref: parameters.yaml#/code
   responses:
     QTree:
       $ref: responses.yaml#/QTree
@@ -136,6 +142,8 @@ components:
       $ref: schemas.yaml#/bibcodesObject
     libraryMetadata:
       $ref: schemas.yaml#/libraryMetadata
+    libraryNote:
+        $ref: schemas.yaml#/libraryNote
     orcid-work-to:
       $ref: schemas.yaml#/orcid-work-to
     orcid-work-from:
@@ -144,6 +152,16 @@ components:
       $ref: schemas.yaml#/orcid-preferences
     myADSsetupResponse:
       $ref: schemas.yaml#/myADSsetupResponse
+    summary: 
+      $ref: schemas.yaml#/summary
+    journal: 
+        $ref: schemas.yaml#/journal
+    holdings: 
+      $ref: schemas.yaml#/holdings
+    refsource: 
+      $ref: schemas.yaml#/refsource
+    issn: 
+      $ref: schemas.yaml#/issn
 paths:
   /alive:
     $ref: 'services/adsws.yaml#/alive'
@@ -215,6 +233,8 @@ paths:
     $ref: 'services/biblib.yaml#/biblib-libraries-operations'
   /biblib/documents/{library_id}:
     $ref: 'services/biblib.yaml#/biblib-documents'
+  /biblib/notes/{library_id}/{document_id}:
+    $ref: 'services/biblib.yaml#/biblib-notes'
   /biblib/query/{library_id}:
     $ref: 'services/biblib.yaml#/biblib-query'  
   /biblib/permissions/{library_id}:

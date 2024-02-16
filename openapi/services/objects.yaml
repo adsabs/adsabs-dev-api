@@ -75,6 +75,8 @@ objects-nedsrv:
                   type: string
               output_format:
                 type: string
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         description: NED refcodes

@@ -122,6 +122,8 @@ search-qtree:
       - $ref: '../parameters.yaml#/start'
       - $ref: '../parameters.yaml#/rows'
       - $ref: '../parameters.yaml#/sort'
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         $ref: '../responses.yaml#/QTree'
@@ -230,6 +232,8 @@ search-query:
       - $ref: '../parameters.yaml#/start'
       - $ref: '../parameters.yaml#/rows'
       - $ref: '../parameters.yaml#/sort'
+    security:
+      - ApiKeySecurity: []
     responses:
       '200':
         $ref: '../responses.yaml#/SearchResults'

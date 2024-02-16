@@ -7,12 +7,7 @@ orcid-exchangeOAuthCode:
     security:
       - ApiKeySecurity: []
     parameters:
-      - name: code
-        description: Code to exchange
-        required: true
-        in: query
-        schema:
-          type: string
+      - $ref: '../parameters.yaml#/code'
     responses:
       '200':
         description: Exchange complete, login successful
