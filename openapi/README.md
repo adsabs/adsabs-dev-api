@@ -22,9 +22,11 @@ This is currently a pain, for two competing reasons:
 
 Most tools that I've found will do one or the other (local files or multiple files), but not both. Given that our spec is now relatively mature, you should be able to get away with the Rapidoc validation approach below.
 
-### Latest: Redocly extension (VSCode)
+### Latest: Redocly
 
-[Redocly](https://redocly.com/docs/redocly-openapi/)
+There are several ways to use [Redocly](https://redocly.com/docs/redocly-openapi/). Here we outline two methods.
+
+#### Redocly extension (VSCode)
 
 Add redocly.yaml with the content below to your project directory.
 
@@ -82,8 +84,26 @@ decorators:
 
 ```
 
+#### Redocly via Docker container
+
+Setting up Redocly on your own can be painful, especially if you're not using `npm` already. To use one-off packages within Redocly more easily, run the commands within the provided Docker container.
+
+Full installation instructions here: https://redocly.com/docs/cli/installation/
+
+From the instructions, to install the Redocly container via Docker Hub:
+
+```
+docker pull redocly/cli
+```
+
+Then, you can run commands such as `bundle` (https://redocly.com/docs/cli/commands/bundle/), which takes the main OpenAPI file and dereferences it, or bundles all of the references and dependencies into a single OpenAPI file. Many OpenAPI tools require a single OpenAPI file, so this is very helpful for validation.
+
+```
+docker run --rm -v $PWD:/spec redocly/cli bundle openapi_public.yaml --output openapi_public_consolidated.json -d
+```
+
 ### Swagger Editor validation
-The online [Swagger Editor](https://editor.swagger.io/) can be helpful for validation, but it doesn't support specifications split across multiple files, as ours is. If you want to use it, you'll have to do a workaround (hope they fix this, merge the necessary files into a single file, etc.).
+The online [Swagger Editor](https://editor.swagger.io/) can be helpful for validation, but it doesn't support specifications split across multiple files, as ours is. If you want to use it, you'll have to bundle our specification into a single file (see Redocly instructions above).
 
 ### Rapidoc validation
 To test the full documentation before you commit changes to the main OpenAPI spec:
