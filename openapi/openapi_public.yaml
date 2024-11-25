@@ -274,6 +274,8 @@ paths:
     $ref: 'services/journals.yaml#/refsource'
   /journals/issn/{issn}:
     $ref: 'services/journals.yaml#/issn'
+  /journals/browse/{bibstem}:
+    $ref: 'services/journals.yaml#/browse'
   /oracle/matchdoc:
     $ref: 'services/oracle.yaml#/oracle-matchdoc'
   /oracle/readhist:

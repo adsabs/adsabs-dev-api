@@ -156,3 +156,30 @@ issn:
         description: Authentication failure, unable to get results
       '500':
         description: Internal error, unable to get results
+browse:
+  get:
+    summary: Simple summary for a bibstem query
+    parameters:
+      - $ref: '../parameters.yaml#/JournalBibstem'
+    description: >
+      For a given bibstem, return a dictionary with journal metadata
+      drawn from several tables in the journalsdb if it exists.
+    tags:
+      - journals
+    security:
+      - ApiKeySecurity: []
+    responses:
+      '200':
+        description: >
+          JSON object containing a dictionary, with key-value pairs
+          for english- and native-language titles, canonical abbreviation,
+          external identifiers, publication history, and completeness estimate.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '../schemas.yaml#/browse'
+      '403':
+        description: Authentication failure, unable to get results
+      '500':
+        description: Internal error, unable to get results 

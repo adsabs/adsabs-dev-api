@@ -162,6 +162,8 @@ components:
       $ref: schemas.yaml#/refsource
     issn: 
       $ref: schemas.yaml#/issn
+    browse:
+      $ref: schemas.yaml#/browse
 paths:
   /alive:
     $ref: 'services/adsws.yaml#/alive'
@@ -349,6 +351,8 @@ paths:
     $ref: 'services/journals.yaml#/refsource'
   /journals/issn/{issn}:
     $ref: 'services/journals.yaml#/issn'
+  /journals/browse/{bibstem}:
+    $ref: 'services/journals.yaml#/browse'
   /metrics:
     $ref: 'services/metrics.yaml#/metrics'
   /metrics/{bibcode}:
