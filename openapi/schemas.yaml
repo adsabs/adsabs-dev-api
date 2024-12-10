@@ -734,3 +734,41 @@ issn:
           type: string
         journal_name:
           type: string
+browse:
+  type: object
+  properties:
+    browse:
+      type: object
+      properties:
+        canonical_abbreviation:
+          type: string
+        canonical_name:
+          type: string
+        classic_bibstem:
+          type: string
+        completeness_estimate:
+          type: string
+        external_identifiers:
+          type: array
+          items:
+            properties:
+              id_type:
+                type: string
+              id_value:
+                type: string
+        native_language_title:
+          type: string
+        primary_language:
+          type: string
+        publication_history:
+          type: array
+          items:
+            properties:
+              publisher:
+                type: string
+              start_volume:
+                type: string
+              start_year:
+                type: string
+        title_language:
+          type: string
