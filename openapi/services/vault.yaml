@@ -514,7 +514,7 @@ vault-query:
       ## Example request
 
       ```bash
-        $ curl 'https://api.adsabs.harvard.edu/v1/vault/query' -H 'Authorization: Bearer:TOKEN' \
+        $ curl 'https://api.adsabs.harvard.edu/v1/vault/query' -H 'Authorization: Bearer TOKEN' \
           -X POST -d $'{"q":"*:*", "bigquery": "bibcode\\n2015IAUGA..2257982A\\n2015IAUGA..2257768A\\n2015IAUGA..2257639R", "fq": "{!bitset}"}' \
           -H 'Content-Type: application/json'
 
