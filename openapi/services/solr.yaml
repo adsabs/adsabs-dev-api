@@ -39,7 +39,7 @@ search-bigquery:
         bibcodes="bibcode\n1907AN....174...59.\n1908PA.....16..445.\n1989LNP...334..242S"
         r = requests.post('https://api.adsabs.harvard.edu/v1/search/bigquery',
              params={'q':'*:*', 'wt':'json', 'fq':'{!bitset}', 'fl':'bibcode'},
-             headers={'Authorization': 'Bearer:TOKEN'},
+             headers={'Authorization': 'Bearer TOKEN'},
              data=bibcodes)
       ```
 
